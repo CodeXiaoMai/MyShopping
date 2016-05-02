@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="purple">#b462f5</color>
+    <color name="title_gray">#b2000000</color>
+    <!-- 按钮按下 -->
+    <color name="button_zise_pressed">#CD96F8</color>
+    <!-- 头部 -->
+    <color name="title_red">#CD3C39</color>
+    <!-- 页面填充 -->
+    <color name="background">#f2f2f2</color>
+    <!-- 普通字体 -->
+    <color name="ziti_normal">#595959</color>
+    <!-- 二级字体 -->
+    <color name="ziti2">#bfbfbf</color>
+    <!-- 按下时的颜色 -->
+    <color name="press">#CBCACA</color>
+    <!-- 分隔线 -->
+    <color name="fengexian">#808080</color>
+    <!-- 绿色 -->
+    <color name="lvse">#00ff00</color>
+   <!-- 主题绿 --> 
+    <color name="circle_green">#11cd6e</color>
+
+    <color name="abc_search_url_text_normal">#ff7fa87f</color>
+    <color name="abc_search_url_text_pressed">@android:color/black</color>
+    <color name="abc_search_url_text_selected">@android:color/black</color>
+    <color name="black">#ff000000</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="category_button_pressed_color">#ffffc500</color>
+    <color name="checkin_back_color">#ff493330</color>
+    <color name="classify_back_color">#fffcfaf2</color>
+    <color name="common_action_bar_splitter">#ffd2d2d2</color>
+    <color name="common_signin_btn_dark_text_default">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_disabled">#ffaaaaaa</color>
+    <color name="common_signin_btn_dark_text_focused">@android:color/white</color>
+    <color name="common_signin_btn_dark_text_pressed">@android:color/white</color>
+    <color name="common_signin_btn_default_background">#ffdd4b39</color>
+    <color name="common_signin_btn_light_text_default">#ff737373</color>
+    <color name="common_signin_btn_light_text_disabled">#ffaaaaaa</color>
+    <color name="common_signin_btn_light_text_focused">#ff737373</color>
+    <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
+    <color name="contact_back_color">#ff000000</color>
+    <color name="contact_button_back">#ff51c0ed</color>
+    <color name="dark_slate_gray">#ffd0d1c1</color>
+    <color name="deep_blue">#ff64afcc</color>
+    <color name="deep_orange">#fff69b02</color>
+    <color name="default_drawable_color">#ffdddddd</color>
+    <color name="detail_back_color">#fff6f7e4</color>
+    <color name="detail_price_back">#fffc5720</color>
+    <color name="edit_text_color">#ff808080</color>
+    <color name="gold">#ffdfe58d</color>
+    <color name="goods_name_color">#ff69b2c4</color>
+    <color name="graphite">#ff333333</color>
+    <color name="gray">#ff999999</color>
+    <color name="gray_1">#ffffffff</color>
+    <color name="gray_2">#fff6f7e4</color>
+    <color name="green">#ff8aba56</color>
+    <color name="guagua_back_color">#fffe7960</color>
+    <color name="holo_blue">#ff33e5b5</color>
+    <color name="login_text_color">#ff0ba3c5</color>
+    <color name="need_detail_color">#ffaaaaaa</color>
+    <color name="need_name_color">#ffc1b095</color>
+    <color name="need_text_color">#ff888888</color>
+    <color name="normal_image_loading_back">#ffdddddd</color>
+    <color name="normal_text_color">#ffafafaf</color>
+    <color name="off_shelf_divider_color">#ffe0e1d5</color>
+    <color name="pager_indicator_unchecked">#ff8cc3cd</color>
+    <color name="photo_container_back">#ff262e3b</color>
+    <color name="pink">#ffea4c89</color>
+    <color name="price_select_back_color">#ff71b7c6</color>
+    <color name="profile_text_color">#ffb1a481</color>
+    <color name="progressbar_color">#ffffc500</color>
+    <color name="red">#ffff0000</color>
+    <color name="register_button_color">#ffccffff</color>
+    <color name="search_back_color">#eeffffff</color>
+    <color name="search_cancel_button_color">#ff2aa6b9</color>
+    <color name="search_history_color">#ff28e267</color>
+    <color name="search_history_item_color">#ff8fd498</color>
+    <color name="search_hot_item_color">#ffe9663d</color>
+    <color name="setting_back_color">#ff323c4d</color>
+    <color name="setting_button1">#ff7ec7d5</color>
+    <color name="setting_button2">#fffc5720</color>
+    <color name="setting_divider_color">#ff3e4c63</color>
+    <color name="setting_text1">#ff7ec7d5</color>
+    <color name="setting_text2">#fff3bd05</color>
+    <color name="setting_text3">#ff2ab961</color>
+    <color name="spb_default_color">#ff33b5e5</color>
+    <color name="switch_default_back_color">#ff444444</color>
+    <color name="switch_selected_back_color">#ff666666</color>
+    <color name="tab_back_color">#ff7ec7d5</color>
+    <color name="tab_back_color_translucent">#c07ec7d5</color>
+    <color name="text_color_main_tab_focus">#ff444f59</color>
+    <color name="text_color_main_tab_unfocus">#ff858c98</color>
+    <color name="theme_blue">#ff7ec7d5</color>
+    <color name="theme_blue_translucent">#dd8cc5d3</color>
+    <color name="theme_brown">#ffb1a482</color>
+    <color name="theme_brown_translucent">#77b1a482</color>
+    <color name="theme_deep_blue">#ff323c4d</color>
+    <color name="theme_gray">#ffd0d1c1</color>
+    <color name="theme_gray_translucent">#ccd0d1c1</color>
+    <color name="theme_green">#ff74d764</color>
+    <color name="theme_orange">#fff8c333</color>
+    <color name="theme_pink">#fff4677f</color>
+    <color name="theme_red">#ffff5602</color>
+    <color name="theme_white_translucent">#aaffffff</color>
+    <color name="title_back_color">#ff7ec5d3</color>
+    <color name="title_back_color_translucent">#c07ec5d3</color>
+    <color name="transparent">#00000000</color>
+    <color name="umeng_fb_color_btn_normal">#ff333333</color>
+    <color name="umeng_fb_color_btn_pressed">#ff1495f7</color>
+    <color name="umeng_socialize_color_group">#ff2c3035</color>
+    <color name="umeng_socialize_comments_bg">#fff4f4f4</color>
+    <color name="umeng_socialize_divider">#ffe6e6e6</color>
+    <color name="umeng_socialize_edit_bg">#ffc4c4c4</color>
+    <color name="umeng_socialize_grid_divider_line">#fff8f8f8</color>
+    <color name="umeng_socialize_list_item_bgcolor">#ffffffff</color>
+    <color name="umeng_socialize_list_item_textcolor">#ff333333</color>
+    <color name="umeng_socialize_text_friends_list">#ff959696</color>
+    <color name="umeng_socialize_text_share_content">#ff666666</color>
+    <color name="umeng_socialize_text_time">#ff999999</color>
+    <color name="umeng_socialize_text_title">#ff464f61</color>
+    <color name="umeng_socialize_text_ucenter">#ff595959</color>
+    <color name="umeng_socialize_ucenter_bg">#ffeeeeee</color>
+    <color name="white">#ffffffff</color>
+    <color name="windows_blue">#ff1aa1e2</color>
+    <color name="yellow">#ffffff00</color>
+
+</resources>

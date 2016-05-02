@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_marginTop="32dp"
+            android:background="#757877" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="0.1dp"
+                android:layout_height="match_parent"
+                android:background="#757877" />
+
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:text="中国     +86"
+                android:textColor="#3cbbdf"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="0.1dp"
+                android:layout_height="match_parent"
+                android:background="#757877" />
+
+            <EditText
+                android:id="@+id/regist1_et_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:background="#ffffff"
+                android:hint="请输入手机号码"
+                android:inputType="number"
+                android:maxLength="11"
+                android:textColor="#6f6f6f"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#757877" />
+
+        <Button
+            android:id="@+id/regist_bt_next"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/button_blue_selector"
+            android:text="下一步"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

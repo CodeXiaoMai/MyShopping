@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/activity_feed_detail_comment_bg2"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="发布评论"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        android:maxLines="6"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/ziti_normal"
+        android:textSize="15sp" />
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="15dp"
+        android:text="匿名评论"
+        android:textColor="@color/ziti2"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/button_blue_selector"
+        android:text="发送"
+        android:textColor="@color/white" />
+
+</LinearLayout>

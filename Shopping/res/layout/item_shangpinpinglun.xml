@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xiaomai.shopping.view.CommentView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal" >
+
+        <com.xiaomai.shopping.view.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/heart" />
+
+        <TextView
+            android:id="@+id/tv_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="小迈"
+            android:textColor="@color/ziti_normal"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="5dp"
+        android:text="sksdlfsjdlkfsld;fksadfjlksdf;sdfslajflksdjf;sadfsdjlfksdlkfskld" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:text="2016年3月23日"
+        android:textColor="@color/ziti2"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/ziti2" />
+
+</com.xiaomai.shopping.view.CommentView>

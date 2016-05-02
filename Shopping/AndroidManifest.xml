@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xiaomai.shopping"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
+
+    <!-- 允许联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取GSM（2g）、WCDMA（联通3g）等网络状态的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 获取wifi网络状态的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 获取sd卡写的权限，用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许读取手机状态 用于创建BmobInstallation -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.xiaomai.shopping.module.welcome.WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.xiaomai.shopping.module.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.RegisterStep1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.RegisterStep3"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.ShouYeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.ShangPinXiangQingActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.FaBuZhongXinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.FaBuShangPinActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.xiaomai.shopping.module.WoDeShouCangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.WoDeDingDanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.WoDeQiuGouActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.FaBuQiuGouActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.xiaomai.shopping.module.WoDeJiFenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.ImagePagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="multi_image_selector.MultiImageSelectorActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

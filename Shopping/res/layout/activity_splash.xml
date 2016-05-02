@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="@dimen/splash_01_width"
+            android:layout_height="@dimen/splash_01_height"
+            android:background="@drawable/ic_launcher" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50.0px"
+            android:background="@color/transparent" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50.0px" >
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="我们自己的市场"
+            android:textColor="#ff3cc3a5"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv1"
+            android:layout_centerHorizontal="true"
+            android:text="北苑跳蚤市场"
+            android:textColor="#ff3cc3a5"
+            android:textSize="30sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

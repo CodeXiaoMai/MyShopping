@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/ziti2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/ll_shouye"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/main_bt_shouye"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/home_press" />
+
+            <TextView
+                android:id="@+id/main_tv_shouye"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="首页"
+                android:textColor="@color/title_red"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_qiugou"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/main_bt_qiugou"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/main_qiugou" />
+
+            <TextView
+                android:id="@+id/main_tv_qiugou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="求购"
+                android:textColor="@color/ziti_normal"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_xiaoxi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/main_bt_xiaoxi"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:src="@drawable/xiaoxi_normal" />
+
+            <TextView
+                android:id="@+id/main_tv_xiaoxi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="消息"
+                android:textColor="@color/ziti_normal"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_gerenzhongxin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/main_bt_gerenzhongxin"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:src="@drawable/wode_normal" />
+
+            <TextView
+                android:id="@+id/main_tv_gerenzhongxin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="我的"
+                android:textColor="@color/ziti_normal"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

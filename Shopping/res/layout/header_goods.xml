@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <TextView
+            android:id="@+id/tv_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#8e000000"
+            android:gravity="right"
+            android:padding="10dp"
+            android:text="1/2"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/goods_tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:maxLines="2"
+        android:padding="10dp"
+        android:text="乒乓球拍"
+        android:textColor="@color/ziti_normal"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/goods_tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/red"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/goods_tv_remain_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="数量："
+            android:textColor="@color/ziti_normal" />
+
+        <TextView
+            android:id="@+id/goods_tv_sale"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="成交：笔"
+            android:textColor="@color/ziti_normal" />
+
+        <TextView
+            android:id="@+id/goods_tv_shoucang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="收藏：人"
+            android:textColor="@color/ziti_normal" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="宝贝描述"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/goods_tv_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="领英称即将开源他们内部的应用软件WhereHows，一个企业级的数据挖掘软件。准确的说，领英称它为“数据发现软件”。从商业角度讲，WhereHows的目标是从分布式的多种元数据中进行挖掘。"
+        android:textColor="@color/ziti_normal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="评价"
+        android:textColor="@color/ziti_normal" />
+
+</LinearLayout>
