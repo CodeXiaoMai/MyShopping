@@ -6,7 +6,6 @@
 	<classpathentry kind="src" path="/ToggleButtonLib"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="lib" path="E:/developer/workspace/library/bin/library.jar" sourcepath="/library/src"/>
 	<classpathentry kind="src" path="/library"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

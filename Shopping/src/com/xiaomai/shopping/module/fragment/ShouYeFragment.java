@@ -172,6 +172,11 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		context = getContext();
 		scrollView = (PullToRefreshScrollView) view
 				.findViewById(R.id.pull_refresh_scrollview);
+		scrollView.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载更多");
+		scrollView.getLoadingLayoutProxy(false, true).setRefreshingLabel(
+				"加载中...");
+		scrollView.getLoadingLayoutProxy(false, true).setReleaseLabel("释放加载");
+
 		scrollView.setOnRefreshListener(this);
 		loader = ImageLoader.getInstance();
 		loader.init(ImageLoaderConfiguration.createDefault(context));

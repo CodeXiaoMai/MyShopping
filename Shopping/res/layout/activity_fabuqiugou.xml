@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -33,6 +33,7 @@
                     android:textSize="15sp" />
 
                 <EditText
+                    android:id="@+id/et_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -65,6 +66,7 @@
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/et_desc"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginLeft="15dp"
@@ -87,10 +89,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:text="价格区间"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center_horizontal"
                 android:textColor="@color/ziti_normal"
                 android:textSize="15sp" />
 
@@ -102,16 +104,17 @@
                 android:paddingTop="5dp" >
 
                 <EditText
+                    android:id="@+id/et_minPrice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    android:hint="最低"
                     android:inputType="numberDecimal"
                     android:maxLength="4"
-                    android:hint="最低"
-                android:textColorHint="@color/ziti2"
                     android:textColor="@color/title_red"
+                    android:textColorHint="@color/ziti2"
                     android:textSize="18sp" />
 
                 <TextView
@@ -123,18 +126,18 @@
                     android:textSize="15sp" />
 
                 <EditText
+                    android:id="@+id/et_maxPrice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
+                    android:hint="最高"
                     android:inputType="numberSigned"
                     android:maxLength="4"
-                    android:hint="最高"
-                android:textColorHint="@color/ziti2"
                     android:textColor="@color/title_red"
+                    android:textColorHint="@color/ziti2"
                     android:textSize="18sp" />
-
             </LinearLayout>
 
             <View
@@ -156,6 +159,7 @@
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -186,6 +190,7 @@
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/et_qq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -207,6 +212,7 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/bt_fabu"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="5dp"

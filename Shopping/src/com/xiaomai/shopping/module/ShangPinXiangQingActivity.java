@@ -422,25 +422,6 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		}
 	}
 
-	private User getCurrentUser() {
-		User user = BmobUser.getCurrentUser(context, User.class);
-		if (user == null) {
-			MyDialog.showDialog(context, "提示", "您还没有登录，现在登录",
-					new OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent intent = new Intent(context,
-									LoginActivity.class);
-							startActivityForResult(intent,
-									RequestCode.REQUEST_CODE_LOGIN);
-							dialog.dismiss();
-						}
-					}, null);
-		}
-		return user;
-	}
-
 	/**
 	 * 发送评论
 	 */

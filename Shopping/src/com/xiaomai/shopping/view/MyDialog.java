@@ -25,7 +25,7 @@ public class MyDialog {
 		Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(title).setMessage(message)
 				.setPositiveButton("确认", positiveListener)
-				.setNegativeButton("取消", negativeListener);
+				.setNegativeButton("取消", negativeListener).setCancelable(false);
 		AlertDialog alertDialog = builder.create();
 		alertDialog.show();
 	}
