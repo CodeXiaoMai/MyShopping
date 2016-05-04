@@ -77,7 +77,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 
 	@Override
 	public void loadData() {
-		User user = BmobUser.getCurrentUser(context, User.class);
+		User user = getCurrentUser();
 		if (user != null) {
 			bmobQuery.setLimit(Utils.REQUEST_COUNT);
 			bmobQuery.setSkip(list_shoucang.size());

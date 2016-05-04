@@ -19,6 +19,7 @@ public class IWant extends BmobObject {
 	private static final int STATE_CANCEL = -1;
 
 	private String userId;
+	private String userImage;
 	private String title;
 	private String desc;
 	private String minPrice;
@@ -32,10 +33,11 @@ public class IWant extends BmobObject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public IWant(String userId, String title, String desc, String minPrice,
-			String maxPrice, String phone, String qq) {
+	public IWant(String userId, String userImage, String title, String desc,
+			String minPrice, String maxPrice, String phone, String qq) {
 		super();
 		this.userId = userId;
+		this.userImage = userImage;
 		this.title = title;
 		this.desc = desc;
 		this.minPrice = minPrice;
@@ -51,6 +53,14 @@ public class IWant extends BmobObject {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
 	}
 
 	public String getTitle() {

@@ -3,6 +3,7 @@ package com.xiaomai.shopping.module;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +11,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.FindListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
-import com.xiaomai.shopping.bean.YiFaBu;
+import com.xiaomai.shopping.bean.IWant;
+import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.utils.Utils;
+import com.xiaomai.shopping.view.MyDialog;
+import com.xiaomai.shopping.view.RefreshListView;
+import com.xiaomai.shopping.view.RefreshListView.OnRefreshListener;
 
 /**
  * 求购页面
@@ -23,22 +31,25 @@ import com.xiaomai.shopping.bean.YiFaBu;
  * @author XiaoMai
  *
  */
-public class WoDeQiuGouActivity extends BaseActivity {
+public class WoDeQiuGouActivity extends BaseActivity implements
+		OnRefreshListener {
 
 	private View back;
 	private TextView title;
 	private View share;
 
 	// 已经发布的求购
-	private ListView lv_yifabuqiugou;
+	private RefreshListView lv_yifabuqiugou;
 	private MyAdapter adapter;
-	private List<YiFaBu> list_yifabuqiugou = new ArrayList<>();
+	private List<IWant> list_yifabuqiugou = new ArrayList<>();
+	private List<IWant> list_temp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wodeqiugou);
 		initView();
+		loadData();
 	}
 
 	private void initView() {
@@ -50,7 +61,8 @@ public class WoDeQiuGouActivity extends BaseActivity {
 		// 分享
 		share = findViewById(R.id.title_share);
 
-		lv_yifabuqiugou = (ListView) findViewById(R.id.lv_yifabuqiugou);
+		lv_yifabuqiugou = (RefreshListView) findViewById(R.id.lv_yifabuqiugou);
+		lv_yifabuqiugou.setOnRefreshListener(this);
 		adapter = new MyAdapter();
 		lv_yifabuqiugou.setAdapter(adapter);
 		setOnClick(back, share);
@@ -72,10 +84,18 @@ public class WoDeQiuGouActivity extends BaseActivity {
 
 	private class MyAdapter extends BaseAdapter {
 
+		private List<IWant> list;
+
+		public void setList(List<IWant> list) {
+			this.list = list;
+		}
+
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return 10;
+			if (list != null) {
+				return list.size();
+			}
+			return 0;
 		}
 
 		@Override
@@ -91,42 +111,125 @@ public class WoDeQiuGouActivity extends BaseActivity {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
 			View view = convertView;
 			ViewHolder holder;
 			if (view == null) {
 				view = View.inflate(WoDeQiuGouActivity.this,
-						R.layout.item_qiugou, null);
+						R.layout.item_wode_qiugou, null);
 				holder = new ViewHolder();
-				holder.iv_image = (ImageView) view.findViewById(R.id.iv_image);
 				holder.tv_name = (TextView) view
-						.findViewById(R.id.yifabu_tv_title);
-				holder.tv_state = (TextView) view
-						.findViewById(R.id.yifabu_tv_state);
-				holder.bt_edit = (Button) view.findViewById(R.id.bt_edit);
-				holder.bt_xiajia = (Button) view.findViewById(R.id.bt_xiajia);
-				holder.bt_shouchu = (Button) view.findViewById(R.id.bt_shouchu);
+						.findViewById(R.id.qiugou_tv_title);
+				// holder.tv_state = (TextView) view
+				// .findViewById(R.id.yifabu_tv_state);
+				holder.tv_price = (TextView) view
+						.findViewById(R.id.qiugou_tv_price);
+				holder.bt_quxiao = (Button) view
+						.findViewById(R.id.qiugou_bt_quxiao);
 				view.setTag(holder);
 			} else {
 				holder = (ViewHolder) view.getTag();
 			}
+			final IWant iWant = list.get(position);
+			holder.tv_name.setText(iWant.getTitle());
+			// holder.tv_state.setText(iWant.getState());
+			holder.tv_price.setText(iWant.getMinPrice() + " - "
+					+ iWant.getMaxPrice());
+			holder.bt_quxiao.setOnClickListener(new View.OnClickListener() {
 
+				@Override
+				public void onClick(View v) {
+					MyDialog.showDialog(context, "提示", "确认取消您的求购吗",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									quXiao();
+									dialog.dismiss();
+								}
+
+							}, null);
+				}
+
+				private void quXiao() {
+					iWant.delete(context, new DeleteListener() {
+
+						@Override
+						public void onSuccess() {
+							showToast("取消求购成功");
+							list.remove(position);
+							adapter.notifyDataSetChanged();
+						}
+
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							showErrorToast(arg0, arg1);
+							showLog("取消求购", arg0, arg1);
+						}
+					});
+				}
+			});
+			// holder.
 			return view;
 		}
 
 		private class ViewHolder {
-			ImageView iv_image;
 			TextView tv_name;
 			TextView tv_state;
-			Button bt_edit;
-			Button bt_xiajia;
-			Button bt_shouchu;
+			TextView tv_price;
+			Button bt_quxiao;
 		}
 	}
 
 	@Override
 	public void loadData() {
-		// TODO Auto-generated method stub
-		
+		User user = getCurrentUser();
+		BmobQuery<IWant> bmobQuery = new BmobQuery<IWant>();
+		bmobQuery.setLimit(Utils.REQUEST_COUNT);
+		bmobQuery.setSkip(list_yifabuqiugou.size());
+		bmobQuery.addWhereEqualTo("userId", user.getObjectId());
+		bmobQuery.findObjects(context, new FindListener<IWant>() {
+
+			@Override
+			public void onSuccess(List<IWant> arg0) {
+				if (list_yifabuqiugou.size() == 0) {
+					if (arg0.size() == 0) {
+						showToast("您还没有发布过任何求购！");
+						return;
+					} else {
+						list_yifabuqiugou = arg0;
+					}
+				} else {
+					if (arg0.size() == 0) {
+						showToast("没有更多数据");
+						return;
+					}
+					list_yifabuqiugou.addAll(arg0);
+				}
+				adapter.setList(list_yifabuqiugou);
+				adapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onError(int arg0, String arg1) {
+				showErrorToast(arg0, arg1);
+				showLog("我的求购", arg0, arg1);
+			}
+		});
+	}
+
+	@Override
+	public void pullDownRefresh() {
+		list_temp = list_yifabuqiugou;
+		adapter.setList(list_temp);
+		list_yifabuqiugou = new ArrayList<IWant>();
+		loadData();
+	}
+
+	@Override
+	public void pullUpLoadMore() {
+		loadData();
 	}
 }

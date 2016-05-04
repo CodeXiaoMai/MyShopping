@@ -125,7 +125,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	/**
 	 * 检查网络状态
 	 */
-	private void checkNetWorkState() {
+	public void checkNetWorkState() {
 		boolean shengLiuLiang = SharedPrenerencesUtil.getShengLiuLiang(context);
 		if (NetWorkUtil.isNetwork(context)
 				&& NetWorkUtil.isMobileNetWork(context) && !shengLiuLiang) {
@@ -153,7 +153,8 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		}
 	}
 
-	private void loadData() {
+	@Override
+	public void loadData() {
 		boolean shengLiuLiang = SharedPrenerencesUtil.getShengLiuLiang(context);
 		// 如果是数据状态，并且未开启省流量模式，或者是Wifi状态就加载图片，否则不加载图片
 		if (!NetWorkUtil.isNetwork(context, false)) {
@@ -395,7 +396,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 			public void onSuccess(List<Goods> arg0) {
 				if (list_search_result.size() == 0) {
 					if (arg0.size() == 0) {
-						showToast(context, "没有您要搜索的商品");
+						showToast("没有您要搜索的商品");
 						scrollView.onRefreshComplete();
 						return;
 					} else {
@@ -403,7 +404,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 					}
 				} else {
 					if (arg0.size() == 0) {
-						showToast(context, "没有更多数据");
+						showToast("没有更多数据");
 						scrollView.onRefreshComplete();
 						return;
 					} else {
@@ -419,7 +420,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 
 			@Override
 			public void onError(int arg0, String arg1) {
-				showErrorToast(context, arg0, arg1);
+				showErrorToast(arg0, arg1);
 				showLog("shouye_goods", arg0, arg1);
 			}
 		});
@@ -436,7 +437,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 			public void onSuccess(List<Goods> arg0) {
 				if (list.size() == 0) {
 					if (arg0.size() == 0) {
-						showToast(context, "没有任何数据！");
+						showToast("没有任何数据！");
 						scrollView.onRefreshComplete();
 						return;
 					} else {
@@ -444,7 +445,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 					}
 				} else {
 					if (arg0.size() == 0) {
-						showToast(context, "没有更多数据");
+						showToast("没有更多数据");
 						scrollView.onRefreshComplete();
 						return;
 					} else {
@@ -459,7 +460,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 
 			@Override
 			public void onError(int arg0, String arg1) {
-				showErrorToast(context, arg0, arg1);
+				showErrorToast(arg0, arg1);
 				showLog("shouye_goods", arg0, arg1);
 			}
 		});

@@ -19,16 +19,6 @@ import com.xiaomai.shopping.module.ImagePagerActivity;
 
 public class ImageFragment extends BaseFragment {
 
-	// public interface onClickListener {
-	// public void onClick(Context context, List<String> images, int postion);
-	// }
-	//
-	// private onClickListener listener;
-	//
-	// public void setOnClickListener(onClickListener listener) {
-	// this.listener = listener;
-	// }
-
 	private Context context;
 	private ImageView imageview;
 	private ImageLoader imageloader;
@@ -87,5 +77,11 @@ public class ImageFragment extends BaseFragment {
 		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
 		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
 		context.startActivity(intent);
+	}
+
+	@Override
+	public void loadData() {
+		// TODO Auto-generated method stub
+		
 	}
 }

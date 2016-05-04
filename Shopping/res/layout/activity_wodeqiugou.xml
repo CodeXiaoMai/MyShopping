@@ -38,11 +38,10 @@
             android:src="@drawable/button_add_selector" />
     </LinearLayout>
 
-    <ListView
-        android:divider="@null"
+    <com.xiaomai.shopping.view.RefreshListView
         android:id="@+id/lv_yifabuqiugou"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+        android:layout_height="match_parent"
+        android:divider="@null" />
 
 </LinearLayout>

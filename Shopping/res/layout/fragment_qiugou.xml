@@ -6,4 +6,18 @@
 
     <include layout="@layout/title" />
 
+    <com.xiaomai.shopping.view.RefreshListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null" >
+    </com.xiaomai.shopping.view.RefreshListView>
+
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="暂无数据" />
+
 </LinearLayout>

@@ -120,7 +120,7 @@ public class GeRenZhongXinFragment extends BaseFragment {
 		if (user != null) {
 			startActivity(new Intent(context, clazz));
 		} else {
-			showToast(context, "请先登录");
+			showToast("请先登录");
 		}
 	}
 
@@ -147,5 +147,11 @@ public class GeRenZhongXinFragment extends BaseFragment {
 			login.setClickable(true);
 		}
 
+	}
+
+	@Override
+	public void loadData() {
+		// TODO Auto-generated method stub
+		
 	}
 }

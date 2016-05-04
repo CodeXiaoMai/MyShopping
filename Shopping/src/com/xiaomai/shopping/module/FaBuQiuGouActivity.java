@@ -132,8 +132,12 @@ public class FaBuQiuGouActivity extends BaseActivity {
 	private void fabu() {
 		User user = getCurrentUser();
 		String userId = user.getObjectId();
-		final IWant iWant = new IWant(userId, strTitle, desc, minPrice,
-				maxPrice, phone, qq);
+		String imageUri = user.getImageUri();
+		if (imageUri == null) {
+			imageUri = "";
+		}
+		final IWant iWant = new IWant(userId, imageUri, strTitle, desc,
+				minPrice, maxPrice, phone, qq);
 		MyDialog.showDialog(context, "提示", "确认发布",
 				new DialogInterface.OnClickListener() {
 

@@ -65,4 +65,10 @@ public class XiaoXiFragment extends BaseFragment {
 
 	}
 
+	@Override
+	public void loadData() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
