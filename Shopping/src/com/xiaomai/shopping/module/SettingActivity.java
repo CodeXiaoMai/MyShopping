@@ -1,6 +1,7 @@
 package com.xiaomai.shopping.module;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,8 @@ public class SettingActivity extends BaseActivity {
 	private boolean isShengLiuLiang;
 	// 省流量开关
 	private ToggleButton tb_shengliuliang;
+	// 个人资料
+	private View gerenziliao;
 	// 退出登录
 	private Button bt_logOut;
 
@@ -76,7 +79,8 @@ public class SettingActivity extends BaseActivity {
 			}
 		});
 
-		setOnClick(back, bt_logOut);
+		gerenziliao = findViewById(R.id.setting_gerenziliao);
+		setOnClick(back, bt_logOut, gerenziliao);
 	}
 
 	@Override
@@ -90,6 +94,10 @@ public class SettingActivity extends BaseActivity {
 			setResult(ResultCode.RESULT_CODE_SETTING_LOGOUT);
 			finish();
 			break;
+		case R.id.setting_gerenziliao:
+			Intent intent = new Intent(context, GeRenZiLiaoActivity.class);
+			startActivity(intent);
+			break;
 		default:
 			break;
 		}
@@ -98,7 +106,7 @@ public class SettingActivity extends BaseActivity {
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

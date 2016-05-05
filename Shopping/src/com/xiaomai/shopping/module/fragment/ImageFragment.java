@@ -19,7 +19,6 @@ import com.xiaomai.shopping.module.ImagePagerActivity;
 
 public class ImageFragment extends BaseFragment {
 
-	private Context context;
 	private ImageView imageview;
 	private ImageLoader imageloader;
 	private int position;

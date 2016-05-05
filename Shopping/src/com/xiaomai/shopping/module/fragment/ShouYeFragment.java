@@ -92,8 +92,6 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private SimpleAdapter simple_adapter;
 	private List<Map<String, Object>> data;
 
-	private Context context;
-
 	// 加载全部图片
 	private ImageLoader imageloader;
 	// 长按加载图片
@@ -207,6 +205,9 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		adapter.setList(list);
 		gv_shangpin = (MyGridView) view.findViewById(R.id.gv_shangpin);
 		gv_shangpin.setAdapter(adapter);
+		View emptyView = view.findViewById(R.id.emptyView);
+		gv_shangpin.setEmptyView(emptyView);
+		
 
 		Utils.setHeight(adapter, gv_shangpin, 2);
 

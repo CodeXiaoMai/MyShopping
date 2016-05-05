@@ -49,8 +49,6 @@ public class GeRenZhongXinFragment extends BaseFragment {
 	// 我的积分
 	private View ll_wodejifen;
 
-	private Context context;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

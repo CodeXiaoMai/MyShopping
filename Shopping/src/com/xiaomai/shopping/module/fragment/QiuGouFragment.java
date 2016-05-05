@@ -3,22 +3,25 @@ package com.xiaomai.shopping.module.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.anim;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.IWant;
 import com.xiaomai.shopping.utils.Utils;
-import com.xiaomai.shopping.view.RefreshListView;
 import com.xiaomai.shopping.view.RefreshListView.OnRefreshListener;
 
 /**
@@ -27,13 +30,15 @@ import com.xiaomai.shopping.view.RefreshListView.OnRefreshListener;
  * @author XiaoMai
  *
  */
-public class QiuGouFragment extends BaseFragment implements OnRefreshListener {
+public class QiuGouFragment extends BaseFragment implements
+		OnRefreshListener2<ScrollView> {
 
 	private View back;
 	private TextView title;
 	private View share;
 
-	private RefreshListView listView;
+	private PullToRefreshScrollView scrollView;
+	private ListView listView;
 	private List<IWant> list_qiugou;
 	private List<IWant> list_temp;
 	private MyAdapter adapter;
@@ -61,11 +66,16 @@ public class QiuGouFragment extends BaseFragment implements OnRefreshListener {
 		share = view.findViewById(R.id.title_share);
 		share.setVisibility(View.GONE);
 
-		listView = (RefreshListView) view.findViewById(android.R.id.list);
-		listView.setOnRefreshListener(this);
+		scrollView = (PullToRefreshScrollView) view
+				.findViewById(R.id.pull_refresh_scrollview);
+		scrollView.setOnRefreshListener(this);
+		listView = (ListView) view.findViewById(android.R.id.list);
 		list_qiugou = new ArrayList<IWant>();
 		adapter = new MyAdapter();
 		listView.setAdapter(adapter);
+
+		View emptyView = view.findViewById(R.id.emptyView);
+		listView.setEmptyView(emptyView);
 	}
 
 	@Override
@@ -85,6 +95,7 @@ public class QiuGouFragment extends BaseFragment implements OnRefreshListener {
 			public void onSuccess(List<IWant> arg0) {
 				if (list_qiugou.size() == 0) {
 					if (arg0.size() == 0) {
+						scrollView.onRefreshComplete();
 						return;
 					} else {
 						list_qiugou = arg0;
@@ -92,12 +103,14 @@ public class QiuGouFragment extends BaseFragment implements OnRefreshListener {
 				} else {
 					if (arg0.size() == 0) {
 						showToast("没有更多数据");
+						scrollView.onRefreshComplete();
 						return;
 					}
 					list_qiugou.addAll(arg0);
 				}
 				adapter.setList(list_qiugou);
 				adapter.notifyDataSetChanged();
+				scrollView.onRefreshComplete();
 			}
 
 			@Override
@@ -176,7 +189,7 @@ public class QiuGouFragment extends BaseFragment implements OnRefreshListener {
 	}
 
 	@Override
-	public void pullDownRefresh() {
+	public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
 		list_temp = list_qiugou;
 		adapter.setList(list_temp);
 		list_qiugou = new ArrayList<IWant>();
@@ -184,7 +197,7 @@ public class QiuGouFragment extends BaseFragment implements OnRefreshListener {
 	}
 
 	@Override
-	public void pullUpLoadMore() {
+	public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
 		checkNetWorkState();
 	}
 
