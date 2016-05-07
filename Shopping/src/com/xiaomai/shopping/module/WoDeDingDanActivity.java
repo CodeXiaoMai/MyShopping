@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
-import com.xiaomai.shopping.bean.WoDeShouCang;
 
 /**
  * 我的收藏页面
@@ -33,7 +32,7 @@ public class WoDeDingDanActivity extends BaseActivity {
 	// 我的收藏
 	private ListView lv_dingdan;
 	private MyAdapter adapter;
-	private List<WoDeShouCang> list_dingdan = new ArrayList<>();
+	private List<String> list_dingdan = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

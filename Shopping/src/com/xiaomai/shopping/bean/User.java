@@ -24,6 +24,16 @@ public class User extends BmobUser {
 	private Integer score;
 	// 昵称修改过
 	private Boolean isNiChengChanged;
+	// 最后一次登录的时间
+	private String lastTimeLogin;
+
+	public String getLastTimeLogin() {
+		return lastTimeLogin;
+	}
+
+	public void setLastTimeLogin(String lastTimeLogin) {
+		this.lastTimeLogin = lastTimeLogin;
+	}
 
 	public String getNicheng() {
 		return nicheng;

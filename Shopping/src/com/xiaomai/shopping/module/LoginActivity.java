@@ -1,5 +1,7 @@
 package com.xiaomai.shopping.module;
 
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,16 +11,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
+import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.utils.DES;
+import com.xiaomai.shopping.utils.GetDate;
 import com.xiaomai.shopping.utils.MD5;
 import com.xiaomai.shopping.utils.ResultCode;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
+import com.xiaomai.shopping.utils.Utils;
 
 /**
  * 这是登录的页面
@@ -38,6 +45,7 @@ public class LoginActivity extends BaseActivity {
 	// 密码
 	private EditText et_password;
 	private String password;
+	private User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +114,23 @@ public class LoginActivity extends BaseActivity {
 			// 联网登录
 			userName = DES.encryptDES(userName);
 			password = MD5.ecode(password);
-			User user = new User();
+			user = new User();
 			user.setUsername(userName);
 			user.setPassword(password);
 			user.login(context, new SaveListener() {
 
 				@Override
 				public void onSuccess() {
-					User currentUser = BmobUser.getCurrentUser(context,
-							User.class);
+					User currentUser = getCurrentUser();
+					String lastTimeLogin = currentUser.getLastTimeLogin();
+					if (!lastTimeLogin.startsWith(GetDate.getDateBefore(0))) {
+						Score score = new Score(currentUser.getObjectId(),
+								Utils.SCORE_LOGIN, "登录");
+						score.save(context);
+						currentUser.setLastTimeLogin(GetDate.currentTime());
+						currentUser.setScore(currentUser.getScore()+Utils.SCORE_LOGIN);
+						currentUser.update(context);
+					}
 					Intent data = new Intent();
 					Bundle extras = new Bundle();
 					extras.putSerializable("user", currentUser);
@@ -122,7 +138,6 @@ public class LoginActivity extends BaseActivity {
 					setResult(ResultCode.RESULT_CODE_LOGIN_SUCESS, data);
 					SharedPrenerencesUtil.setIsLogOut(context, false);
 					finish();
-
 				}
 
 				@Override
@@ -164,6 +179,6 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

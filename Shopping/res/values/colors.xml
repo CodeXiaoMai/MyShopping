@@ -19,9 +19,8 @@
     <color name="fengexian">#808080</color>
     <!-- 绿色 -->
     <color name="lvse">#00ff00</color>
-   <!-- 主题绿 --> 
+    <!-- 主题绿 -->
     <color name="circle_green">#11cd6e</color>
-
     <color name="abc_search_url_text_normal">#ff7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>

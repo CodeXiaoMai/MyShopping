@@ -178,7 +178,7 @@ public class QiuGouFragment extends BaseFragment implements
 
 			holder.tv_name.setText(iWant.getUserName());
 			holder.tv_title.setText("求购:" + iWant.getTitle());
-			holder.tv_desc.setText(iWant.getDesc());
+			holder.tv_desc.setText("描述：\n\t\t"+iWant.getDesc());
 			holder.tv_price.setText(iWant.getMinPrice() + " - "
 					+ iWant.getMaxPrice());
 			holder.tv_date.setText(iWant.getUpdatedAt());

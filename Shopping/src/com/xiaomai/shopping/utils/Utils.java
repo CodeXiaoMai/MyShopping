@@ -7,6 +7,11 @@ import android.widget.BaseAdapter;
 
 public class Utils {
 
+	// 注册
+	public static final int SCORE_REGIST = 50;
+	// 登录
+	public static final int SCORE_LOGIN = 10;
+
 	public static final String ENCRYPT_KEY = "20120401";
 
 	/**

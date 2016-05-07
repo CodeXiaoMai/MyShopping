@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.xiaomai.shopping"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
     android:orientation="vertical" >
 
     <include layout="@layout/title" />
@@ -21,11 +22,13 @@
 
             <com.xiaomai.shopping.view.CircleImageView
                 android:id="@+id/iv_head"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/ic_launcher" />
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_launcher"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,10 +50,10 @@
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@color/background"
+                    android:hint="昵称只能修改一次"
                     android:maxLength="8"
                     android:paddingLeft="15dp"
-                    android:hint="昵称只能修改一次"
                     android:textColor="@color/ziti_normal"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -87,9 +90,9 @@
                     android:id="@+id/tv_sex_man"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
                     android:text="男"
                     android:textColor="@color/ziti_normal"
                     android:textSize="15sp" />
@@ -106,9 +109,9 @@
                     android:id="@+id/tv_woman"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
                     android:text="女"
                     android:textColor="@color/ziti_normal"
                     android:textSize="15sp" />
@@ -137,7 +140,7 @@
                     android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@color/background"
                     android:inputType="phone"
                     android:maxLength="11"
                     android:paddingLeft="15dp"
@@ -170,10 +173,10 @@
                     android:id="@+id/et_grade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@color/background"
+                    android:hint="xx级xx学院xx班"
                     android:paddingLeft="15dp"
                     android:singleLine="true"
-                    android:hint="xx级xx学院xx班"
                     android:textColor="@color/ziti_normal"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -202,7 +205,7 @@
                     android:id="@+id/et_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@color/background"
                     android:inputType="numberSigned"
                     android:paddingLeft="15dp"
                     android:singleLine="true"

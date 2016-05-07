@@ -1,18 +1,34 @@
 package com.xiaomai.shopping.module;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import multi_image_selector.MultiImageSelectorActivity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.utils.RequestCode;
 
 /**
  * 个人资料页面
@@ -22,6 +38,7 @@ import com.xiaomai.shopping.bean.User;
  */
 public class GeRenZiLiaoActivity extends BaseActivity {
 
+	private static final int PHOTO_REQUEST_CUT = 0;
 	private View back;
 	private TextView title;
 	private View share;
@@ -35,12 +52,17 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 	private TextView tv_nan, tv_nv;
 	private Button bt_save;
 
+	private String imageUri;
 	private String name = "";
 	private String sex = "男";
 	private String phone = "";
 	private String grade = "";
 	private String num = "";
 	private User user;
+	private ArrayList<String> mSelectPath = new ArrayList<String>();
+	private Bitmap bitmap;
+	private String fileName = "";
+	private boolean headChanged;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +70,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_geren_ziliao);
 		initView();
-		loadData();
+		checkNetWorkState();
 	}
 
 	private void initView() {
@@ -90,7 +112,28 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 		case R.id.bt_save:
 			checkMessage();
 			break;
+		case R.id.iv_head:
+			openImageSelector();
+			break;
 		}
+	}
+
+	private void openImageSelector() {
+		Intent intent = new Intent(context, MultiImageSelectorActivity.class);
+		// 是否显示拍摄图片
+		intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+		// 最大可选择图片数量
+		intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+		// 选择模式
+		intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE,
+				MultiImageSelectorActivity.MODE_MULTI);
+		// 默认选择
+		if (mSelectPath != null && mSelectPath.size() > 0) {
+			intent.putExtra(
+					MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST,
+					mSelectPath);
+		}
+		startActivityForResult(intent, RequestCode.REQUEST_IMAGE);
 	}
 
 	private void checkMessage() {
@@ -114,7 +157,39 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 			showToast("学号不能为空");
 			return;
 		}
-		updateUserInfo();
+		updateUserHead();
+	}
+
+	private void updateUserHead() {
+		if (headChanged) {
+			String[] filePaths = { fileName };
+			showToast("正在上传头像...");
+			BmobFile.uploadBatch(context, filePaths, new UploadBatchListener() {
+
+				@Override
+				public void onSuccess(List<BmobFile> arg0, List<String> arg1) {
+					// TODO Auto-generated method stub
+					if (arg1 != null) {
+						imageUri = arg1.get(0);
+						updateUserInfo();
+					} else {
+						showToast("arg1:null");
+					}
+				}
+
+				@Override
+				public void onProgress(int arg0, int arg1, int arg2, int arg3) {
+				}
+
+				@Override
+				public void onError(int arg0, String arg1) {
+					showErrorToast(arg0, arg1);
+					showLog("上传图片", arg0, arg1);
+				}
+			});
+		} else {
+			updateUserInfo();
+		}
 	}
 
 	private void updateUserInfo() {
@@ -124,12 +199,12 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 		user.setGrade(grade);
 		user.setNum(num);
 		user.setIsNiChengChanged(true);
+		user.setImageUri(imageUri);
 		user.update(context, new UpdateListener() {
 
 			@Override
 			public void onSuccess() {
 				showToast("修改成功！");
-				finish();
 			}
 
 			@Override
@@ -144,6 +219,10 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 	public void loadData() {
 		user = getCurrentUser();
 		if (user != null) {
+			imageUri = user.getImageUri();
+			if (!TextUtils.isEmpty(imageUri)) {
+				imageloader.displayImage(imageUri, iv_head);
+			}
 			name = user.getNicheng();
 			if (name != null) {
 				et_name.setText(name);
@@ -167,6 +246,109 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 			iv_nv.setImageResource(R.drawable.radiobutton_xuanzhong);
 			iv_nan.setImageResource(R.drawable.radiobutton_weixuanzhong);
 		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == RequestCode.REQUEST_IMAGE && resultCode == RESULT_OK) {
+			if (data != null) {
+				if (requestCode == RequestCode.REQUEST_IMAGE
+						&& resultCode == RESULT_OK) {
+					mSelectPath = data
+							.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+					File file = new File(mSelectPath.get(0));
+					Uri uri = Uri.fromFile(file);
+					crop(uri);
+				}
+			}
+		} else if (requestCode == PHOTO_REQUEST_CUT) {
+			try {
+				bitmap = data.getParcelableExtra("data");
+				String name = DateFormat.format("yyyyMMdd_hhmmss",
+						Calendar.getInstance(Locale.CHINA))
+						+ ".png";
+				FileOutputStream b = null;
+				File file = new File("/sdcard/myImage/");
+				file.mkdirs();// 创建文件夹
+				fileName = "/sdcard/myImage/" + name;
+				try {
+					b = new FileOutputStream(fileName);
+					bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						b.flush();
+						b.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+				iv_head.setImageBitmap(bitmap);
+				headChanged = true;
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * 剪切图片
+	 * 
+	 * @function:
+	 * @author:Jerry
+	 * @date:2013-12-30
+	 * @param uri
+	 */
+	private void crop(Uri uri) {
+		// 裁剪图片意图
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setDataAndType(uri, "image/*");
+		intent.putExtra("crop", "true");
+		// 裁剪框的比例，1：1
+		intent.putExtra("aspectX", 1);
+		intent.putExtra("aspectY", 1);
+		// 裁剪后输出图片的尺寸大小
+		intent.putExtra("outputX", 250);
+		intent.putExtra("outputY", 250);
+		// 图片格式
+		intent.putExtra("outputFormat", "JPEG");
+		intent.putExtra("noFaceDetection", true);// 取消人脸识别
+		intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
+		startActivityForResult(intent, PHOTO_REQUEST_CUT);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		deleteAllFiles(new File("/sdcard/myImage/"));
+	}
+
+	private void deleteAllFiles(File root) {
+		File files[] = root.listFiles();
+		if (files != null)
+			for (File f : files) {
+				if (f.isDirectory()) { // 判断是否为文件夹
+					deleteAllFiles(f);
+					try {
+						f.delete();
+					} catch (Exception e) {
+					}
+				} else {
+					if (f.exists()) { // 判断是否存在
+						deleteAllFiles(f);
+						try {
+							f.delete();
+						} catch (Exception e) {
+						}
+					}
+				}
+			}
 	}
 
 }

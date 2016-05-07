@@ -13,9 +13,12 @@ import cn.bmob.v3.listener.SaveListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
+import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.utils.DES;
+import com.xiaomai.shopping.utils.GetDate;
 import com.xiaomai.shopping.utils.MD5;
+import com.xiaomai.shopping.utils.Utils;
 
 /**
  * 注册第三步
@@ -96,6 +99,8 @@ public class RegisterStep3 extends BaseActivity {
 		user.setUsername(username);
 		user.setPassword(pass);
 		user.setSex("未知");
+		user.setScore(Utils.SCORE_REGIST);
+		user.setLastTimeLogin("");
 		user.setIsNiChengChanged(false);
 		try {
 			user.setMobilePhoneNumber(DES.decryptDES(username, "20120401"));
@@ -106,10 +111,28 @@ public class RegisterStep3 extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
-				showToast("注册成功");
-				Intent intent = new Intent(context, LoginActivity.class);
-				startActivity(intent);
-				finish();
+				addScore();
+			}
+
+			private void addScore() {
+				Score score = new Score(getCurrentUser().getObjectId(),
+						Utils.SCORE_REGIST, "注册");
+				score.save(context, new SaveListener() {
+
+					@Override
+					public void onSuccess() {
+						showToast("注册成功,获得50积分^_^");
+						Intent intent = new Intent(context, LoginActivity.class);
+						startActivity(intent);
+						finish();
+					}
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						showErrorToast(arg0, arg1);
+						showLog("积分", arg0, arg1);
+					}
+				});
 			}
 
 			@Override
@@ -119,7 +142,6 @@ public class RegisterStep3 extends BaseActivity {
 				case 301:
 					showToast("您的手机号不是有效的号码！");
 					break;
-
 				default:
 					break;
 				}
