@@ -8,23 +8,61 @@ public class User extends BmobUser {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	// 昵称
+	private String nicheng;
 	// 头像地址
 	private String imageUri;
+	// 性别
+	private String sex;
+	// 班级
+	private String grade;
+	// 学号
+	private String num;
 	// 等级
-	private String level;
+	private Integer level;
 	// 积分
-	private String score;
+	private Integer score;
+	// 昵称修改过
+	private Boolean isNiChengChanged;
 
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String getNicheng() {
+		return nicheng;
 	}
 
-	public User(String imageUri, String level, String score) {
-		super();
-		this.imageUri = imageUri;
-		this.level = level;
-		this.score = score;
+	public void setNicheng(String nicheng) {
+		this.nicheng = nicheng;
+	}
+
+	public Boolean getIsNiChengChanged() {
+		return isNiChengChanged;
+	}
+
+	public void setIsNiChengChanged(Boolean isNiChengChanged) {
+		this.isNiChengChanged = isNiChengChanged;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getNum() {
+		return num;
+	}
+
+	public void setNum(String num) {
+		this.num = num;
 	}
 
 	public String getImageUri() {
@@ -35,19 +73,19 @@ public class User extends BmobUser {
 		this.imageUri = imageUri;
 	}
 
-	public String getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(String level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 
-	public String getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	public void setScore(String score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 

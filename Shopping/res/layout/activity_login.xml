@@ -78,7 +78,7 @@
             android:inputType="textPassword"
             android:maxLength="11"
             android:singleLine="true"
-            android:text="1"
+            android:text="123456"
             android:textColor="@color/ziti_normal"
             android:textColorHint="#d6d6d6"
             android:textSize="17sp" />

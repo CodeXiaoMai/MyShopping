@@ -95,8 +95,10 @@ public class SettingActivity extends BaseActivity {
 			finish();
 			break;
 		case R.id.setting_gerenziliao:
-			Intent intent = new Intent(context, GeRenZiLiaoActivity.class);
-			startActivity(intent);
+			if (getCurrentUser() != null) {
+				Intent intent = new Intent(context, GeRenZiLiaoActivity.class);
+				startActivity(intent);
+			}
 			break;
 		default:
 			break;

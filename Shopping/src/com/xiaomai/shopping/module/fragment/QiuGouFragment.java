@@ -159,6 +159,10 @@ public class QiuGouFragment extends BaseFragment implements
 				holder.iv_head = (ImageView) view.findViewById(R.id.iv_head);
 				holder.tv_name = (TextView) view
 						.findViewById(R.id.qiugou_tv_title);
+				holder.tv_title = (TextView) view
+						.findViewById(R.id.qiugou_tv_title);
+				holder.tv_desc = (TextView) view
+						.findViewById(R.id.qiugou_tv_desc);
 				holder.tv_price = (TextView) view
 						.findViewById(R.id.qiugou_tv_price);
 				holder.tv_date = (TextView) view
@@ -169,10 +173,12 @@ public class QiuGouFragment extends BaseFragment implements
 			}
 			final IWant iWant = list.get(position);
 			if (imageloader != null) {
-				// imageloader.displayImage(iWant.getUserImage(),
-				// holder.iv_head);
+				imageloader.displayImage(iWant.getUserImage(), holder.iv_head);
 			}
-			holder.tv_name.setText(iWant.getTitle());
+
+			holder.tv_name.setText(iWant.getUserName());
+			holder.tv_title.setText("求购:" + iWant.getTitle());
+			holder.tv_desc.setText(iWant.getDesc());
 			holder.tv_price.setText(iWant.getMinPrice() + " - "
 					+ iWant.getMaxPrice());
 			holder.tv_date.setText(iWant.getUpdatedAt());
@@ -182,6 +188,8 @@ public class QiuGouFragment extends BaseFragment implements
 		private class ViewHolder {
 			ImageView iv_head;
 			TextView tv_name;
+			TextView tv_title;
+			TextView tv_desc;
 			TextView tv_date;
 			TextView tv_price;
 		}

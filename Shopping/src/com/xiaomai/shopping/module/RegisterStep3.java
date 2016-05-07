@@ -95,10 +95,11 @@ public class RegisterStep3 extends BaseActivity {
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(pass);
+		user.setSex("未知");
+		user.setIsNiChengChanged(false);
 		try {
 			user.setMobilePhoneNumber(DES.decryptDES(username, "20120401"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		user.signUp(context, new SaveListener() {
@@ -129,7 +130,7 @@ public class RegisterStep3 extends BaseActivity {
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
