@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.View;
@@ -14,13 +15,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.GetListener;
 
+import com.a.a.in;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Collection;
+import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
@@ -188,6 +191,33 @@ public class WoDeShouCangActivity extends BaseActivity implements
 			}
 			holder.tv_name.setText(collection.getGoodsName());
 			holder.tv_price.setText(collection.getGoodsPrice());
+			// 进入商品详情
+			view.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					BmobQuery<Goods> bmobQuery = new BmobQuery<Goods>();
+					bmobQuery.getObject(context, collection.getGoodsId(),
+							new GetListener<Goods>() {
+
+								@Override
+								public void onSuccess(Goods arg0) {
+									Intent intent = new Intent(context,
+											ShangPinXiangQingActivity.class);
+									intent.putExtra("goods", arg0);
+									startActivity(intent);
+								}
+
+								@Override
+								public void onFailure(int arg0, String arg1) {
+									showErrorToast(arg0, arg1);
+									showLog("获取商品详情", arg0, arg1);
+								}
+							});
+
+				}
+			});
+			// 取消收藏
 			holder.bt_quxiaoshouchu
 					.setOnClickListener(new View.OnClickListener() {
 

@@ -45,8 +45,15 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	}
 
 	public void showErrorToast(int arg0, String arg1) {
-		Toast.makeText(this, "错误代码：" + arg0 + ",错误信息：" + arg1,
-				Toast.LENGTH_SHORT).show();
+		switch (arg0) {
+		case 101:
+			arg1 = "宝贝已失效，或已下架";
+			break;
+
+		default:
+			break;
+		}
+		Toast.makeText(this, arg1, Toast.LENGTH_SHORT).show();
 	}
 
 	public void showLog(String tag, int arg0, String arg1) {

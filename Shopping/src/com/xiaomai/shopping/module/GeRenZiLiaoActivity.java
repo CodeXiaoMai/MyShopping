@@ -25,6 +25,7 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.User;
@@ -221,7 +222,8 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 		if (user != null) {
 			imageUri = user.getImageUri();
 			if (!TextUtils.isEmpty(imageUri)) {
-				imageloader.displayImage(imageUri, iv_head);
+				loader = ImageLoader.getInstance();
+				loader.displayImage(imageUri, iv_head);
 			}
 			name = user.getNicheng();
 			if (name != null) {

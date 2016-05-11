@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,17 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.bean.User;
-import com.xiaomai.shopping.utils.NetWorkUtil;
-import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
+import com.xiaomai.shopping.utils.StateCode;
 import com.xiaomai.shopping.utils.Utils;
+import com.xiaomai.shopping.view.MyDialog;
 import com.xiaomai.shopping.view.RefreshListView;
 import com.xiaomai.shopping.view.RefreshListView.OnRefreshListener;
 
@@ -60,7 +61,6 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 		initView();
 		checkNetWorkState();
 	}
-
 
 	public void loadData() {
 		if (user != null) {
@@ -187,27 +187,63 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 			} else {
 				holder = (ViewHolder) view.getTag();
 			}
-			Goods goods = list.get(position);
+			final Goods goods = list.get(position);
 
-			String objectId = goods.getObjectId();
-			final String uri = goods.getImages().get(0);
 			String state = goods.getState();
 			String title = goods.getTitle();
 			holder.tv_name.setText(title);
 			holder.tv_state.setText(state);
-			if (imageloader != null) {
-				imageloader.displayImage(uri, holder.iv_image);
-			} else {
-				holder.iv_image
-						.setOnLongClickListener(new View.OnLongClickListener() {
+			holder.bt_xiajia.setOnClickListener(new View.OnClickListener() {
 
-							@Override
-							public boolean onLongClick(View v) {
-								loader.displayImage(uri, holder.iv_image);
-								return true;
-							}
-						});
+				@Override
+				public void onClick(View v) {
+					MyDialog.showDialog(context, "提示", "确认下架吗？下架后不可恢复",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.dismiss();
+									goods.delete(context, new DeleteListener() {
+
+										@Override
+										public void onSuccess() {
+											showToast("下架成功！");
+											list.remove(position);
+											adapter.notifyDataSetChanged();
+										}
+
+										@Override
+										public void onFailure(int arg0,
+												String arg1) {
+											showErrorToast(arg0, arg1);
+											showLog("下架", arg0, arg1);
+										}
+									});
+								}
+							}, null);
+
+				}
+			});
+
+			List<String> images = goods.getImages();
+			if (images.size() > 0) {
+				final String uri = images.get(0);
+				if (imageloader != null) {
+					imageloader.displayImage(uri, holder.iv_image);
+				} else {
+					holder.iv_image
+							.setOnLongClickListener(new View.OnLongClickListener() {
+
+								@Override
+								public boolean onLongClick(View v) {
+									loader.displayImage(uri, holder.iv_image);
+									return true;
+								}
+							});
+				}
 			}
+
 			return view;
 		}
 

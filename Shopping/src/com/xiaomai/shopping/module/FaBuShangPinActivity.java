@@ -91,6 +91,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 	private String phone;
 	private String qq;
 	private String title2;
+	private User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 
 	private void initView() {
 		context = this;
+		user = getCurrentUser();
 		back = findViewById(R.id.title_back);
 		title = (TextView) findViewById(R.id.title_title);
 		title.setText("发布商品");
@@ -112,6 +114,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 		et_count = (EditText) findViewById(R.id.fabu_et_count);
 		et_address = (EditText) findViewById(R.id.fabu_et_address);
 		et_phone = (EditText) findViewById(R.id.fabu_et_phone);
+		et_phone.setText(user.getMobilePhoneNumber());
 		et_qq = (EditText) findViewById(R.id.fabu_et_qq);
 		bt_fabu = (Button) findViewById(R.id.fabu_bt_fabu);
 		gridView = (MyGridView) findViewById(R.id.fabu_gridView);
@@ -192,8 +195,6 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 			return;
 		}
 		qq = et_qq.getText().toString().trim();
-
-		User user = BmobUser.getCurrentUser(context, User.class);
 		if (user != null) {
 			userId = user.getObjectId();
 			state = StateCode.GOODS_OK;
@@ -210,43 +211,47 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 			// state = DES.encryptDES(state);
 			final String[] list = string_list.toArray(new String[string_list
 					.size()]);
-			final ProgressDialog progressDialog = new ProgressDialog(context);
-			progressDialog.setTitle("正在上传图片");
-			progressDialog.setProgress(0);
-			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			progressDialog.setCanceledOnTouchOutside(false);
-			progressDialog.show();
-			BmobFile.uploadBatch(context, list, new UploadBatchListener() {
+			if (list.length > 0) {
+				final ProgressDialog progressDialog = new ProgressDialog(
+						context);
+				progressDialog.setTitle("正在上传图片");
+				progressDialog.setProgress(0);
+				progressDialog
+						.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				progressDialog.setCanceledOnTouchOutside(false);
+				progressDialog.show();
+				BmobFile.uploadBatch(context, list, new UploadBatchListener() {
 
-				@Override
-				public void onSuccess(List<BmobFile> arg0, List<String> arg1) {
-					// TODO Auto-generated method stub
-					showLog("图片张数：", 1, arg1.size() + "");
-					// 保存
-					if (arg1.size() == list.length) {
-						onImageSuccess(arg1);
+					@Override
+					public void onSuccess(List<BmobFile> arg0, List<String> arg1) {
+						// TODO Auto-generated method stub
+						showLog("图片张数：", 1, arg1.size() + "");
+						// 保存
+						if (arg1.size() == list.length) {
+							onImageSuccess(arg1);
+						}
 					}
-				}
 
-				@Override
-				public void onProgress(int arg0, int arg1, int arg2, int arg3) {
-					// showToast(arg0 + "/" + arg2);
-					progressDialog.setTitle("正在上传第" + arg0 + "张图片");
-					progressDialog.setProgress(arg3);
-					Log.d("progress", "arg0:" + arg0 + ",arg1:" + arg1
-							+ ",arg2:" + arg2 + ",arg3:" + arg3);
-				}
+					@Override
+					public void onProgress(int arg0, int arg1, int arg2,
+							int arg3) {
+						// showToast(arg0 + "/" + arg2);
+						progressDialog.setTitle("正在上传第" + arg0 + "张图片");
+						progressDialog.setProgress(arg3);
+						Log.d("progress", "arg0:" + arg0 + ",arg1:" + arg1
+								+ ",arg2:" + arg2 + ",arg3:" + arg3);
+					}
 
-				@Override
-				public void onError(int arg0, String arg1) {
-					showErrorToast(arg0, arg1);
+					@Override
+					public void onError(int arg0, String arg1) {
+						showErrorToast(arg0, arg1);
 
-				}
-			});
+					}
+				});
+			} else {
+				showToast("上传张图片吧！");
+			}
 
-		} else {
-			showToast("您还未登录");
-			startActivity(new Intent(context, LoginActivity.class));
 		}
 
 	}
@@ -500,6 +505,6 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
