@@ -161,6 +161,8 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 				|| NetWorkUtil.isWifiNetWork(context)) {
 			imageloader = ImageLoader.getInstance();
 			imageloader.init(ImageLoaderConfiguration.createDefault(context));
+		}else{
+			imageloader = null;
 		}
 		loadPager();
 		loadGoods();

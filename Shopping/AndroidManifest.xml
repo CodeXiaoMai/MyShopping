@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="19" />
 
     <!-- 允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -49,6 +49,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.xiaomai.shopping.module.RegisterStep1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.RegisterStep2"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.xiaomai.shopping.module.RegisterStep3"

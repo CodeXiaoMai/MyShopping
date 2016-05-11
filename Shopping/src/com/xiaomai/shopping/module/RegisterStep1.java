@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
+import cn.bmob.v3.listener.RequestSMSCodeListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
@@ -67,7 +70,7 @@ public class RegisterStep1 extends BaseActivity {
 	 * 
 	 * @param userName
 	 */
-	private void queryName(String userName) {
+	private void queryName(final String userName) {
 		BmobQuery<User> query = new BmobQuery<User>();
 		final String username = DES.encryptDES(userName);
 		query = query.addWhereEqualTo("username", username);
@@ -77,11 +80,32 @@ public class RegisterStep1 extends BaseActivity {
 			public void onSuccess(int count) {
 				Log.i("count:", count + "");
 				// 不存在此用户，可以注册
-				// 为了防止输入密码的过程中别人注册，所以向数据库中添加此用户名，若用户放弃注册怎么办
+				// 为了防止输入密码的过程中别人注册，所以向数据库中添加此用户名，若用户放弃注册怎么办,采用验证码
 				if (count <= 0) {
-					Intent intent = new Intent(context, RegisterStep3.class);
-					intent.putExtra("username", username);
-					startActivity(intent);
+					// 发送验证码
+					final String phoneNumber = userName;
+					BmobSMS.requestSMSCode(context, phoneNumber, "Shopping",
+							new RequestSMSCodeListener() {
+
+								@Override
+								public void done(Integer arg0,
+										BmobException arg1) {
+									if (arg1 == null) {
+										showToast(arg0 + "");
+										Intent intent = new Intent(context,
+												RegisterStep2.class);
+										intent.putExtra("phoneNumber",
+												phoneNumber);
+										intent.putExtra("smsCode", arg0);
+										startActivity(intent);
+									} else {
+										arg1.getErrorCode();
+										showErrorToast(arg1.getErrorCode(),
+												arg1.getMessage());
+									}
+								}
+							});
+
 				} else {
 					showToast("此手机号已经注册！");
 				}
@@ -118,6 +142,6 @@ public class RegisterStep1 extends BaseActivity {
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

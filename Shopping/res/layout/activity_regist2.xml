@@ -47,6 +47,7 @@
                 android:layout_weight="1"
                 android:background="#ffffff"
                 android:hint="请输入验证码"
+                android:textSize="15sp"
                 android:inputType="numberSigned"
                 android:paddingLeft="18dp" />
 
@@ -60,6 +61,7 @@
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:background="#ffffffff"
+                android:textSize="15sp"
                 android:text="重新发送(60s)" />
         </LinearLayout>
 
@@ -69,6 +71,7 @@
             android:background="#a0a0a0" />
 
         <Button
+            android:id="@+id/btn_next"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="18dp"
