@@ -1,6 +1,5 @@
 package com.xiaomai.shopping.module.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -131,7 +130,7 @@ public class GeRenZhongXinFragment extends BaseFragment {
 			User user = (User) data.getSerializableExtra("user");
 			showLog("登录成功", 0, user.getObjectId());
 			try {
-				String userName = DES.decryptDES(user.getUsername(),
+				String userName = DES.decryptDES(user.getNicheng(),
 						Utils.ENCRYPT_KEY);
 				tv_name.setText(userName);
 				login.setClickable(false);

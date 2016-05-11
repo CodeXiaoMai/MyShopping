@@ -48,15 +48,22 @@ public class DES {
 	}
 
 	// 解密
-	public static String decryptDES(String decryptString, String decryptKey)
-			throws Exception {
+	public static String decryptDES(String decryptString, String decryptKey) {
 		byte[] byteMi = Base64.decode(decryptString);
 		IvParameterSpec zeroIv = new IvParameterSpec(iv);
 		SecretKeySpec key = new SecretKeySpec(decryptKey.getBytes(), "DES");
-		Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
-		cipher.init(Cipher.DECRYPT_MODE, key, zeroIv);
-		byte decryptedData[] = cipher.doFinal(byteMi);
-		return new String(decryptedData, "utf-8");
+
+		Cipher cipher;
+		try {
+			cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+			cipher.init(Cipher.DECRYPT_MODE, key, zeroIv);
+			byte decryptedData[] = cipher.doFinal(byteMi);
+			return new String(decryptedData, "utf-8");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	static public void main(String argv[]) throws Exception {

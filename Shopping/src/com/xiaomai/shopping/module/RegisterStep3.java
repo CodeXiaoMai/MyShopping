@@ -16,7 +16,6 @@ import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.utils.DES;
-import com.xiaomai.shopping.utils.GetDate;
 import com.xiaomai.shopping.utils.MD5;
 import com.xiaomai.shopping.utils.Utils;
 

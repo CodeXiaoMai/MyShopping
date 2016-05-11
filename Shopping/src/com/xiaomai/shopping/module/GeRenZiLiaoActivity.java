@@ -29,7 +29,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.RequestCode;
+import com.xiaomai.shopping.utils.Utils;
 
 /**
  * 个人资料页面
@@ -194,10 +196,14 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 	}
 
 	private void updateUserInfo() {
+		name = DES.encryptDES(name);
 		user.setNicheng(name);
+		sex = DES.encryptDES(sex);
 		user.setSex(sex);
 		user.setMobilePhoneNumber(phone);
+		grade = DES.encryptDES(grade);
 		user.setGrade(grade);
+		num = DES.encryptDES(num);
 		user.setNum(num);
 		user.setIsNiChengChanged(true);
 		user.setImageUri(imageUri);
@@ -227,6 +233,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 			}
 			name = user.getNicheng();
 			if (name != null) {
+				name = DES.decryptDES(name, Utils.ENCRYPT_KEY);
 				et_name.setText(name);
 			}
 			if (user.getIsNiChengChanged()) {
@@ -234,9 +241,20 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 			}
 			et_phone.setText(user.getMobilePhoneNumber());
 			sex = user.getSex();
-			setSex(sex);
-			et_grade.setText(user.getGrade());
-			et_num.setText(user.getNum());
+			if (!TextUtils.isEmpty(sex) && !sex.equals("未知")) {
+				sex = DES.decryptDES(sex, Utils.ENCRYPT_KEY);
+				setSex(sex);
+			}
+			grade = user.getGrade();
+			if (grade != null) {
+				grade = DES.decryptDES(grade, Utils.ENCRYPT_KEY);
+				et_grade.setText(grade);
+			}
+			num = user.getNum();
+			if (num != null) {
+				num = DES.decryptDES(num, Utils.ENCRYPT_KEY);
+				et_num.setText(num);
+			}
 		}
 	}
 
