@@ -5,11 +5,13 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 import com.xiaomai.shoppingmanager.adapter.GoodsAdapter;
 import com.xiaomai.shoppingmanager.adapter.WantAdapter;
+import com.xiaomai.shoppingmanager.adapter.WantAdapter.onWantUpdateListener;
 import com.xiaomai.shoppingmanager.base.BaseActivity;
 import com.xiaomai.shoppingmanager.bean.Goods;
 import com.xiaomai.shoppingmanager.bean.IWant;
@@ -17,7 +19,8 @@ import com.xiaomai.shoppingmanager.utils.Utils;
 import com.xiaomai.shoppingmanager.view.RefreshListView;
 import com.xiaomai.shoppingmanager.view.RefreshListView.OnRefreshListener;
 
-public class WantManage extends BaseActivity implements OnRefreshListener {
+public class WantManage extends BaseActivity implements OnRefreshListener,
+		onWantUpdateListener {
 
 	private RefreshListView listView;
 	private WantAdapter adapter;
@@ -35,10 +38,15 @@ public class WantManage extends BaseActivity implements OnRefreshListener {
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		back = findViewById(R.id.title_back);
+		title = (TextView) findViewById(R.id.title_title);
+		title.setText("求购管理");
+		setOnClick(back);
 		listView = (RefreshListView) findViewById(R.id.listView);
 		listView.setOnRefreshListener(this);
 		list = new ArrayList<IWant>();
 		adapter = new WantAdapter(list, context);
+		adapter.setOnGoodsUpdateListener(this);
 		listView.setAdapter(adapter);
 	}
 
@@ -99,6 +107,14 @@ public class WantManage extends BaseActivity implements OnRefreshListener {
 	public void pullUpLoadMore() {
 		// TODO Auto-generated method stub
 		loadData();
+	}
+
+	@Override
+	public void onWantUpdate(int position) {
+		// TODO Auto-generated method stub
+		list.remove(position);
+		adapter.setList(list);
+		adapter.notifyDataSetChanged();
 	}
 
 }

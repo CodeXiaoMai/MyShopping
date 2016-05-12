@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.xiaomai.shoppingmanager.view.RefreshListView
+    <include layout="@layout/title" />
+    <com.xiaomai.shoppingmanager.view.RefreshListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

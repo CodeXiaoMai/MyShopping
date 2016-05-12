@@ -10,13 +10,13 @@ public class IWant extends BmobObject {
 	private static final long serialVersionUID = 1L;
 
 	// 待审核
-	private static final int STATE_DAISHENHE = 0;
+	public static final int STATE_DAISHENHE = 0;
 	// 审核失败
-	private static final int STATE_SHENHE_SHIBAI = -100;
+	public static final int STATE_SHENHE_SHIBAI = -100;
 	// 正常
-	private static final int STATE_NORMAL = 1;
+	public static final int STATE_NORMAL = 1;
 	// 取消
-	private static final int STATE_CANCEL = -1;
+	public static final int STATE_CANCEL = -1;
 
 	private String userId;
 	private String userName;

@@ -5,19 +5,20 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 import com.xiaomai.shoppingmanager.adapter.GoodsAdapter;
+import com.xiaomai.shoppingmanager.adapter.GoodsAdapter.onGoodsUpdateListener;
 import com.xiaomai.shoppingmanager.base.BaseActivity;
 import com.xiaomai.shoppingmanager.bean.Goods;
-import com.xiaomai.shoppingmanager.bean.User;
-import com.xiaomai.shoppingmanager.utils.StateCode;
 import com.xiaomai.shoppingmanager.utils.Utils;
 import com.xiaomai.shoppingmanager.view.RefreshListView;
 import com.xiaomai.shoppingmanager.view.RefreshListView.OnRefreshListener;
 
-public class GoodsManage extends BaseActivity implements OnRefreshListener {
+public class GoodsManage extends BaseActivity implements OnRefreshListener,
+		onGoodsUpdateListener {
 	private RefreshListView listView;
 	private GoodsAdapter adapter;
 	private List<Goods> list;
@@ -34,10 +35,16 @@ public class GoodsManage extends BaseActivity implements OnRefreshListener {
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		back = findViewById(R.id.title_back);
+		title = (TextView) findViewById(R.id.title_title);
+		title.setText("商品管理");
+		setOnClick(back);
+		
 		listView = (RefreshListView) findViewById(R.id.listView);
 		listView.setOnRefreshListener(this);
 		list = new ArrayList<Goods>();
 		adapter = new GoodsAdapter(list, context);
+		adapter.setOnGoodsUpdateListener(this);
 		listView.setAdapter(adapter);
 	}
 
@@ -98,6 +105,14 @@ public class GoodsManage extends BaseActivity implements OnRefreshListener {
 	public void pullUpLoadMore() {
 		// TODO Auto-generated method stub
 		loadData();
+	}
+
+	@Override
+	public void onGoodsUpdate(int position) {
+		// TODO Auto-generated method stub
+		list.remove(position);
+		adapter.setList(list);
+		adapter.notifyDataSetChanged();
 	}
 
 }

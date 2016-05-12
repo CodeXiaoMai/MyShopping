@@ -3,10 +3,10 @@ package com.xiaomai.shoppingmanager.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 
@@ -14,7 +14,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xiaomai.shoppingmanager.bean.User;
 import com.xiaomai.shoppingmanager.utils.NetWorkUtil;
-import com.xiaomai.shoppingmanager.utils.RequestCode;
 import com.xiaomai.shoppingmanager.utils.SharedPrenerencesUtil;
 import com.xiaomai.shoppingmanager.view.MyDialog;
 
@@ -26,6 +25,9 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	public ImageLoader loader;
 
 	public Context context = this;
+
+	public TextView title;
+	public View back;
 
 	/**
 	 * 监听事件
@@ -84,10 +86,10 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-//							Intent intent = new Intent(context,
-//									LoginActivity.class);
-//							startActivityForResult(intent,
-//									RequestCode.REQUEST_CODE_LOGIN);
+							// Intent intent = new Intent(context,
+							// LoginActivity.class);
+							// startActivityForResult(intent,
+							// RequestCode.REQUEST_CODE_LOGIN);
 							dialog.dismiss();
 						}
 					}, null);

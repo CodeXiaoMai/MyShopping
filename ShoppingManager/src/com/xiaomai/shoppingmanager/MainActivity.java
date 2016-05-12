@@ -3,7 +3,9 @@ package com.xiaomai.shoppingmanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 import com.xiaomai.shoppingmanager.base.BaseActivity;
 import com.xiaomai.shoppingmanager.utils.Config;
@@ -18,12 +20,18 @@ public class MainActivity extends BaseActivity {
 	private View want_manage;
 	// 意见箱
 	private View suggestions;
+	// 广告管理
+	private View ad_manage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 初始化BmobSdk
 		Bmob.initialize(this, Config.APPLICATION_ID);
+		// 使用推送服务时的初始化操作
+		BmobInstallation.getCurrentInstallation(this).save();
+		// 启动推送服务
+		BmobPush.startWork(this);
 		setContentView(R.layout.activity_main);
 		initView();
 	}
@@ -33,7 +41,9 @@ public class MainActivity extends BaseActivity {
 		goods_manage = findViewById(R.id.bt_goods_manage);
 		want_manage = findViewById(R.id.bt_want_manage);
 		suggestions = findViewById(R.id.bt_suggestions_manage);
-		setOnClick(user_manage, goods_manage, want_manage, suggestions);
+		ad_manage = findViewById(R.id.bt_ad_manage);
+		setOnClick(user_manage, goods_manage, want_manage, suggestions,
+				ad_manage);
 	}
 
 	@Override
@@ -52,7 +62,8 @@ public class MainActivity extends BaseActivity {
 		case R.id.bt_suggestions_manage:
 			startActivity(new Intent(context, SuggestionManage.class));
 			break;
-		default:
+		case R.id.bt_ad_manage:
+			startActivity(new Intent(context, AdManage.class));
 			break;
 		}
 	}

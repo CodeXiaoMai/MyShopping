@@ -50,6 +50,9 @@
         <activity
             android:name="com.xiaomai.shoppingmanager.SuggestionManage"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shoppingmanager.AdManage"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="cn.bmob.push.lib.service.PushService"
@@ -74,7 +77,7 @@
         </receiver>
 
         <!-- 第四部中创建的消息接收器，在这里进行注册 -->
-        <receiver android:name="com.xiaomai.shopping.receiver.MyPushMessageReceiver" >
+        <receiver android:name="com.xiaomai.shoppingmanager.receiver.MyPushMessageReceiver" >
             <intent-filter>
                 <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>

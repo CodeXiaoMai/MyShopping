@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
@@ -33,6 +34,10 @@ public class UserManage extends BaseActivity implements OnRefreshListener {
 
 	private void initView() {
 		// TODO Auto-generated method stub
+		back = findViewById(R.id.title_back);
+		title = (TextView) findViewById(R.id.title_title);
+		title.setText("用户管理");
+		setOnClick(back);
 		listView = (RefreshListView) findViewById(R.id.listView);
 		listView.setOnRefreshListener(this);
 		list = new ArrayList<User>();
