@@ -173,6 +173,9 @@ public class RegisterStep2 extends BaseActivity {
 	 */
 	private void yanZheng() {
 		smsCode = et_input_yanzhengma.getText().toString().trim();
+
+		showLog("", 0, phoneNumber + ":" + smsCode);
+
 		BmobSMS.verifySmsCode(context, phoneNumber, smsCode,
 				new VerifySMSCodeListener() {
 
@@ -182,6 +185,7 @@ public class RegisterStep2 extends BaseActivity {
 							Intent intent = new Intent(context,
 									RegisterStep3.class);
 							intent.putExtra("username", phoneNumber);
+							startActivity(intent);
 						} else {
 							showLog("验证验证码", 1, arg0.toString());
 							showToast("验证失败,请重试!");

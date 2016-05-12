@@ -105,6 +105,9 @@
         <activity
             android:name="com.xiaomai.shopping.module.AboutUsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.FanKuiActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="cn.bmob.push.lib.service.PushService"

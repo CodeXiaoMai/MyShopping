@@ -49,7 +49,9 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 		case 101:
 			arg1 = "宝贝已失效，或已下架";
 			break;
-
+		case 10010:
+			arg1 = "您的操作太频繁,请稍后再试!";
+			break;
 		default:
 			break;
 		}

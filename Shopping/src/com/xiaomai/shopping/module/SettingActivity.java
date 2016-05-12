@@ -32,6 +32,8 @@ public class SettingActivity extends BaseActivity {
 	private View gerenziliao;
 	// 关于我们
 	private View aboutus;
+	// 反馈中心
+	private View fankui;
 	// 退出登录
 	private Button bt_logOut;
 
@@ -83,7 +85,8 @@ public class SettingActivity extends BaseActivity {
 
 		gerenziliao = findViewById(R.id.setting_gerenziliao);
 		aboutus = findViewById(R.id.setting_about_us);
-		setOnClick(back, bt_logOut, gerenziliao, aboutus);
+		fankui = findViewById(R.id.setting_fankui);
+		setOnClick(back, bt_logOut, gerenziliao, aboutus, fankui);
 	}
 
 	@Override
@@ -106,6 +109,11 @@ public class SettingActivity extends BaseActivity {
 		case R.id.setting_about_us:
 			Intent intent = new Intent(context, AboutUsActivity.class);
 			startActivity(intent);
+			break;
+		case R.id.setting_fankui:
+			if (getCurrentUser() != null) {
+				startActivity(new Intent(context, FanKuiActivity.class));
+			}
 			break;
 		}
 	}

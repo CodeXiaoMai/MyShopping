@@ -91,7 +91,6 @@ public class RegisterStep1 extends BaseActivity {
 								public void done(Integer arg0,
 										BmobException arg1) {
 									if (arg1 == null) {
-										showToast(arg0 + "");
 										Intent intent = new Intent(context,
 												RegisterStep2.class);
 										intent.putExtra("phoneNumber",

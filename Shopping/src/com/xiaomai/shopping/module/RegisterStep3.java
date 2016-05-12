@@ -102,19 +102,16 @@ public class RegisterStep3 extends BaseActivity {
 			return;
 		}
 		String username = getIntent().getStringExtra("username");
-		pass = MD5.ecode(pass);
 		User user = new User();
+		username = DES.encryptDES(username);
 		user.setUsername(username);
+		pass = MD5.ecode(pass);
 		user.setPassword(pass);
 		user.setSex("未知");
 		user.setScore(Utils.SCORE_REGIST);
 		user.setLastTimeLogin("");
 		user.setIsNiChengChanged(false);
-		try {
-			user.setMobilePhoneNumber(DES.decryptDES(username, "20120401"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		user.setMobilePhoneNumber(username);
 		user.signUp(context, new SaveListener() {
 
 			@Override
@@ -129,12 +126,8 @@ public class RegisterStep3 extends BaseActivity {
 
 					@Override
 					public void onSuccess() {
-						showToast("注册成功,获得50积分^_^");
 						// 添加推送
 						startPush();
-						Intent intent = new Intent(context, LoginActivity.class);
-						startActivity(intent);
-						finish();
 					}
 
 					@Override
@@ -178,6 +171,11 @@ public class RegisterStep3 extends BaseActivity {
 						public void onSuccess() {
 							// TODO Auto-generated method stub
 							Log.i("bmob", "设备信息更新成功");
+							showToast("注册成功,获得50积分^_^");
+							Intent intent = new Intent(context,
+									LoginActivity.class);
+							startActivity(intent);
+							finish();
 						}
 
 						@Override
