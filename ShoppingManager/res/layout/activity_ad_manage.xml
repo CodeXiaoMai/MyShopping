@@ -22,6 +22,7 @@
                 android:layout_height="150dp" >
 
                 <ImageView
+                    android:layout_margin="5dp"
                     android:id="@+id/iv1"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -36,6 +37,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/shanchuzhaopian" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/ziti2" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -45,6 +52,7 @@
                 android:visibility="gone" >
 
                 <ImageView
+                    android:layout_margin="5dp"
                     android:id="@+id/iv2"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -59,6 +67,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/shanchuzhaopian" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/ziti2" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -68,6 +82,7 @@
                 android:visibility="gone" >
 
                 <ImageView
+                    android:layout_margin="5dp"
                     android:id="@+id/iv3"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -82,6 +97,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/shanchuzhaopian" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/ziti2" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -91,6 +112,7 @@
                 android:visibility="gone" >
 
                 <ImageView
+                    android:layout_margin="5dp"
                     android:id="@+id/iv4"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -105,6 +127,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/shanchuzhaopian" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/ziti2" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -114,6 +142,7 @@
                 android:visibility="gone" >
 
                 <ImageView
+                    android:layout_margin="5dp"
                     android:id="@+id/iv5"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
@@ -128,6 +157,12 @@
                     android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/shanchuzhaopian" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/ziti2" />
             </RelativeLayout>
 
             <com.xiaomai.shoppingmanager.view.MyListView

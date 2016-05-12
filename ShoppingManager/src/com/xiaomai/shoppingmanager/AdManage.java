@@ -10,6 +10,7 @@ import java.util.List;
 
 import multi_image_selector.MultiImageSelectorActivity;
 import multi_image_selector.utils.Bimp;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,8 +25,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -121,11 +125,72 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 			deletAd(4);
 			break;
 		case R.id.bt_commit:
-
+			shangchuantupian();
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void shangchuantupian() {
+		// TODO Auto-generated method stub
+		final String[] list = string_list
+				.toArray(new String[string_list.size()]);
+		if (string_list.size() > 0) {
+			final ProgressDialog progressDialog = new ProgressDialog(context);
+			progressDialog.setTitle("正在上传图片");
+			progressDialog.setProgress(0);
+			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			progressDialog.setCanceledOnTouchOutside(false);
+			progressDialog.show();
+			BmobFile.uploadBatch(context, list, new UploadBatchListener() {
+
+				@Override
+				public void onSuccess(List<BmobFile> arg0, List<String> arg1) {
+					// TODO Auto-generated method stub
+					showLog("图片张数：", 1, arg1.size() + "");
+					// 保存
+					if (arg1.size() == list.length) {
+						onImageSuccess(arg1);
+					}
+				}
+
+				@Override
+				public void onProgress(int arg0, int arg1, int arg2, int arg3) {
+					// showToast(arg0 + "/" + arg2);
+					progressDialog.setTitle("正在上传第" + arg0 + "张图片");
+					progressDialog.setProgress(arg3);
+					Log.d("progress", "arg0:" + arg0 + ",arg1:" + arg1
+							+ ",arg2:" + arg2 + ",arg3:" + arg3);
+				}
+
+				@Override
+				public void onError(int arg0, String arg1) {
+					showErrorToast(arg0, arg1);
+				}
+			});
+		}
+	}
+
+	private void onImageSuccess(List<String> arg1) {
+		for (int i = 0; i < arg1.size(); i++) {
+			Ad ad = new Ad(arg1.get(i), "", "");
+			ad.save(context, new SaveListener() {
+
+				@Override
+				public void onSuccess() {
+					showToast("发布成功!");
+					finish();
+				}
+
+				@Override
+				public void onFailure(int arg0, String arg1) {
+					showLog("fabu", arg0, arg1);
+					showErrorToast(arg0, arg1);
+				}
+			});
+		}
+
 	}
 
 	private void deletAd(final int position) {
@@ -194,16 +259,16 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 		switch (count) {
 		case 5:
 			iv_add.setVisibility(View.GONE);
-			iv5.setVisibility(View.VISIBLE);
+			rl5.setVisibility(View.VISIBLE);
 			imageloader.displayImage(images.get(4).getImage_url(), iv5);
 		case 4:
-			iv4.setVisibility(View.VISIBLE);
+			rl4.setVisibility(View.VISIBLE);
 			imageloader.displayImage(images.get(3).getImage_url(), iv4);
 		case 3:
-			iv3.setVisibility(View.VISIBLE);
+			rl3.setVisibility(View.VISIBLE);
 			imageloader.displayImage(images.get(2).getImage_url(), iv3);
 		case 2:
-			iv2.setVisibility(View.VISIBLE);
+			rl2.setVisibility(View.VISIBLE);
 			imageloader.displayImage(images.get(1).getImage_url(), iv2);
 		case 1:
 			imageloader.displayImage(images.get(0).getImage_url(), iv1);
@@ -357,48 +422,48 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 		}
 	}
 
-	private void showImages() {
-		// TODO Auto-generated method stub
-		/**
-		 * 因为至少有一张照片，所有选择的照片最多是4张，这样从最后一张开始显示
-		 */
-		File mFile;
-		switch (string_list.size()) {
-		case 4:
-			mFile = new File(string_list.get(3));
-			// 若该文件存在
-			if (mFile.exists()) {
-				bitmap = BitmapFactory.decodeFile(string_list.get(3));
-				iv2.setVisibility(View.VISIBLE);
-				iv2.setImageBitmap(bitmap);
-			}
-		case 3:
-			mFile = new File(string_list.get(2));
-			// 若该文件存在
-			if (mFile.exists()) {
-				bitmap = BitmapFactory.decodeFile(string_list.get(2));
-				iv3.setVisibility(View.VISIBLE);
-				iv3.setImageBitmap(bitmap);
-			}
-		case 2:
-			mFile = new File(string_list.get(1));
-			// 若该文件存在
-			if (mFile.exists()) {
-				bitmap = BitmapFactory.decodeFile(string_list.get(1));
-				iv4.setVisibility(View.VISIBLE);
-				iv4.setImageBitmap(bitmap);
-			}
-		case 1:
-			mFile = new File(string_list.get(0));
-			// 若该文件存在
-			if (mFile.exists()) {
-				bitmap = BitmapFactory.decodeFile(string_list.get(0));
-				iv5.setVisibility(View.VISIBLE);
-				iv5.setImageBitmap(bitmap);
-			}
-			break;
-		}
-	}
+	// private void showImages() {
+	// // TODO Auto-generated method stub
+	// /**
+	// * 因为至少有一张照片，所有选择的照片最多是4张，这样从最后一张开始显示
+	// */
+	// File mFile;
+	// switch (string_list.size()) {
+	// case 4:
+	// mFile = new File(string_list.get(3));
+	// // 若该文件存在
+	// if (mFile.exists()) {
+	// bitmap = BitmapFactory.decodeFile(string_list.get(3));
+	// iv2.setVisibility(View.VISIBLE);
+	// iv2.setImageBitmap(bitmap);
+	// }
+	// case 3:
+	// mFile = new File(string_list.get(2));
+	// // 若该文件存在
+	// if (mFile.exists()) {
+	// bitmap = BitmapFactory.decodeFile(string_list.get(2));
+	// iv3.setVisibility(View.VISIBLE);
+	// iv3.setImageBitmap(bitmap);
+	// }
+	// case 2:
+	// mFile = new File(string_list.get(1));
+	// // 若该文件存在
+	// if (mFile.exists()) {
+	// bitmap = BitmapFactory.decodeFile(string_list.get(1));
+	// iv4.setVisibility(View.VISIBLE);
+	// iv4.setImageBitmap(bitmap);
+	// }
+	// case 1:
+	// mFile = new File(string_list.get(0));
+	// // 若该文件存在
+	// if (mFile.exists()) {
+	// bitmap = BitmapFactory.decodeFile(string_list.get(0));
+	// iv5.setVisibility(View.VISIBLE);
+	// iv5.setImageBitmap(bitmap);
+	// }
+	// break;
+	// }
+	// }
 
 	@Override
 	protected void onDestroy() {
