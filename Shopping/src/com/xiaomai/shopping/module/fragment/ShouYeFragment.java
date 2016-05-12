@@ -289,11 +289,13 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 				imageloader.displayImage(goods.getImages().get(0),
 						holder.iv_image);
 			} else {
+				holder.iv_image.setImageResource(R.drawable.chang_an);
 				holder.iv_image
 						.setOnLongClickListener(new View.OnLongClickListener() {
 
 							@Override
 							public boolean onLongClick(View v) {
+								holder.iv_image.setImageResource(R.drawable.tupian_jiazaizhong);
 								loader.displayImage(goods.getImages().get(0),
 										holder.iv_image);
 								return true;

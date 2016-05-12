@@ -3,10 +3,15 @@ package com.xiaomai.shopping.module.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,7 +27,7 @@ import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.IWant;
 import com.xiaomai.shopping.utils.Utils;
-import com.xiaomai.shopping.view.RefreshListView.OnRefreshListener;
+import com.xiaomai.shopping.view.MyDialog;
 
 /**
  * 求购页面
@@ -73,6 +78,30 @@ public class QiuGouFragment extends BaseFragment implements
 		list_qiugou = new ArrayList<IWant>();
 		adapter = new MyAdapter();
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				MyDialog.showDialog(context, "提示信息", "您有Ta需要的宝贝？快联系Ta吧！",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+								String phone = (String) adapter
+										.getItem(position);
+								Intent intent = new Intent(Intent.ACTION_DIAL);
+								intent.setData(Uri.parse("tel:" + phone));
+								if (intent.resolveActivity(context
+										.getPackageManager()) != null) {
+									startActivity(intent);
+								}
+							}
+						}, null);
+			}
+		});
 
 		View emptyView = view.findViewById(R.id.emptyView);
 		listView.setEmptyView(emptyView);
@@ -140,7 +169,7 @@ public class QiuGouFragment extends BaseFragment implements
 		@Override
 		public Object getItem(int position) {
 			// TODO Auto-generated method stub
-			return null;
+			return list.get(position).getPhone();
 		}
 
 		@Override
@@ -178,7 +207,7 @@ public class QiuGouFragment extends BaseFragment implements
 
 			holder.tv_name.setText(iWant.getUserName());
 			holder.tv_title.setText("求购:" + iWant.getTitle());
-			holder.tv_desc.setText("描述：\n\t\t"+iWant.getDesc());
+			holder.tv_desc.setText("描述：\n\t\t" + iWant.getDesc());
 			holder.tv_price.setText(iWant.getMinPrice() + " - "
 					+ iWant.getMaxPrice());
 			holder.tv_date.setText(iWant.getUpdatedAt());

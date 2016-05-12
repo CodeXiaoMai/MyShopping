@@ -6,8 +6,6 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,7 +51,6 @@ import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.RequestCode;
 import com.xiaomai.shopping.utils.ResultCode;
 import com.xiaomai.shopping.utils.Utils;
-import com.xiaomai.shopping.view.MyDialog;
 import com.xiaomai.shopping.view.MyListView;
 
 public class ShangPinXiangQingActivity extends BaseFragmentActivity implements

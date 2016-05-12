@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import cn.bmob.push.BmobPush;
+import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
 
 import com.xiaomai.shopping.module.HomeActivity;
@@ -23,7 +26,13 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		context = this;
+		// 初始化BmobSdk
 		Bmob.initialize(this, Config.APPLICATION_ID);
+		// 使用推送服务时的初始化操作
+		BmobSMS.initialize(this, Config.APPLICATION_ID);
+		BmobInstallation.getCurrentInstallation(context).save();
+		// 启动推送服务
+		BmobPush.startWork(context);
 		// 检查程序是否是第一次运行
 
 		boolean isLogOut = SharedPrenerencesUtil.getIsLogOut(context);

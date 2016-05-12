@@ -1,18 +1,27 @@
 package com.xiaomai.shopping.module;
 
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
+import com.xiaomai.shopping.bean.MyBmobInstallation;
 import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.utils.DES;
@@ -121,6 +130,8 @@ public class RegisterStep3 extends BaseActivity {
 					@Override
 					public void onSuccess() {
 						showToast("注册成功,获得50积分^_^");
+						// 添加推送
+						startPush();
 						Intent intent = new Intent(context, LoginActivity.class);
 						startActivity(intent);
 						finish();
@@ -146,6 +157,47 @@ public class RegisterStep3 extends BaseActivity {
 				}
 			}
 		});
+	}
+
+	private void startPush() {
+		BmobQuery<MyBmobInstallation> query = new BmobQuery<MyBmobInstallation>();
+		query.addWhereEqualTo("installationId",
+				BmobInstallation.getInstallationId(this));
+		query.findObjects(this, new FindListener<MyBmobInstallation>() {
+
+			@Override
+			public void onSuccess(List<MyBmobInstallation> object) {
+				// TODO Auto-generated method stub
+				if (object.size() > 0) {
+					MyBmobInstallation mbi = object.get(0);
+					mbi.setUid(BmobUser.getCurrentUser(context, User.class)
+							.getObjectId());
+					mbi.update(context, new UpdateListener() {
+
+						@Override
+						public void onSuccess() {
+							// TODO Auto-generated method stub
+							Log.i("bmob", "设备信息更新成功");
+						}
+
+						@Override
+						public void onFailure(int code, String msg) {
+							// TODO Auto-generated method stub
+							Log.i("bmob", "设备信息更新失败:" + msg);
+						}
+					});
+				} else {
+				}
+			}
+
+			@Override
+			public void onError(int code, String msg) {
+				// TODO Auto-generated method stub
+				showErrorToast(code, msg);
+				showLog("更新信息", code, msg);
+			}
+		});
+
 	}
 
 	@Override

@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.RequestSMSCodeListener;
-import cn.bmob.v3.listener.VerifySMSCodeListener;
+import cn.bmob.sms.BmobSMS;
+import cn.bmob.sms.exception.BmobException;
+import cn.bmob.sms.listener.RequestSMSCodeListener;
+import cn.bmob.sms.listener.VerifySMSCodeListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
@@ -40,7 +40,7 @@ public class RegisterStep2 extends BaseActivity {
 	// 输入验证码
 	private EditText et_input_yanzhengma;
 	// 验证码
-	private Integer smsCode;
+	private String smsCode;
 
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -73,7 +73,6 @@ public class RegisterStep2 extends BaseActivity {
 		String area_number = "86";// 地区号码
 		Intent intent = getIntent();
 		phoneNumber = intent.getExtras().getString("phoneNumber");
-		smsCode = intent.getExtras().getInt("smsCode");
 		String showNumber = "我们已给你的手机号码+" + area_number + " -" + phoneNumber
 				+ "发送了一条验证短信";
 		SpannableStringBuilder builder = new SpannableStringBuilder(showNumber);
@@ -132,7 +131,6 @@ public class RegisterStep2 extends BaseActivity {
 					public void done(Integer arg0, BmobException arg1) {
 						if (arg1 == null) {
 							showToast("发送成功！");
-							smsCode = arg0;
 							duMiao();
 						} else {
 							showErrorToast(arg1.getErrorCode(),
@@ -174,7 +172,8 @@ public class RegisterStep2 extends BaseActivity {
 	 * 验证验证码
 	 */
 	private void yanZheng() {
-		BmobSMS.verifySmsCode(context, phoneNumber, smsCode + "",
+		smsCode = et_input_yanzhengma.getText().toString().trim();
+		BmobSMS.verifySmsCode(context, phoneNumber, smsCode,
 				new VerifySMSCodeListener() {
 
 					@Override
@@ -185,7 +184,7 @@ public class RegisterStep2 extends BaseActivity {
 							intent.putExtra("username", phoneNumber);
 						} else {
 							showLog("验证验证码", 1, arg0.toString());
-							showToast(arg0.toString());
+							showToast("验证失败,请重试!");
 						}
 					}
 				});

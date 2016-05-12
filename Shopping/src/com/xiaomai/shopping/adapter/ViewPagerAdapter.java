@@ -62,10 +62,12 @@ public class ViewPagerAdapter extends PagerAdapter {
 		if (imageLoader != null) {
 			imageLoader.displayImage(ad.getImage_url(), imageView);
 		} else {
+			imageView.setImageResource(R.drawable.chang_an);
 			imageView.setOnLongClickListener(new View.OnLongClickListener() {
 
 				@Override
 				public boolean onLongClick(View v) {
+					imageView.setImageResource(R.drawable.tupian_jiazaizhong);
 					loader.displayImage(ad.getImage_url(), imageView);
 					return true;
 				}
@@ -80,7 +82,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 	 */
 	@Override
 	public void destroyItem(ViewGroup container, int position, Object object) {
-//		container.removeView((View) object);
+		// container.removeView((View) object);
 	}
 
 }
