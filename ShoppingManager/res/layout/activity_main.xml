@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:text="北苑跳蚤市场管理平台"
+        android:textStyle="bold"
+        android:textColor="@color/ziti_normal"
+        android:textSize="20sp" />
+
+    <Button 
+        android:id="@+id/bt_user_manage"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
+        android:text="用户管理"
+        android:textColor="@color/white"
+        android:background="@drawable/button_blue_selector"/>
+    
+    <Button 
+        android:id="@+id/bt_goods_manage"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
+        android:text="商品管理"
+        android:textColor="@color/white"
+        android:background="@drawable/button_blue_selector"/>
+    
+    <Button 
+        android:id="@+id/bt_want_manage"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
+        android:text="求购管理"
+        android:textColor="@color/white"
+        android:background="@drawable/button_blue_selector"/>
+    
+    <Button 
+        android:id="@+id/bt_suggestions_manage"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
+        android:text="意见箱"
+        android:textColor="@color/white"
+        android:background="@drawable/button_blue_selector"/>
+</LinearLayout>
