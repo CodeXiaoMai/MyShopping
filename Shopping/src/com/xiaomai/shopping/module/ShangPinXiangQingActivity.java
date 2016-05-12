@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -350,9 +351,19 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 			}
 			break;
 		case R.id.buy:
-
+			Intent intent = new Intent(Intent.ACTION_DIAL);
+			intent.setData(Uri.parse("tel:" + goods.getPhone()));
+			if (intent.resolveActivity(context.getPackageManager()) != null) {
+				startActivity(intent);
+			}
 			break;
 		case R.id.chat:
+			String phoneNumber = goods.getPhone();
+			intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"
+					+ phoneNumber));
+			intent.putExtra("sms_body",
+					"你好，我在北苑跳蚤市场看到你发布的\"" + goods.getTitle() + "\",我们可以聊聊吗？");
+			startActivity(intent);
 			break;
 		}
 	}
