@@ -53,6 +53,9 @@
         <activity
             android:name="com.xiaomai.shoppingmanager.AdManage"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="multi_image_selector.MultiImageSelectorActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="cn.bmob.push.lib.service.PushService"
