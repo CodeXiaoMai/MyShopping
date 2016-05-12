@@ -30,6 +30,8 @@ public class SettingActivity extends BaseActivity {
 	private ToggleButton tb_shengliuliang;
 	// 个人资料
 	private View gerenziliao;
+	// 关于我们
+	private View aboutus;
 	// 退出登录
 	private Button bt_logOut;
 
@@ -80,7 +82,8 @@ public class SettingActivity extends BaseActivity {
 		});
 
 		gerenziliao = findViewById(R.id.setting_gerenziliao);
-		setOnClick(back, bt_logOut, gerenziliao);
+		aboutus = findViewById(R.id.setting_about_us);
+		setOnClick(back, bt_logOut, gerenziliao, aboutus);
 	}
 
 	@Override
@@ -100,7 +103,9 @@ public class SettingActivity extends BaseActivity {
 				startActivity(intent);
 			}
 			break;
-		default:
+		case R.id.setting_about_us:
+			Intent intent = new Intent(context, AboutUsActivity.class);
+			startActivity(intent);
 			break;
 		}
 	}
