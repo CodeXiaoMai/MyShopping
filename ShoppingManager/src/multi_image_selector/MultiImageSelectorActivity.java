@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.xiaomai.shoppingmanager.R;
+import com.xiaomai.shopping.R;
 
 
 

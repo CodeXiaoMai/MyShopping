@@ -16,12 +16,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.xiaomai.shoppingmanager.view.MyListView
+            <com.xiaomai.shopping.view.MyListView
                 android:id="@+id/listView_down"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.xiaomai.shoppingmanager.view.MyListView
+            <com.xiaomai.shopping.view.MyListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

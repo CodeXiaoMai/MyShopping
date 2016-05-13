@@ -41,7 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.xiaomai.shoppingmanager.R;
+import com.xiaomai.shopping.R;
 
 
 /**

@@ -116,7 +116,9 @@ public class QiuGouFragment extends BaseFragment implements
 	@Override
 	public void loadData() {
 		BmobQuery<IWant> bmobQuery = new BmobQuery<IWant>();
+		bmobQuery.order("-updateAt");
 		bmobQuery.setLimit(Utils.REQUEST_COUNT);
+		bmobQuery.addWhereEqualTo("state", IWant.STATE_NORMAL);
 		bmobQuery.setSkip(list_qiugou.size());
 		bmobQuery.findObjects(context, new FindListener<IWant>() {
 

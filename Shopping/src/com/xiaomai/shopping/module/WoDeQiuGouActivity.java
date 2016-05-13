@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.DeleteListener;
@@ -121,10 +120,10 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 				holder = new ViewHolder();
 				holder.tv_name = (TextView) view
 						.findViewById(R.id.qiugou_tv_title);
-				// holder.tv_state = (TextView) view
-				// .findViewById(R.id.yifabu_tv_state);
+				holder.tv_state = (TextView) view.findViewById(R.id.tv_state);
 				holder.tv_price = (TextView) view
 						.findViewById(R.id.qiugou_tv_price);
+				holder.tv_time = (TextView) view.findViewById(R.id.tv_time);
 				holder.bt_quxiao = (Button) view
 						.findViewById(R.id.qiugou_bt_quxiao);
 				view.setTag(holder);
@@ -133,7 +132,21 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 			}
 			final IWant iWant = list.get(position);
 			holder.tv_name.setText(iWant.getTitle());
-			// holder.tv_state.setText(iWant.getState());
+			int state = iWant.getState();
+			String zt = "";
+			switch (state) {
+			case IWant.STATE_DAISHENHE:
+				zt = "待审核";
+				break;
+			case IWant.STATE_NORMAL:
+				zt = "审核通过";
+				break;
+			case IWant.STATE_SHENHE_SHIBAI:
+				zt = "审核失败";
+				break;
+			}
+			holder.tv_state.setText(zt);
+			holder.tv_time.setText(iWant.getCreatedAt());
 			holder.tv_price.setText(iWant.getMinPrice() + " - "
 					+ iWant.getMaxPrice());
 			holder.bt_quxiao.setOnClickListener(new View.OnClickListener() {
@@ -177,8 +190,9 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 
 		private class ViewHolder {
 			TextView tv_name;
-			TextView tv_state;
 			TextView tv_price;
+			TextView tv_state;
+			TextView tv_time;
 			Button bt_quxiao;
 		}
 	}

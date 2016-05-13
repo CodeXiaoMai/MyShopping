@@ -11,6 +11,7 @@ import cn.bmob.v3.BmobUser;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.listener.OnLoginOutListener;
 import com.xiaomai.shopping.module.FaBuZhongXinActivity;
 import com.xiaomai.shopping.module.LoginActivity;
 import com.xiaomai.shopping.module.SettingActivity;
@@ -29,7 +30,8 @@ import com.xiaomai.shopping.utils.Utils;
  * @author XiaoMai
  *
  */
-public class GeRenZhongXinFragment extends BaseFragment {
+public class GeRenZhongXinFragment extends BaseFragment implements
+		OnLoginOutListener {
 
 	// 登录
 	private View login;
@@ -61,7 +63,7 @@ public class GeRenZhongXinFragment extends BaseFragment {
 
 	private void initView(View view) {
 		context = getContext();
-
+		LoginActivity.listener = this;
 		tv_name = (TextView) view.findViewById(R.id.gerenzhongxin_tv_name);
 		login = view.findViewById(R.id.ll_login_regist);
 		ll_setting = view.findViewById(R.id.gerenzhongxin_ll_setting);
@@ -149,6 +151,25 @@ public class GeRenZhongXinFragment extends BaseFragment {
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void onLogin() {
+		// TODO Auto-generated method stub
+		User user = getCurrentUser();
+		if (user.getIsNiChengChanged()) {
+			tv_name.setText(DES.decryptDES(user.getNicheng(), Utils.ENCRYPT_KEY));
+		} else {
+			tv_name.setText(user.getMobilePhoneNumber());
+		}
+		login.setClickable(false);
+	}
+
+	@Override
+	public void onLogOut() {
+		// TODO Auto-generated method stub
+		tv_name.setText("登录/注册");
+		login.setClickable(true);
 	}
 }

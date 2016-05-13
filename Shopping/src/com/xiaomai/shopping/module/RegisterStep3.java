@@ -103,8 +103,6 @@ public class RegisterStep3 extends BaseActivity {
 		}
 		String username = getIntent().getStringExtra("username");
 		User user = new User();
-		username = DES.encryptDES(username);
-		user.setUsername(username);
 		pass = MD5.ecode(pass);
 		user.setPassword(pass);
 		user.setSex("未知");
@@ -112,6 +110,8 @@ public class RegisterStep3 extends BaseActivity {
 		user.setLastTimeLogin("");
 		user.setIsNiChengChanged(false);
 		user.setMobilePhoneNumber(username);
+		username = DES.encryptDES(username);
+		user.setUsername(username);
 		user.signUp(context, new SaveListener() {
 
 			@Override

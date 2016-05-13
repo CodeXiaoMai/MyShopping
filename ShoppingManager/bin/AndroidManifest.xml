@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xiaomai.shoppingmanager"
+    package="com.xiaomai.shopping"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -39,19 +39,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.xiaomai.shoppingmanager.UserManage"
+            android:name="com.xiaomai.shopping.UserManage"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.xiaomai.shoppingmanager.WantManage"
+            android:name="com.xiaomai.shopping.WantManage"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.xiaomai.shoppingmanager.GoodsManage"
+            android:name="com.xiaomai.shopping.GoodsManage"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.xiaomai.shoppingmanager.SuggestionManage"
+            android:name="com.xiaomai.shopping.SuggestionManage"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.xiaomai.shoppingmanager.AdManage"
+            android:name="com.xiaomai.shopping.AdManage"
             android:screenOrientation="portrait" />
         <activity
             android:name="multi_image_selector.MultiImageSelectorActivity"
@@ -80,7 +80,7 @@
         </receiver>
 
         <!-- 第四部中创建的消息接收器，在这里进行注册 -->
-        <receiver android:name="com.xiaomai.shoppingmanager.receiver.MyPushMessageReceiver" >
+        <receiver android:name="com.xiaomai.shopping.receiver.MyPushMessageReceiver" >
             <intent-filter>
                 <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>

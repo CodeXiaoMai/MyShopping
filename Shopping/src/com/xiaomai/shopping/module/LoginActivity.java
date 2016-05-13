@@ -15,11 +15,10 @@ import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.listener.OnLoginOutListener;
 import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.GetDate;
 import com.xiaomai.shopping.utils.MD5;
-import com.xiaomai.shopping.utils.ResultCode;
-import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 import com.xiaomai.shopping.utils.Utils;
 
 /**
@@ -41,6 +40,8 @@ public class LoginActivity extends BaseActivity {
 	private EditText et_password;
 	private String password;
 	private User user;
+
+	public static OnLoginOutListener listener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,6 @@ public class LoginActivity extends BaseActivity {
 		// 登录按钮
 		case R.id.denglu_bt_login:
 			login();
-
 			break;
 		default:
 			break;
@@ -123,15 +123,13 @@ public class LoginActivity extends BaseActivity {
 								Utils.SCORE_LOGIN, "登录");
 						score.save(context);
 						currentUser.setLastTimeLogin(GetDate.currentTime());
-						currentUser.setScore(currentUser.getScore()+Utils.SCORE_LOGIN);
+						currentUser.setScore(currentUser.getScore()
+								+ Utils.SCORE_LOGIN);
 						currentUser.update(context);
 					}
-					Intent data = new Intent();
-					Bundle extras = new Bundle();
-					extras.putSerializable("user", currentUser);
-					data.putExtras(extras);
-					setResult(ResultCode.RESULT_CODE_LOGIN_SUCESS, data);
-					SharedPrenerencesUtil.setIsLogOut(context, false);
+					if (listener != null) {
+						listener.onLogin();
+					}
 					finish();
 				}
 
@@ -176,4 +174,5 @@ public class LoginActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 
 	}
+
 }

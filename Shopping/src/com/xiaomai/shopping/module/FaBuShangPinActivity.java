@@ -196,7 +196,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 		qq = et_qq.getText().toString().trim();
 		if (user != null) {
 			userId = user.getObjectId();
-			state = StateCode.GOODS_OK;
+			state = StateCode.GOODS_SHENHE;
 			want = 0;
 			// 加密
 			// userId = DES.encryptDES(userId);

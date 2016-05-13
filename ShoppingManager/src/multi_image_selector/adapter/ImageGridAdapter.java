@@ -14,7 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
-import com.xiaomai.shoppingmanager.R;
+import com.xiaomai.shopping.R;
 
 
 /**

@@ -47,6 +47,7 @@ import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.module.ShangPinXiangQingActivity;
 import com.xiaomai.shopping.utils.NetWorkUtil;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
+import com.xiaomai.shopping.utils.StateCode;
 import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
 import com.xiaomai.shopping.view.MyGridView;
@@ -73,7 +74,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private View quxiao;
 	// 图片轮播
 	private ViewPager viewPager;
-	private TextView tv_intro;
+//	private TextView tv_intro;
 	private LinearLayout dotLayout;
 	private ViewPagerAdapter adapter_viewPager;
 	private List<Ad> list_ad;
@@ -116,6 +117,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 				.inflate(R.layout.fragment_shouye, container, false);
 		initView(view);
 		checkNetWorkState();
+		loadPager();
 		return view;
 	}
 
@@ -164,7 +166,6 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		}else{
 			imageloader = null;
 		}
-		loadPager();
 		loadGoods();
 	}
 
@@ -183,7 +184,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		viewPager.addOnPageChangeListener(this);
 		list_ad = new ArrayList<Ad>();
-		tv_intro = (TextView) view.findViewById(R.id.tv_intro);
+//		tv_intro = (TextView) view.findViewById(R.id.tv_intro);
 		dotLayout = (LinearLayout) view.findViewById(R.id.dot_layout);
 		gv_fenlei = (GridView) view.findViewById(R.id.gv_fenlei);
 		data = new ArrayList<Map<String, Object>>();
@@ -433,6 +434,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private void loadGoods() {
 		BmobQuery<Goods> query = new BmobQuery<Goods>();
 		query.order("-updatedAt");
+		query.addWhereEqualTo("state", StateCode.GOODS_OK);
 		query.setLimit(Utils.REQUEST_COUNT);
 		query.setSkip(list_goods.size());
 		query.findObjects(context, new FindListener<Goods>() {
@@ -497,7 +499,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	 */
 	private void updateIntroAndDot() {
 		int currentPage = viewPager.getCurrentItem() % list_ad.size();
-		tv_intro.setText(list_ad.get(currentPage).getIntroduce());
+//		tv_intro.setText(list_ad.get(currentPage).getIntroduce());
 
 		for (int i = 0; i < dotLayout.getChildCount(); i++) {
 			dotLayout.getChildAt(i).setEnabled(i == currentPage);// 设置setEnabled为true的话

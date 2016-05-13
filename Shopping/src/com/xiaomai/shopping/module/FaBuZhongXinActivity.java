@@ -232,6 +232,7 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 				if (imageloader != null) {
 					imageloader.displayImage(uri, holder.iv_image);
 				} else {
+					holder.iv_image.setImageResource(R.drawable.chang_an);
 					holder.iv_image
 							.setOnLongClickListener(new View.OnLongClickListener() {
 
