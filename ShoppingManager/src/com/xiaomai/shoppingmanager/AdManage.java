@@ -17,7 +17,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -37,23 +36,25 @@ import com.xiaomai.shoppingmanager.base.BaseActivity;
 import com.xiaomai.shoppingmanager.bean.Ad;
 import com.xiaomai.shoppingmanager.utils.RequestCode;
 
-public class AdManage extends BaseActivity implements OnLongClickListener {
+public class AdManage extends BaseActivity {
 
-	private ImageView iv1, iv2, iv3, iv4, iv5;
-	private View rl1, rl2, rl3, rl4, rl5;
-	private View quxiao1, quxiao2, quxiao3, quxiao4, quxiao5;
+	// private ImageView iv1, iv2, iv3, iv4, iv5;
+	// private View rl1, rl2, rl3, rl4, rl5;
+	// private View quxiao1, quxiao2, quxiao3, quxiao4, quxiao5;
 	private ListView listView;
-	private Button bt_commit;
-	private List<Ad> images;
-	private ImageView iv_add;
-	private Bitmap bitmap;
-	// 图片数量
-	private int count;
+	private Myadapter adapter;
 	// 图片的路径名称
 	private ArrayList<String> string_list = new ArrayList<>();
 	// 默认选择的图片
 	private ArrayList<String> mSelectPath = new ArrayList<String>();
-	private Myadapter adapter;
+
+	// 下载的图片
+	private ListView listView_down;
+	private DownAdapter downAdapter;
+	private List<Ad> list_ad;
+	private Button bt_commit;
+	private ImageView iv_add;
+	private Bitmap bitmap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,29 +62,31 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ad_manage);
 		initView();
+		imageloader = ImageLoader.getInstance();
+		imageloader.init(ImageLoaderConfiguration.createDefault(this));
 		loadData();
 	}
 
 	private void initView() {
 		// TODO Auto-generated method stub
 
-		iv1 = (ImageView) findViewById(R.id.iv1);
-		iv2 = (ImageView) findViewById(R.id.iv2);
-		iv3 = (ImageView) findViewById(R.id.iv3);
-		iv4 = (ImageView) findViewById(R.id.iv4);
-		iv5 = (ImageView) findViewById(R.id.iv5);
+		// iv1 = (ImageView) findViewById(R.id.iv1);
+		// iv2 = (ImageView) findViewById(R.id.iv2);
+		// iv3 = (ImageView) findViewById(R.id.iv3);
+		// iv4 = (ImageView) findViewById(R.id.iv4);
+		// iv5 = (ImageView) findViewById(R.id.iv5);
 
-		rl1 = findViewById(R.id.rl1);
-		rl2 = findViewById(R.id.rl2);
-		rl3 = findViewById(R.id.rl3);
-		rl4 = findViewById(R.id.rl4);
-		rl5 = findViewById(R.id.rl5);
-
-		quxiao1 = findViewById(R.id.quxiao1);
-		quxiao2 = findViewById(R.id.quxiao2);
-		quxiao3 = findViewById(R.id.quxiao3);
-		quxiao4 = findViewById(R.id.quxiao4);
-		quxiao5 = findViewById(R.id.quxiao5);
+		// rl1 = findViewById(R.id.rl1);
+		// rl2 = findViewById(R.id.rl2);
+		// rl3 = findViewById(R.id.rl3);
+		// rl4 = findViewById(R.id.rl4);
+		// rl5 = findViewById(R.id.rl5);
+		//
+		// quxiao1 = findViewById(R.id.quxiao1);
+		// quxiao2 = findViewById(R.id.quxiao2);
+		// quxiao3 = findViewById(R.id.quxiao3);
+		// quxiao4 = findViewById(R.id.quxiao4);
+		// quxiao5 = findViewById(R.id.quxiao5);
 
 		back = findViewById(R.id.title_back);
 		title = (TextView) findViewById(R.id.title_title);
@@ -95,8 +98,11 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 		listView = (ListView) findViewById(R.id.listView);
 		adapter = new Myadapter();
 		listView.setAdapter(adapter);
-		setOnClick(back, bt_commit, iv_add, quxiao1, quxiao2, quxiao3, quxiao4,
-				quxiao5);
+
+		listView_down = (ListView) findViewById(R.id.listView_down);
+		downAdapter = new DownAdapter();
+		listView_down.setAdapter(downAdapter);
+		setOnClick(back, bt_commit, iv_add);
 	}
 
 	@Override
@@ -109,21 +115,21 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 		case R.id.add_image:
 			openImageSelector();
 			break;
-		case R.id.quxiao1:
-			deletAd(0);
-			break;
-		case R.id.quxiao2:
-			deletAd(1);
-			break;
-		case R.id.quxiao3:
-			deletAd(2);
-			break;
-		case R.id.quxiao4:
-			deletAd(3);
-			break;
-		case R.id.quxiao5:
-			deletAd(4);
-			break;
+		// case R.id.quxiao1:
+		// deletAd(0);
+		// break;
+		// case R.id.quxiao2:
+		// deletAd(1);
+		// break;
+		// case R.id.quxiao3:
+		// deletAd(2);
+		// break;
+		// case R.id.quxiao4:
+		// deletAd(3);
+		// break;
+		// case R.id.quxiao5:
+		// deletAd(4);
+		// break;
 		case R.id.bt_commit:
 			shangchuantupian();
 			break;
@@ -151,6 +157,7 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 					showLog("图片张数：", 1, arg1.size() + "");
 					// 保存
 					if (arg1.size() == list.length) {
+						progressDialog.dismiss();
 						onImageSuccess(arg1);
 					}
 				}
@@ -179,8 +186,6 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 
 				@Override
 				public void onSuccess() {
-					showToast("发布成功!");
-					finish();
 				}
 
 				@Override
@@ -190,42 +195,29 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 				}
 			});
 		}
+		showToast("发布成功!");
 
 	}
 
-	private void deletAd(final int position) {
+	private void deletAd(Ad ad, final int position) {
 		// TODO Auto-generated method stub
-		images.get(position).delete(context, new DeleteListener() {
+		showLog("ad", 0, ad.getObjectId());
+		ad.delete(this, new DeleteListener() {
 
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				switch (position) {
-				case 0:
-					rl1.setVisibility(View.GONE);
-					break;
-				case 1:
-					rl2.setVisibility(View.GONE);
-					break;
-				case 2:
-					rl3.setVisibility(View.GONE);
-					break;
-				case 3:
-					rl4.setVisibility(View.GONE);
-					break;
-				case 4:
-					rl5.setVisibility(View.GONE);
-					break;
-				default:
-					break;
-				}
-				images.remove(position);
+				list_ad.remove(position);
+				downAdapter.setList(list_ad);
+				downAdapter.notifyDataSetChanged();
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
 				showToast("操作失败");
+				showErrorToast(arg0, arg1);
+				showLog("删除", arg0, arg1);
 			}
 		});
 	}
@@ -239,8 +231,10 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 			@Override
 			public void onSuccess(List<Ad> arg0) {
 				// TODO Auto-generated method stub
-				images = arg0;
-				download();
+				list_ad = arg0;
+//				download();
+				downAdapter.setList(list_ad);
+				downAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -251,30 +245,30 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 		});
 	}
 
-	private void download() {
-		// TODO Auto-generated method stub
-		imageloader = ImageLoader.getInstance();
-		imageloader.init(ImageLoaderConfiguration.createDefault(this));
-		count = images.size();
-		switch (count) {
-		case 5:
-			iv_add.setVisibility(View.GONE);
-			rl5.setVisibility(View.VISIBLE);
-			imageloader.displayImage(images.get(4).getImage_url(), iv5);
-		case 4:
-			rl4.setVisibility(View.VISIBLE);
-			imageloader.displayImage(images.get(3).getImage_url(), iv4);
-		case 3:
-			rl3.setVisibility(View.VISIBLE);
-			imageloader.displayImage(images.get(2).getImage_url(), iv3);
-		case 2:
-			rl2.setVisibility(View.VISIBLE);
-			imageloader.displayImage(images.get(1).getImage_url(), iv2);
-		case 1:
-			imageloader.displayImage(images.get(0).getImage_url(), iv1);
-			break;
-		}
-	}
+//	private void download() {
+//		// TODO Auto-generated method stub
+//		imageloader = ImageLoader.getInstance();
+//		imageloader.init(ImageLoaderConfiguration.createDefault(this));
+//		count = list_ad.size();
+//		switch (count) {
+//		case 5:
+//			iv_add.setVisibility(View.GONE);
+//			rl5.setVisibility(View.VISIBLE);
+//			imageloader.displayImage(list_ad.get(4).getImage_url(), iv5);
+//		case 4:
+//			rl4.setVisibility(View.VISIBLE);
+//			imageloader.displayImage(list_ad.get(3).getImage_url(), iv4);
+//		case 3:
+//			rl3.setVisibility(View.VISIBLE);
+//			imageloader.displayImage(list_ad.get(2).getImage_url(), iv3);
+//		case 2:
+//			rl2.setVisibility(View.VISIBLE);
+//			imageloader.displayImage(list_ad.get(1).getImage_url(), iv2);
+//		case 1:
+//			imageloader.displayImage(list_ad.get(0).getImage_url(), iv1);
+//			break;
+//		}
+//	}
 
 	private void openImageSelector() {
 		Intent intent = new Intent(context, MultiImageSelectorActivity.class);
@@ -282,7 +276,7 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 		intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
 		// 最大可选择图片数量
 		intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-				5 - count);
+				5 - list_ad.size());
 		// 选择模式
 		intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE,
 				MultiImageSelectorActivity.MODE_MULTI);
@@ -348,6 +342,71 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 
 			adapter.setList(string_list);
 			adapter.notifyDataSetChanged();
+		}
+	}
+
+	private class DownAdapter extends BaseAdapter {
+
+		private List<Ad> list;
+
+		public void setList(List<Ad> list) {
+			this.list = list;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			if (list != null) {
+				return list.size();
+			}
+			return 0;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
+			// TODO Auto-generated method stub
+
+			View view = convertView;
+			ViewHolder holder;
+			if (view == null) {
+				holder = new ViewHolder();
+				view = View.inflate(context, R.layout.item_shangchuan_tupian,
+						null);
+				holder.image = (ImageView) view.findViewById(R.id.image);
+				holder.shanchu = (ImageView) view.findViewById(R.id.quxiao);
+				view.setTag(holder);
+			} else {
+				holder = (ViewHolder) view.getTag();
+			}
+			final Ad ad = list.get(position);
+			imageloader.displayImage(list_ad.get(position).getImage_url(),holder.image);
+			holder.shanchu.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					deletAd(ad, position);
+				}
+			});
+			return view;
+		}
+
+		private class ViewHolder {
+			ImageView image;
+			ImageView shanchu;
 		}
 	}
 
@@ -497,30 +556,6 @@ public class AdManage extends BaseActivity implements OnLongClickListener {
 					}
 				}
 			}
-	}
-
-	@Override
-	public boolean onLongClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.iv1:
-			break;
-		case R.id.iv2:
-
-			break;
-		case R.id.iv3:
-			break;
-		case R.id.iv4:
-
-			break;
-		case R.id.iv5:
-
-			break;
-
-		default:
-			break;
-		}
-		return false;
 	}
 
 }
