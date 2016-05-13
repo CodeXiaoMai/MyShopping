@@ -130,6 +130,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 				}
 			}
 		});
+		et_title.requestFocus();
 		setOnClick(back, bt_fabu);
 	}
 

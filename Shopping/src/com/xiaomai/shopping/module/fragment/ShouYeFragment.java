@@ -518,9 +518,9 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		if (num > 0) {
 			for (int i = 0; i < num; i++) {
 				View view = new View(context);
-				LayoutParams params = new LayoutParams(8, 8);
+				LayoutParams params = new LayoutParams(15, 15);
 				if (i != 0) {
-					params.leftMargin = 5;
+					params.leftMargin = 10;
 				}
 				view.setLayoutParams(params);
 				view.setBackgroundResource(R.drawable.selector_dot);

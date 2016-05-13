@@ -84,7 +84,7 @@
                     android:layout_height="40dp"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:background="#60000000"
+                    android:background="#00ffffff"
                     android:orientation="horizontal" >
                 </LinearLayout>
             </RelativeLayout>

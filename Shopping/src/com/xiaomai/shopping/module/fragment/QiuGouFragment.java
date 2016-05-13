@@ -26,6 +26,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.IWant;
+import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
 
@@ -189,7 +190,7 @@ public class QiuGouFragment extends BaseFragment implements
 				holder = new ViewHolder();
 				holder.iv_head = (ImageView) view.findViewById(R.id.iv_head);
 				holder.tv_name = (TextView) view
-						.findViewById(R.id.qiugou_tv_title);
+						.findViewById(R.id.qiugou_tv_name);
 				holder.tv_title = (TextView) view
 						.findViewById(R.id.qiugou_tv_title);
 				holder.tv_desc = (TextView) view
@@ -207,7 +208,8 @@ public class QiuGouFragment extends BaseFragment implements
 				imageloader.displayImage(iWant.getUserImage(), holder.iv_head);
 			}
 
-			holder.tv_name.setText(iWant.getUserName());
+			holder.tv_name.setText(DES.decryptDES(iWant.getUserName(),
+					Utils.ENCRYPT_KEY));
 			holder.tv_title.setText("求购:" + iWant.getTitle());
 			holder.tv_desc.setText("描述：\n\t\t" + iWant.getDesc());
 			holder.tv_price.setText(iWant.getMinPrice() + " - "

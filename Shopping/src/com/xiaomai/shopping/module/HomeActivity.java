@@ -27,6 +27,12 @@ import com.xiaomai.shopping.module.fragment.ShouYeFragment;
 import com.xiaomai.shopping.module.fragment.XiaoXiFragment;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 
+/**
+ * 这是主页
+ * 
+ * @author XiaoMai
+ *
+ */
 public class HomeActivity extends FragmentActivity implements OnClickListener,
 		OnPageChangeListener {
 
@@ -41,12 +47,10 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 
 	private ImageView bt_shouye;
 	private ImageView bt_xiaoxi;
-	// private ImageView bt_fabu;
 	private ImageView bt_qiugou;
 	private ImageView bt_gerenzhongxin;
 
 	private TextView tv_shouye;
-	// private TextView tv_fabu;
 	private TextView tv_gerenzhongxin;
 	private TextView tv_xiaoxi;
 	private TextView tv_qiugou;
@@ -61,8 +65,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 		initView();
 	}
 
-	
-
 	private void initView() {
 		context = this;
 		// viewPager
@@ -72,11 +74,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 		// viewPager.setOffscreenPageLimit(2);
 		viewPager.addOnPageChangeListener(this);
 
-		// // 发布
-		// ll_fabu = (LinearLayout) findViewById(R.id.ll_fabu);
-		// bt_fabu = (ImageView) findViewById(R.id.main_bt_fabu);
-		// tv_fabu = (TextView) findViewById(R.id.main_tv_fabu);
-		// ll_fabu.setOnClickListener(this);
 		// 个人中心
 		bt_gerenzhongxin = (ImageView) findViewById(R.id.main_bt_gerenzhongxin);
 		tv_gerenzhongxin = (TextView) findViewById(R.id.main_tv_gerenzhongxin);
@@ -109,7 +106,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 			list.add(new ShouYeFragment());
 			list.add(new QiuGouFragment());
 			list.add(new XiaoXiFragment());
-			// list.add(new FaBuFragment());
 			list.add(new GeRenZhongXinFragment());
 		}
 
@@ -148,11 +144,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 			xiaoxi();
 			viewPager.setCurrentItem(2);
 			break;
-		// case R.id.ll_fabu:
-		// fabu();
-		// viewPager.setCurrentItem(2);
-		// break;
-
 		case R.id.ll_gerenzhongxin:
 			gerenzhongxin();
 			viewPager.setCurrentItem(3);
@@ -166,64 +157,43 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 	private void qiugou() {
 		bt_shouye.setImageResource(R.drawable.home_normal);
 		bt_gerenzhongxin.setImageResource(R.drawable.wode_normal);
-		// bt_fabu.setImageResource(R.drawable.fabu_normal);
 		bt_qiugou.setImageResource(R.drawable.main_qiugou_press);
 		bt_xiaoxi.setImageResource(R.drawable.xiaoxi_normal);
 		tv_qiugou.setTextColor(color_red);
 		tv_xiaoxi.setTextColor(color_black);
 		tv_shouye.setTextColor(color_black);
 		tv_gerenzhongxin.setTextColor(color_black);
-		// tv_fabu.setTextColor(color_black);
 	}
 
 	private void xiaoxi() {
 		bt_shouye.setImageResource(R.drawable.home_normal);
 		bt_gerenzhongxin.setImageResource(R.drawable.wode_normal);
-		// bt_fabu.setImageResource(R.drawable.fabu_normal);
 		bt_qiugou.setImageResource(R.drawable.main_qiugou);
 		bt_xiaoxi.setImageResource(R.drawable.xiaoxi_press);
 		tv_qiugou.setTextColor(color_black);
 		tv_xiaoxi.setTextColor(color_red);
 		tv_shouye.setTextColor(color_black);
 		tv_gerenzhongxin.setTextColor(color_black);
-		// tv_fabu.setTextColor(color_black);
 	}
 
 	private void gerenzhongxin() {
 		bt_shouye.setImageResource(R.drawable.home_normal);
 		bt_gerenzhongxin.setImageResource(R.drawable.wode_select);
-		// bt_fabu.setImageResource(R.drawable.fabu_normal);
 		bt_qiugou.setImageResource(R.drawable.main_qiugou);
 		bt_xiaoxi.setImageResource(R.drawable.xiaoxi_normal);
 		tv_qiugou.setTextColor(color_black);
 		tv_xiaoxi.setTextColor(color_black);
 		tv_shouye.setTextColor(color_black);
 		tv_gerenzhongxin.setTextColor(color_red);
-		// tv_fabu.setTextColor(color_black);
-	}
-
-	private void fabu() {
-		bt_shouye.setImageResource(R.drawable.home_normal);
-		bt_gerenzhongxin.setImageResource(R.drawable.wode_normal);
-		// bt_fabu.setImageResource(R.drawable.fabu_press);
-		bt_qiugou.setImageResource(R.drawable.main_qiugou);
-		bt_xiaoxi.setImageResource(R.drawable.xiaoxi_normal);
-		tv_qiugou.setTextColor(color_black);
-		tv_xiaoxi.setTextColor(color_black);
-		tv_shouye.setTextColor(color_black);
-		tv_gerenzhongxin.setTextColor(color_black);
-		// tv_fabu.setTextColor(color_red);
 	}
 
 	private void shouYe() {
 		bt_shouye.setImageResource(R.drawable.home_press);
 		bt_gerenzhongxin.setImageResource(R.drawable.wode_normal);
-		// bt_fabu.setImageResource(R.drawable.fabu_normal);
 		bt_xiaoxi.setImageResource(R.drawable.xiaoxi_normal);
 		bt_qiugou.setImageResource(R.drawable.main_qiugou);
 		tv_shouye.setTextColor(color_red);
 		tv_gerenzhongxin.setTextColor(color_black);
-		// tv_fabu.setTextColor(color_black);
 		tv_xiaoxi.setTextColor(color_black);
 		tv_qiugou.setTextColor(color_black);
 	}
@@ -248,7 +218,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 			break;
 		case 1:
 			qiugou();
-
 			break;
 		case 2:
 			xiaoxi();

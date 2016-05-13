@@ -53,6 +53,8 @@ public class FaBuQiuGouActivity extends BaseActivity {
 	private Button bt_fabu;
 	private Context context;
 
+	private User user;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,6 +64,7 @@ public class FaBuQiuGouActivity extends BaseActivity {
 
 	private void initView() {
 		context = this;
+		user = getCurrentUser();
 		back = findViewById(R.id.title_back);
 		title = (TextView) findViewById(R.id.title_title);
 		title.setText("发布求购");
@@ -73,9 +76,11 @@ public class FaBuQiuGouActivity extends BaseActivity {
 		et_minPrice = (EditText) findViewById(R.id.et_minPrice);
 		et_maxPrice = (EditText) findViewById(R.id.et_maxPrice);
 		et_phone = (EditText) findViewById(R.id.et_phone);
+		et_phone.setText(user.getMobilePhoneNumber());
+		et_phone.clearFocus();
 		et_qq = (EditText) findViewById(R.id.et_qq);
 		bt_fabu = (Button) findViewById(R.id.bt_fabu);
-
+		et_title.requestFocus();
 		setOnClick(back, bt_fabu);
 	}
 
@@ -130,9 +135,13 @@ public class FaBuQiuGouActivity extends BaseActivity {
 	}
 
 	private void fabu() {
-		User user = getCurrentUser();
 		String userId = user.getObjectId();
-		String userName = user.getUsername();
+		String userName;
+		if (user.getIsNiChengChanged()) {
+			userName = user.getNicheng();
+		} else {
+			userName = user.getUsername();
+		}
 		String imageUri = user.getImageUri();
 		if (imageUri == null) {
 			imageUri = "";
