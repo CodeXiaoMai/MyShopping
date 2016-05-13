@@ -184,7 +184,6 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 					});
 				}
 			});
-			// holder.
 			return view;
 		}
 

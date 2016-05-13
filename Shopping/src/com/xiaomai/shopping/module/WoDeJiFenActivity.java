@@ -113,12 +113,11 @@ public class WoDeJiFenActivity extends BaseActivity {
 			tv_time.setText(score.getUpdatedAt());
 			if (position == 0) {
 				top.setVisibility(View.INVISIBLE);
-			} else if (position == list.size()-1) {
+			} else if (position == list.size() - 1) {
 				bottom.setVisibility(View.INVISIBLE);
 			}
 			return view;
 		}
-
 	}
 
 	@Override

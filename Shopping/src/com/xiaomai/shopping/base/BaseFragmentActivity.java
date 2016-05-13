@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 
+import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.module.LoginActivity;
 import com.xiaomai.shopping.utils.RequestCode;
@@ -67,5 +68,19 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements
 					}, null);
 		}
 		return user;
+	}
+
+	/**
+	 * 添加积分
+	 * 
+	 * @param user
+	 * @param jifen
+	 * @param desc
+	 */
+	public void addScore(User user, Integer jifen, String desc) {
+		Score score = new Score(user.getObjectId(), jifen, desc);
+		score.save(context);
+		user.setScore(user.getScore() + jifen);
+		user.update(context);
 	}
 }

@@ -28,7 +28,7 @@
                     android:paddingLeft="15dp"
                     android:paddingTop="20dp"
                     android:text="添加标题："
-                    android:textColor="@color/ziti_normal"
+                    android:textColor="@color/ziti2"
                     android:textSize="15sp" />
 
                 <EditText
@@ -38,10 +38,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:background="@color/white"
-                    android:gravity="center_horizontal"
                     android:maxLength="16"
                     android:singleLine="true"
-                    android:textColor="@color/ziti2"
+                    android:textColor="@color/ziti_normal"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -63,7 +62,7 @@
                 android:gravity="top|center_horizontal"
                 android:hint="添加宝贝描述"
                 android:lineSpacingExtra="5dp"
-                android:textColor="@color/ziti2"
+                android:textColor="@color/ziti_normal"
                 android:textColorHint="@color/ziti2"
                 android:textSize="15sp" />
 
@@ -88,7 +87,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="价格"
-                    android:textColor="@color/ziti_normal"
+                    android:textColor="@color/ziti2"
                     android:textSize="15sp" />
 
                 <TextView
@@ -97,7 +96,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="数量"
-                    android:textColor="@color/ziti_normal"
+                    android:textColor="@color/ziti2"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -134,7 +133,7 @@
                     android:gravity="center_horizontal"
                     android:inputType="numberSigned"
                     android:maxLength="4"
-                    android:textColor="@color/ziti2"
+                    android:textColor="@color/ziti_normal"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -153,7 +152,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
                 android:text="交易地点"
-                android:textColor="@color/ziti_normal"
+                android:textColor="@color/ziti2"
                 android:textSize="15sp" />
 
             <EditText
@@ -167,7 +166,8 @@
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="5dp"
                 android:maxLines="3"
-                android:textColor="@color/ziti2" />
+                android:text="北方学院西校区"
+                android:textColor="@color/ziti_normal" />
 
             <View
                 android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
                 android:text="手机号(必填)"
-                android:textColor="@color/ziti_normal"
+                android:textColor="@color/ziti2"
                 android:textSize="15sp" />
 
             <EditText
@@ -198,7 +198,7 @@
                 android:gravity="center_horizontal"
                 android:inputType="numberSigned"
                 android:maxLength="11"
-                android:textColor="@color/ziti2" />
+                android:textColor="@color/ziti_normal" />
 
             <View
                 android:layout_width="match_parent"
@@ -246,11 +246,11 @@
                 android:textColor="@color/ziti_normal" />
 
             <com.xiaomai.shopping.view.MyGridView
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:id="@+id/fabu_gridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:numColumns="3"
                 android:verticalSpacing="5dp" />
         </LinearLayout>

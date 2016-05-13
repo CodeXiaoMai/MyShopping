@@ -41,6 +41,7 @@ import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.listener.LunBoListener;
 import com.xiaomai.shopping.utils.RequestCode;
 import com.xiaomai.shopping.utils.StateCode;
+import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyGridView;
 
 /**
@@ -264,6 +265,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 			@Override
 			public void onSuccess() {
 				showToast("发布成功!");
+				addScore(user, Utils.SCORE_ADD_GOODS, "发布商品");
 				finish();
 			}
 

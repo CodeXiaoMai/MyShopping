@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_shangpin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:id="@+id/item_shangpin"
     android:orientation="vertical" >
 
     <ImageView
-        android:background="@color/white"
         android:id="@+id/shangpin_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
+        android:background="@color/white"
         android:scaleType="center"
-        android:src="@drawable/tupian_jiazaizhong"  />
+        android:src="@drawable/tupian_jiazaizhong" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,15 +34,28 @@
             android:textColor="@color/ziti_normal"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/shangpin_jiaoyididian"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="交易地点"
-            android:textColor="@color/ziti2"
-            android:textSize="10sp" />
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/address" />
+
+            <TextView
+                android:id="@+id/shangpin_jiaoyididian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:text="交易地点"
+                android:textColor="@color/ziti2"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

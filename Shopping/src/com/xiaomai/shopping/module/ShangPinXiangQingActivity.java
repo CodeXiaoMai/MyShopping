@@ -41,11 +41,14 @@ import cn.bmob.v3.listener.SaveListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseFragmentActivity;
 import com.xiaomai.shopping.bean.Collection;
 import com.xiaomai.shopping.bean.Comment;
 import com.xiaomai.shopping.bean.Goods;
+import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.module.fragment.ImageFragment;
 import com.xiaomai.shopping.utils.DES;
@@ -113,6 +116,8 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 
 	private PullToRefreshScrollView scrollView;
 	private Collection collection;
+
+	private ImageLoader imageLoader;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +247,8 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 
 	private void initView() {
 		context = this;
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 		// 收藏
 		bt_shoucang = findViewById(R.id.want);
 
@@ -405,7 +412,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 	 * 收藏
 	 */
 	private void addCollection() {
-		User user = getCurrentUser();
+		final User user = getCurrentUser();
 		if (user != null) {
 			collection = new Collection(user.getObjectId(),
 					goods.getObjectId(), goods.getTitle(), goods.getPrice(),
@@ -419,6 +426,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 					iv_shoucang.setVisibility(View.INVISIBLE);
 					goods.setWant(goods.getWant() + 1);
 					tv_shoucang.setText("收藏：" + goods.getWant() + "人");
+					addScore(user, Utils.SCORE_ADD_COLLECTION, "收藏商品");
 				}
 
 				@Override
@@ -463,14 +471,21 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 					boolean isNiMing = checkBox.isChecked();
 
 					String userName;
+					String userHead;
+
 					if (isNiMing) {
 						userName = "匿名用户";
 						userName = DES.encryptDES(userName);
+						userHead = "";
 					} else {
 						userName = currentUser.getUsername();
+						userHead = currentUser.getImageUri();
+						if (TextUtils.isEmpty(userHead)) {
+							userHead = "";
+						}
 					}
 					Comment comment = new Comment(goods.getObjectId(), content,
-							userId, userName);
+							userId, userHead, userName);
 					comment.save(context, new SaveListener() {
 
 						@Override
@@ -544,6 +559,10 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 				holder.tv_userName.setText(userName);
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+			String userHead = comment.getUserHead();
+			if (!TextUtils.isEmpty(userHead)) {
+				imageLoader.displayImage(userHead, holder.iv_head);
 			}
 			holder.tv_content.setText(comment.getContent());
 			holder.tv_date.setText(comment.getCreatedAt());

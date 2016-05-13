@@ -14,6 +14,7 @@ import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.IWant;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
 
 /**
@@ -165,6 +166,7 @@ public class FaBuQiuGouActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
+				addScore(user, Utils.SCORE_ADD_IWANT, "发布求购");
 				MyDialog.showDialog(context, "发布成功", "您还要继续发布新的求购吗？",
 						new DialogInterface.OnClickListener() {
 
@@ -176,8 +178,6 @@ public class FaBuQiuGouActivity extends BaseActivity {
 								et_desc.setText("");
 								et_minPrice.setText("");
 								et_maxPrice.setText("");
-								et_phone.setText("");
-								et_qq.setText("");
 							}
 
 						}, new DialogInterface.OnClickListener() {

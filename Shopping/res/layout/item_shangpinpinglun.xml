@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.xiaomai.shopping.view.CommentView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.xiaomai.shopping"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -10,14 +11,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="55dp"
         android:orientation="horizontal" >
 
         <com.xiaomai.shopping.view.CircleImageView
             android:id="@+id/iv_head"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/tupian_jiazaizhong" />
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/tupian_jiazaizhong"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/tv_userName"
@@ -31,12 +34,14 @@
     </LinearLayout>
 
     <TextView
+        android:layout_marginLeft="20dp"
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:lineSpacingExtra="5dp"
-        android:text="sksdlfsjdlkfsld;fksadfjlksdf;sdfslajflksdjf;sadfsdjlfksdlkfskld" />
+        android:textSize="14sp"
+        android:textColor="@color/ziti_normal" />
 
     <TextView
         android:id="@+id/tv_date"

@@ -11,7 +11,12 @@ public class Utils {
 	public static final int SCORE_REGIST = 50;
 	// 登录
 	public static final int SCORE_LOGIN = 10;
-
+	// 发布商品
+	public static final int SCORE_ADD_GOODS = 10;
+	// 发布求购
+	public static final int SCORE_ADD_IWANT = 5;
+	// 收藏商品
+	public static final int SCORE_ADD_COLLECTION = 5;
 	public static final String ENCRYPT_KEY = "20120401";
 
 	/**

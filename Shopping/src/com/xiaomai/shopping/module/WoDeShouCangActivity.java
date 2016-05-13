@@ -5,8 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,6 @@ import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
 
-import com.a.a.in;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Collection;
@@ -179,6 +178,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 			if (imageloader != null) {
 				imageloader.displayImage(uri, holder.iv_image);
 			} else {
+				holder.iv_image.setImageResource(R.drawable.chang_an);
 				holder.iv_image
 						.setOnLongClickListener(new View.OnLongClickListener() {
 
