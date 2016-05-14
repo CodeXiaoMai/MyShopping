@@ -34,13 +34,30 @@ public class ImageFragment extends BaseFragment {
 	}
 
 	private void initView(View view) {
-		imageloader = ImageLoader.getInstance();
-		imageloader.init(ImageLoaderConfiguration.createDefault(getContext()));
+		// imageloader = ImageLoader.getInstance();
+		// imageloader.init(ImageLoaderConfiguration.createDefault(getContext()));
+		checkNetWorkState();
 		imageview = (ImageView) view.findViewById(R.id.imageview);
 		if (images != null) {
-			String uri = images.get(position);
-			imageloader.displayImage(uri, imageview);
-			imageview.setOnClickListener(this);
+			final String uri = images.get(position);
+			if (imageloader != null) {
+				imageloader.displayImage(uri, imageview);
+				imageview.setOnClickListener(this);
+			} else {
+				imageview.setImageResource(R.drawable.chang_an);
+				imageview
+						.setOnLongClickListener(new View.OnLongClickListener() {
+
+							@Override
+							public boolean onLongClick(View v) {
+								// TODO Auto-generated method stub
+								imageview
+										.setImageResource(R.drawable.tupian_jiazaizhong);
+								loader.displayImage(uri, imageview);
+								return true;
+							}
+						});
+			}
 		}
 
 	}
@@ -81,6 +98,6 @@ public class ImageFragment extends BaseFragment {
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

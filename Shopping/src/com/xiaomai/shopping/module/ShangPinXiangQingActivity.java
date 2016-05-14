@@ -27,6 +27,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import c.b.BP;
+import c.b.PListener;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobQueryResult;
@@ -48,7 +50,6 @@ import com.xiaomai.shopping.base.BaseFragmentActivity;
 import com.xiaomai.shopping.bean.Collection;
 import com.xiaomai.shopping.bean.Comment;
 import com.xiaomai.shopping.bean.Goods;
-import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.module.fragment.ImageFragment;
 import com.xiaomai.shopping.utils.DES;
@@ -100,7 +101,9 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 	private View iv_shoucang;
 	private View tv_yishoucang;
 	// 联系卖家
-	private View bt_lianximaijia;
+	private View bt_chat;
+	// 电话
+	private View bt_phone;
 	// 想要
 	private View bt_buy;
 	// 评论
@@ -147,8 +150,35 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		tv_maichu.setText("成交：" + (goods.getCount() - remainCount) + "笔");
 		tv_desc.setText(goods.getContent());
 		images = goods.getImages();
-		// showToast(images.size() + "");
 		tv_selector.setText("1/" + images.size());
+		double price = Double.parseDouble(goods.getPrice());
+		/*BP.pay(this, goods.getTitle(), goods.getContent(), price, true,
+				new PListener() {
+
+					@Override
+					public void unknow() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void succeed() {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void orderId(String arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void fail(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+
+					}
+				});*/
 	}
 
 	// 查询收藏人数
@@ -273,7 +303,8 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		bt_shoucang = findViewById(R.id.want);
 		iv_shoucang = findViewById(R.id.iv_want);
 		tv_yishoucang = findViewById(R.id.tv_yishoucang);
-		bt_lianximaijia = findViewById(R.id.chat);
+		bt_chat = findViewById(R.id.chat);
+		bt_phone = findViewById(R.id.phone);
 		bt_buy = findViewById(R.id.buy);
 
 		et_comment = (EditText) findViewById(R.id.et_pinglun);
@@ -309,7 +340,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 				loadComment();
 			}
 		});
-		setOnClick(back, iv_send, iv_more, bt_shoucang, bt_lianximaijia, bt_buy);
+		setOnClick(back, iv_send, iv_more, bt_shoucang,bt_phone, bt_chat, bt_buy);
 	}
 
 	private void loadGoods() {
@@ -358,11 +389,9 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 			}
 			break;
 		case R.id.buy:
-			Intent intent = new Intent(Intent.ACTION_DIAL);
-			intent.setData(Uri.parse("tel:" + goods.getPhone()));
-			if (intent.resolveActivity(context.getPackageManager()) != null) {
-				startActivity(intent);
-			}
+			Intent intent = new Intent(context,PayActivity.class);
+			intent.putExtra("goods", goods);
+			startActivity(intent);
 			break;
 		case R.id.chat:
 			String phoneNumber = goods.getPhone();
@@ -371,6 +400,13 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 			intent.putExtra("sms_body",
 					"你好，我在北苑跳蚤市场看到你发布的\"" + goods.getTitle() + "\",我们可以聊聊吗？");
 			startActivity(intent);
+			break;
+		case R.id.phone:
+			intent = new Intent(Intent.ACTION_DIAL);
+			intent.setData(Uri.parse("tel:" + goods.getPhone()));
+			if (intent.resolveActivity(context.getPackageManager()) != null) {
+				startActivity(intent);
+			}
 			break;
 		}
 	}

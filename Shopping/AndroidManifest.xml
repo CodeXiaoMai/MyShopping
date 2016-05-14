@@ -23,6 +23,7 @@
     <!-- 推送所需的权限 -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -115,6 +116,19 @@
         <activity
             android:name="com.xiaomai.shopping.module.ForgetPassWordActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.PayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="c.b.a.A"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="c.b.a.B"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" />
 
         <service
             android:name="cn.bmob.push.lib.service.PushService"

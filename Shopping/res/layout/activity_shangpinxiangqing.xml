@@ -145,6 +145,24 @@
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/phone"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_green" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/phone_white" />
+        </FrameLayout>
+        
+        <FrameLayout
             android:id="@+id/chat"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -177,7 +195,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
-                android:src="@drawable/phone_white" />
+                android:src="@drawable/buy" />
         </FrameLayout>
     </LinearLayout>
 
