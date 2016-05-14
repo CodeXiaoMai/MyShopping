@@ -19,10 +19,15 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public abstract class BaseActivity extends Activity implements OnClickListener {
 
+	public View back;
+	public TextView title;
+	public View share;
+	
 	// 加载全部图片
 	public ImageLoader imageloader;
 	// 长按加载图片

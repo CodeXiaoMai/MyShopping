@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import cn.bmob.sms.BmobSMS;
-import cn.bmob.sms.exception.BmobException;
-import cn.bmob.sms.listener.RequestSMSCodeListener;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
+import cn.bmob.v3.listener.RequestSMSCodeListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;

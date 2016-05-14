@@ -84,6 +84,7 @@ public class LoginActivity extends BaseActivity {
 			break;
 		// 忘记密码
 		case R.id.denglu_tv_forgetpass:
+			startActivity(new Intent(this, ForgetPassWordActivity.class));
 			break;
 		// 登录按钮
 		case R.id.denglu_bt_login:

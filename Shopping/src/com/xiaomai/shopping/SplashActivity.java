@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import cn.bmob.push.BmobPush;
-import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
@@ -29,7 +28,6 @@ public class SplashActivity extends Activity {
 		// 初始化BmobSdk
 		Bmob.initialize(this, Config.APPLICATION_ID);
 		// 使用推送服务时的初始化操作
-		BmobSMS.initialize(this, Config.APPLICATION_ID);
 		BmobInstallation.getCurrentInstallation(context).save();
 		// 启动推送服务
 		BmobPush.startWork(context);

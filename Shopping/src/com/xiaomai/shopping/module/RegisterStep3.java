@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -54,13 +55,16 @@ public class RegisterStep3 extends BaseActivity {
 	}
 
 	private void initView() {
-		context = this;
 		// 密码
 		et_pass = (EditText) findViewById(R.id.et_input_number);
 		// 看见密码
 		eye = (ImageView) findViewById(R.id.yanjing);
 		bt_next = (Button) findViewById(R.id.next);
 		back = findViewById(R.id.title_back);
+		title = (TextView) findViewById(R.id.title_title);
+		title.setText("设置密码");
+		share = findViewById(R.id.title_share);
+		share.setVisibility(View.INVISIBLE);
 		setOnClick(bt_next, back, eye);
 	}
 
