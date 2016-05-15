@@ -1,4 +1,4 @@
-package com.xiaomai.shopping.module.welcome;
+package com.xiaomai.shopping.fragment;
 
 import android.content.Context;
 import android.content.Intent;

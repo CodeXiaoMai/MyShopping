@@ -213,7 +213,7 @@ public class AdManage extends BaseActivity {
 		intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
 		// 最大可选择图片数量
 		intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-				5 - list_ad.size());
+				list_ad == null ? 5 : 5 - list_ad.size());
 		// 选择模式
 		intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE,
 				MultiImageSelectorActivity.MODE_MULTI);

@@ -1,10 +1,9 @@
-package com.xiaomai.shopping.module.welcome;
+package com.xiaomai.shopping.module;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +12,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.xiaomai.shopping.R;
+import com.xiaomai.shopping.fragment.WelcomeFragment1;
+import com.xiaomai.shopping.fragment.WelcomeFragment2;
+import com.xiaomai.shopping.fragment.WelcomeFragment3;
+import com.xiaomai.shopping.fragment.WelcomeFragment4;
 
 /**
  * 这是欢迎引导页面的Activity

@@ -1,4 +1,4 @@
-package com.xiaomai.shopping;
+package com.xiaomai.shopping.module;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,7 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
 
-import com.xiaomai.shopping.module.HomeActivity;
-import com.xiaomai.shopping.module.welcome.WelcomeActivity;
+import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.utils.Config;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 

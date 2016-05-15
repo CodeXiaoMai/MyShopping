@@ -1,4 +1,4 @@
-package com.xiaomai.shopping.module.fragment;
+package com.xiaomai.shopping.fragment;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 import uk.co.senab.photoview.PhotoViewAttacher.OnPhotoTapListener;

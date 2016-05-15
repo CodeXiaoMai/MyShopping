@@ -22,10 +22,10 @@ import c.b.BP;
 import cn.bmob.v3.BmobUser;
 
 import com.xiaomai.shopping.R;
-import com.xiaomai.shopping.module.fragment.GeRenZhongXinFragment;
-import com.xiaomai.shopping.module.fragment.QiuGouFragment;
-import com.xiaomai.shopping.module.fragment.ShouYeFragment;
-import com.xiaomai.shopping.module.fragment.XiaoXiFragment;
+import com.xiaomai.shopping.fragment.GeRenZhongXinFragment;
+import com.xiaomai.shopping.fragment.QiuGouFragment;
+import com.xiaomai.shopping.fragment.ShouYeFragment;
+import com.xiaomai.shopping.fragment.XiaoXiFragment;
 import com.xiaomai.shopping.utils.Config;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 

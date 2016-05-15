@@ -1,4 +1,4 @@
-package com.xiaomai.shopping.module.welcome;
+package com.xiaomai.shopping.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 
 import com.xiaomai.shopping.R;
 
-
-public class WelcomeFragment1 extends Fragment {
+public class WelcomeFragment2 extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_welcome1, container, false);
+		return inflater.inflate(R.layout.fragment_welcome2, container, false);
 	}
 }

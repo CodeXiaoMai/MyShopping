@@ -11,7 +11,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.TextView;
 
 import com.xiaomai.shopping.R;
-import com.xiaomai.shopping.module.fragment.ImageDetailFragment;
+import com.xiaomai.shopping.fragment.ImageDetailFragment;
 import com.xiaomai.shopping.view.HackyViewPager;
 
 /**
