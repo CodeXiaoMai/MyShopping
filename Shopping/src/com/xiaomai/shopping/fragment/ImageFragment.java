@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.module.ImagePagerActivity;
@@ -20,7 +18,6 @@ import com.xiaomai.shopping.module.ImagePagerActivity;
 public class ImageFragment extends BaseFragment {
 
 	private ImageView imageview;
-	private ImageLoader imageloader;
 	private int position;
 	private List<String> images;
 
@@ -34,8 +31,6 @@ public class ImageFragment extends BaseFragment {
 	}
 
 	private void initView(View view) {
-		// imageloader = ImageLoader.getInstance();
-		// imageloader.init(ImageLoaderConfiguration.createDefault(getContext()));
 		checkNetWorkState();
 		imageview = (ImageView) view.findViewById(R.id.imageview);
 		if (images != null) {

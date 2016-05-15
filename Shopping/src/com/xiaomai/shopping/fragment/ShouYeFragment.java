@@ -40,6 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xiaomai.shopping.R;
+import com.xiaomai.shopping.adapter.MyFragmentAdapter;
 import com.xiaomai.shopping.adapter.ViewPagerAdapter;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.Ad;
@@ -74,10 +75,11 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private View quxiao;
 	// 图片轮播
 	private ViewPager viewPager;
-//	private TextView tv_intro;
+	// private TextView tv_intro;
 	private LinearLayout dotLayout;
 	private ViewPagerAdapter adapter_viewPager;
 	private List<Ad> list_ad;
+	private MyFragmentAdapter pagerAdapter;
 
 	private MyGridView gv_shangpin;
 	private MyAdapter adapter;
@@ -163,7 +165,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 				|| NetWorkUtil.isWifiNetWork(context)) {
 			imageloader = ImageLoader.getInstance();
 			imageloader.init(ImageLoaderConfiguration.createDefault(context));
-		}else{
+		} else {
 			imageloader = null;
 		}
 		loadGoods();
@@ -184,7 +186,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		viewPager.addOnPageChangeListener(this);
 		list_ad = new ArrayList<Ad>();
-//		tv_intro = (TextView) view.findViewById(R.id.tv_intro);
+		// tv_intro = (TextView) view.findViewById(R.id.tv_intro);
 		dotLayout = (LinearLayout) view.findViewById(R.id.dot_layout);
 		gv_fenlei = (GridView) view.findViewById(R.id.gv_fenlei);
 		data = new ArrayList<Map<String, Object>>();
@@ -209,7 +211,6 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		gv_shangpin.setAdapter(adapter);
 		View emptyView = view.findViewById(R.id.emptyView);
 		gv_shangpin.setEmptyView(emptyView);
-		
 
 		Utils.setHeight(adapter, gv_shangpin, 2);
 
@@ -296,7 +297,8 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 
 							@Override
 							public boolean onLongClick(View v) {
-								holder.iv_image.setImageResource(R.drawable.tupian_jiazaizhong);
+								holder.iv_image
+										.setImageResource(R.drawable.tupian_jiazaizhong);
 								loader.displayImage(goods.getImages().get(0),
 										holder.iv_image);
 								return true;
@@ -499,7 +501,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	 */
 	private void updateIntroAndDot() {
 		int currentPage = viewPager.getCurrentItem() % list_ad.size();
-//		tv_intro.setText(list_ad.get(currentPage).getIntroduce());
+		// tv_intro.setText(list_ad.get(currentPage).getIntroduce());
 
 		for (int i = 0; i < dotLayout.getChildCount(); i++) {
 			dotLayout.getChildAt(i).setEnabled(i == currentPage);// 设置setEnabled为true的话
@@ -527,9 +529,16 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 				dotLayout.addView(view);
 			}
 			if (dotSize == 0) {
-				adapter_viewPager = new ViewPagerAdapter(context, list_ad,
-						imageloader);
-				viewPager.setAdapter(adapter_viewPager);
+				// adapter_viewPager = new ViewPagerAdapter(context, list_ad,
+				// imageloader);
+				List<String> images = new ArrayList<String>();
+				for (Ad ad : list_ad) {
+					images.add(ad.getImage_url());
+				}
+				pagerAdapter = new MyFragmentAdapter(getFragmentManager(),
+						images,context);
+				// viewPager.setAdapter(adapter_viewPager);
+				viewPager.setAdapter(pagerAdapter);
 				myHandler.sendEmptyMessageDelayed(0, AUTO_PLAY_TIME);
 				updateIntroAndDot();
 			}

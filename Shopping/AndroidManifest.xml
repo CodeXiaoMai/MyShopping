@@ -31,7 +31,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".SplashActivity"
+            android:name="com.xiaomai.shopping.module.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar.Fullscreen" >
@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.xiaomai.shopping.module.welcome.WelcomeActivity"
+            android:name="com.xiaomai.shopping.module.WelcomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.xiaomai.shopping.module.HomeActivity"

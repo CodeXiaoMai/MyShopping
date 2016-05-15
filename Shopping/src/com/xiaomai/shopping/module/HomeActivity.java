@@ -12,12 +12,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import c.b.BP;
 import cn.bmob.v3.BmobUser;
 
@@ -59,6 +61,8 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 
 	private int color_red = Color.rgb(205, 60, 57);
 	private int color_black = Color.rgb(89, 89, 89);
+
+	private long mExitTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -239,5 +243,24 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 		super.onDestroy();
 		BmobUser.logOut(context);
 		SharedPrenerencesUtil.setIsLogOut(context, true);
+	}
+
+	// 监听手机上的BACK键
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			// 判断菜单是否关闭
+			// 判断两次点击的时间间隔（默认设置为2秒）
+			if ((System.currentTimeMillis() - mExitTime) > 2000) {
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+
+				mExitTime = System.currentTimeMillis();
+			} else {
+				finish();
+				System.exit(0);
+				super.onBackPressed();
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

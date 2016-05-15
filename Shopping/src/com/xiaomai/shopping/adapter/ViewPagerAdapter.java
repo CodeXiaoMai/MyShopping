@@ -76,6 +76,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 		container.addView(view);// 一定不能少，将view加入到viewPager中
 		return view;
 	}
+	
 
 	/**
 	 * 销毁page position： 当前需要消耗第几个page object:当前需要消耗的page
