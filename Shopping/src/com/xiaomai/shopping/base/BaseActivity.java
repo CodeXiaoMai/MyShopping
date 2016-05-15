@@ -1,17 +1,5 @@
 package com.xiaomai.shopping.base;
 
-import cn.bmob.v3.BmobUser;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.xiaomai.shopping.bean.Score;
-import com.xiaomai.shopping.bean.User;
-import com.xiaomai.shopping.module.LoginActivity;
-import com.xiaomai.shopping.utils.NetWorkUtil;
-import com.xiaomai.shopping.utils.RequestCode;
-import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
-import com.xiaomai.shopping.view.MyDialog;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,13 +9,26 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.umeng.socialize.UMShareAPI;
+import com.xiaomai.shopping.bean.Score;
+import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.module.LoginActivity;
+import com.xiaomai.shopping.utils.NetWorkUtil;
+import com.xiaomai.shopping.utils.RequestCode;
+import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
+import com.xiaomai.shopping.view.MyDialog;
 
 public abstract class BaseActivity extends Activity implements OnClickListener {
 
+	public UMShareAPI mShareAPI;
 	public View back;
 	public TextView title;
 	public View share;
-	
+
 	// 加载全部图片
 	public ImageLoader imageloader;
 	// 长按加载图片

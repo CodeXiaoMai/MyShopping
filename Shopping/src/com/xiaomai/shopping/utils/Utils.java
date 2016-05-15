@@ -1,11 +1,15 @@
 package com.xiaomai.shopping.utils;
 
+import com.umeng.socialize.UMShareAPI;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 
 public class Utils {
+
+	public static UMShareAPI mShareAPI;
 
 	// 注册
 	public static final int SCORE_REGIST = 50;

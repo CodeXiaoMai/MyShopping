@@ -1,5 +1,7 @@
 package com.xiaomai.shopping.module;
 
+import java.util.Map;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import cn.bmob.v3.BmobUser;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.utils.ResultCode;
@@ -21,7 +30,8 @@ import com.zcw.togglebutton.ToggleButton.OnToggleChanged;
  * @author XiaoMai
  *
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements
+		ShareBoardlistener, UMShareListener {
 
 	// 显示省流量是否开启
 	private TextView tv_shengliuliang;
@@ -34,6 +44,8 @@ public class SettingActivity extends BaseActivity {
 	private View aboutus;
 	// 反馈中心
 	private View fankui;
+	// 分享
+	private View fenxiang;
 	// 退出登录
 	private Button bt_logOut;
 
@@ -86,7 +98,8 @@ public class SettingActivity extends BaseActivity {
 		gerenziliao = findViewById(R.id.setting_gerenziliao);
 		aboutus = findViewById(R.id.setting_about_us);
 		fankui = findViewById(R.id.setting_fankui);
-		setOnClick(back, bt_logOut, gerenziliao, aboutus, fankui);
+		fenxiang = findViewById(R.id.setting_share);
+		setOnClick(back, bt_logOut, gerenziliao, aboutus, fankui, fenxiang);
 	}
 
 	@Override
@@ -115,7 +128,24 @@ public class SettingActivity extends BaseActivity {
 				startActivity(new Intent(context, FanKuiActivity.class));
 			}
 			break;
+		case R.id.setting_share:
+			share();
+			break;
+
 		}
+	}
+
+	private void share() {
+		// TODO Auto-generated method stub
+		mShareAPI = UMShareAPI.get(context);
+
+		final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[] {
+				SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
+				SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE };
+
+		new ShareAction(this).setDisplayList(displaylist)
+				.setShareboardclickCallback(this).open();
+
 	}
 
 	@Override
@@ -124,4 +154,79 @@ public class SettingActivity extends BaseActivity {
 
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mShareAPI.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onclick(SnsPlatform arg0, SHARE_MEDIA arg1) {
+		// TODO Auto-generated method stub
+		switch (arg1) {
+		case SINA:
+
+			if (mShareAPI.isAuthorize(this, SHARE_MEDIA.SINA)) {
+
+				new ShareAction(this).setPlatform(SHARE_MEDIA.SINA)
+						.setCallback(this).withText("Hello 豆瓣").share();
+			} else {
+				authSina();
+			}
+
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	private void authSina() {
+		// TODO Auto-generated method stub
+		mShareAPI.doOauthVerify(this, SHARE_MEDIA.SINA, new UMAuthListener() {
+
+			@Override
+			public void onError(SHARE_MEDIA arg0, int arg1, Throwable arg2) {
+				// TODO Auto-generated method stub
+				showToast("授权失败");
+			}
+
+			@Override
+			public void onComplete(SHARE_MEDIA arg0, int arg1,
+					Map<String, String> arg2) {
+				// TODO Auto-generated method stub
+				new ShareAction(SettingActivity.this)
+						.setPlatform(SHARE_MEDIA.SINA)
+						.setCallback(SettingActivity.this).withText("Hello 豆瓣")
+						.share();
+				showToast("授权成功");
+			}
+
+			@Override
+			public void onCancel(SHARE_MEDIA arg0, int arg1) {
+				// TODO Auto-generated method stub
+
+				showToast("取消授权");
+			}
+		});
+	}
+
+	@Override
+	public void onCancel(SHARE_MEDIA arg0) {
+		// TODO Auto-generated method stub
+		showToast("取消分享");
+	}
+
+	@Override
+	public void onError(SHARE_MEDIA arg0, Throwable arg1) {
+		// TODO Auto-generated method stub
+		showToast("分享失败");
+	}
+
+	@Override
+	public void onResult(SHARE_MEDIA arg0) {
+		// TODO Auto-generated method stub
+		showToast("分享成功");
+	}
 }
