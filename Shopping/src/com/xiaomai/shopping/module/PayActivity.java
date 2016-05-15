@@ -18,6 +18,7 @@ import android.widget.TextView;
 import c.b.BP;
 import c.b.PListener;
 import c.b.QListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
@@ -37,7 +38,6 @@ public class PayActivity extends BaseActivity {
 	private Button bt_pay;
 	private boolean isZhiFuBao;
 
-	private ProgressDialog dialog;
 	private String name;
 	private Double money;
 	private User user;
@@ -109,18 +109,7 @@ public class PayActivity extends BaseActivity {
 		}
 	}
 
-	void showDialog(String message) {
-		try {
-			if (dialog == null) {
-				dialog = new ProgressDialog(this);
-				dialog.setCancelable(true);
-			}
-			dialog.setMessage(message);
-			dialog.show();
-		} catch (Exception e) {
-			// 在其他线程调用dialog会报错
-		}
-	}
+	
 
 	/**
 	 * 调用支付宝支付
@@ -129,6 +118,8 @@ public class PayActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		showDialog("正在获取订单");
 		BP.pay(this, name, "", money, isZhiFuBao, new PListener() {
+			private Order order;
+
 			// 因为网络等原因,支付结果未知(小概率事件),出于保险起见稍后手动查询
 			@Override
 			public void unknow() {
@@ -150,7 +141,23 @@ public class PayActivity extends BaseActivity {
 								if (arg0.equals("NOTPAY")) {
 									showToast("支付失败，请到我的订单查看");
 								} else if (arg0.equals("SUCCESS")) {
-									showToast("支付成功!您可以到我的订单页面查看订单详情!");
+									order.setStatus(Order.ORDER_STATUS_ZHIFUCHENGGONG);
+									order.update(context, new UpdateListener() {
+
+										@Override
+										public void onSuccess() {
+											// TODO Auto-generated method stub
+											showToast("支付成功!您可以到我的订单页面查看订单详情!");
+										}
+
+										@Override
+										public void onFailure(int arg0,
+												String arg1) {
+											// TODO Auto-generated method stub
+
+										}
+									});
+
 								}
 							}
 
@@ -172,9 +179,10 @@ public class PayActivity extends BaseActivity {
 				// order.setText(orderId);
 				PayActivity.this.orderId = orderId;
 				showDialog("获取订单成功!请等待跳转到支付页面~");
-				Order order = new Order(orderId, user.getObjectId(), goods
+				order = new Order(orderId, user.getObjectId(), goods
 						.getUserId(), goods.getObjectId(), name, goods
-						.getImages().get(0), count, money);
+						.getImages().get(0), count, money,
+						Order.ORDER_STATUS_WEIZHIFU);
 				order.save(context);
 			}
 
@@ -240,13 +248,6 @@ public class PayActivity extends BaseActivity {
 
 	}
 
-	void hideDialog() {
-		if (dialog != null && dialog.isShowing())
-			try {
-				dialog.dismiss();
-			} catch (Exception e) {
-			}
-	}
 
 	void installBmobPayPlugin(String fileName) {
 		try {

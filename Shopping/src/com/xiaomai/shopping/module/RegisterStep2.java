@@ -172,6 +172,7 @@ public class RegisterStep2 extends BaseActivity {
 	 * 验证验证码
 	 */
 	private void yanZheng() {
+		showDialog("正在验证验证码");
 		smsCode = et_input_yanzhengma.getText().toString().trim();
 
 		showLog("", 0, phoneNumber + ":" + smsCode);
@@ -181,6 +182,7 @@ public class RegisterStep2 extends BaseActivity {
 
 					@Override
 					public void done(BmobException arg0) {
+						hideDialog();
 						if (arg0 == null) {
 							Intent intent = new Intent(context,
 									RegisterStep3.class);

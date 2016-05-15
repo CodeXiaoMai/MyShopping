@@ -19,6 +19,7 @@ import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
+import com.xiaomai.shopping.listener.OnLoginOutListener;
 import com.xiaomai.shopping.utils.ResultCode;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 import com.zcw.togglebutton.ToggleButton;
@@ -31,7 +32,7 @@ import com.zcw.togglebutton.ToggleButton.OnToggleChanged;
  *
  */
 public class SettingActivity extends BaseActivity implements
-		ShareBoardlistener, UMShareListener {
+		ShareBoardlistener, UMShareListener, UMAuthListener {
 
 	// 显示省流量是否开启
 	private TextView tv_shengliuliang;
@@ -53,6 +54,8 @@ public class SettingActivity extends BaseActivity implements
 	private TextView title;
 	private View share;
 	private Context context;
+
+	public static OnLoginOutListener listener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,7 @@ public class SettingActivity extends BaseActivity implements
 			break;
 		case R.id.setting_bt_logout:
 			BmobUser.logOut(context);
-			setResult(ResultCode.RESULT_CODE_SETTING_LOGOUT);
+			listener.onLogOut();
 			finish();
 			break;
 		case R.id.setting_gerenziliao:
@@ -175,41 +178,52 @@ public class SettingActivity extends BaseActivity implements
 			}
 
 			break;
+		case WEIXIN:
+			if (mShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
+				new ShareAction(this).setPlatform(SHARE_MEDIA.SINA)
+						.setCallback(this).withText("Hello 豆瓣").share();
+			} else {
+				authWeiXin();
+			}
 
+			break;
 		default:
 			break;
 		}
 
 	}
 
+	private void authWeiXin() {
+		// TODO Auto-generated method stub
+		mShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, this);
+	}
+
 	private void authSina() {
 		// TODO Auto-generated method stub
-		mShareAPI.doOauthVerify(this, SHARE_MEDIA.SINA, new UMAuthListener() {
+		mShareAPI.doOauthVerify(this, SHARE_MEDIA.SINA, this);
+	}
 
-			@Override
-			public void onError(SHARE_MEDIA arg0, int arg1, Throwable arg2) {
-				// TODO Auto-generated method stub
-				showToast("授权失败");
-			}
+	@Override
+	public void onError(SHARE_MEDIA arg0, int arg1, Throwable arg2) {
+		// TODO Auto-generated method stub
+		showToast("授权失败");
+	}
 
-			@Override
-			public void onComplete(SHARE_MEDIA arg0, int arg1,
-					Map<String, String> arg2) {
-				// TODO Auto-generated method stub
-				new ShareAction(SettingActivity.this)
-						.setPlatform(SHARE_MEDIA.SINA)
-						.setCallback(SettingActivity.this).withText("Hello 豆瓣")
-						.share();
-				showToast("授权成功");
-			}
+	@Override
+	public void onComplete(SHARE_MEDIA arg0, int arg1, Map<String, String> arg2) {
+		// TODO Auto-generated method stub
+		/*
+		 * new ShareAction(SettingActivity.this).setPlatform(arg0)
+		 * .setCallback(SettingActivity.this).withText("Hello 豆瓣").share();
+		 */
+		showToast("授权成功");
+	}
 
-			@Override
-			public void onCancel(SHARE_MEDIA arg0, int arg1) {
-				// TODO Auto-generated method stub
+	@Override
+	public void onCancel(SHARE_MEDIA arg0, int arg1) {
+		// TODO Auto-generated method stub
 
-				showToast("取消授权");
-			}
-		});
+		showToast("取消授权");
 	}
 
 	@Override

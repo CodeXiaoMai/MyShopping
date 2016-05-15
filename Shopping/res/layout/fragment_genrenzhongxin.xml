@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.xiaomai.shopping"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background" >
@@ -31,7 +32,9 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/intro_page3" />
+                    android:src="@drawable/ic_launcher"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp" />
 
                 <TextView
                     android:id="@+id/gerenzhongxin_tv_name"
@@ -228,7 +231,6 @@
                 android:textColor="@color/ziti_normal"
                 android:textSize="16sp" />
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/gerenzhongxin_ll_setting"

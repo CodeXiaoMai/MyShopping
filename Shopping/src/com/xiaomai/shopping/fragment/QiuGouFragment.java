@@ -24,7 +24,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.xiaomai.shopping.R;
-import com.xiaomai.shopping.base.BaseFragment;
+import com.xiaomai.shopping.base.LazyFragment;
 import com.xiaomai.shopping.bean.IWant;
 import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.Utils;
@@ -36,8 +36,11 @@ import com.xiaomai.shopping.view.MyDialog;
  * @author XiaoMai
  *
  */
-public class QiuGouFragment extends BaseFragment implements
+public class QiuGouFragment extends LazyFragment implements
 		OnRefreshListener2<ScrollView> {
+
+	private boolean isPrepared;
+	private boolean isFirstTime = true;
 
 	private View back;
 	private TextView title;
@@ -56,7 +59,8 @@ public class QiuGouFragment extends BaseFragment implements
 		View view = inflater
 				.inflate(R.layout.fragment_qiugou, container, false);
 		initView(view);
-		checkNetWorkState();
+		isPrepared = true;
+		lazyLoad();
 		return view;
 	}
 
@@ -125,6 +129,7 @@ public class QiuGouFragment extends BaseFragment implements
 
 			@Override
 			public void onSuccess(List<IWant> arg0) {
+				dialog.dismiss();
 				if (list_qiugou.size() == 0) {
 					if (arg0.size() == 0) {
 						scrollView.onRefreshComplete();
@@ -240,6 +245,16 @@ public class QiuGouFragment extends BaseFragment implements
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
 		checkNetWorkState();
+	}
+
+	@Override
+	protected void lazyLoad() {
+		// TODO Auto-generated method stub
+		if (isPrepared && isVisible && isFirstTime) {
+			showDialog("数据加载中");
+			isFirstTime = false;
+			checkNetWorkState();
+		}
 	}
 
 }

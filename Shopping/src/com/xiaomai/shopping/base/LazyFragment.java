@@ -21,14 +21,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-public abstract class BaseFragment extends Fragment implements OnClickListener {
+public abstract class LazyFragment extends Fragment implements OnClickListener {
+
+	// 是否可见
+	protected boolean isVisible;
 
 	// 加载全部图片
 	public ImageLoader imageloader;
 	// 长按加载图片
 	public ImageLoader loader;
 	public Context context;
-
 	public ProgressDialog dialog;
 
 	public void showDialog(String message) {
@@ -51,6 +53,33 @@ public abstract class BaseFragment extends Fragment implements OnClickListener {
 			} catch (Exception e) {
 			}
 	}
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		// TODO Auto-generated method stub
+		super.setUserVisibleHint(isVisibleToUser);
+		// ui可见
+		if (getUserVisibleHint()) {
+			isVisible = true;
+			onVisible();
+		} else {
+			// Ui不可见
+			isVisible = false;
+			onInvisible();
+		}
+	}
+
+	private void onInvisible() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void onVisible() {
+		// TODO Auto-generated method stub
+		lazyLoad();
+	}
+
+	protected abstract void lazyLoad();
 
 	public void setOnClick(View... view) {
 		for (View v : view) {

@@ -21,18 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import c.b.BP;
-import cn.bmob.v3.BmobUser;
 
 import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareAPI;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.fragment.GeRenZhongXinFragment;
 import com.xiaomai.shopping.fragment.QiuGouFragment;
 import com.xiaomai.shopping.fragment.ShouYeFragment;
 import com.xiaomai.shopping.fragment.XiaoXiFragment;
 import com.xiaomai.shopping.utils.Config;
-import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
-import com.xiaomai.shopping.utils.Utils;
 
 /**
  * 这是主页
@@ -79,15 +75,14 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 		// 初始化支付服务
 		BP.init(context, Config.APPLICATION_ID);
 		// 微信 appid appsecret
-		PlatformConfig.setWeixin("wx967daebe835fbeac",
-				"5bb696d9ccd75a38c8a0bfe0675559b3");
+		PlatformConfig.setWeixin("wx47350261ee7ea380",
+				"89147e7484f3dca8579b787d70f1b87e");
 		// 新浪微博 appkey appsecret
 		PlatformConfig.setSinaWeibo("2259885001",
 				"60c2dcb8e3c7e04272e36acdf02483c0");
 		// QQ和Qzone appid appkey
 		PlatformConfig.setQQZone("2259885001",
 				"60c2dcb8e3c7e04272e36acdf02483c0");
-		
 
 	}
 
@@ -259,8 +254,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		BmobUser.logOut(context);
-		SharedPrenerencesUtil.setIsLogOut(context, true);
 	}
 
 	// 监听手机上的BACK键
@@ -281,4 +274,5 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
 }

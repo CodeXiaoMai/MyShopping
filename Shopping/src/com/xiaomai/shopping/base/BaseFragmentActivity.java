@@ -1,5 +1,6 @@
 package com.xiaomai.shopping.base;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,28 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements
 	public boolean isPullDown;
 
 	private Context context = this;
+	public ProgressDialog dialog;
+
+	public void showDialog(String message) {
+		try {
+			if (dialog == null) {
+				dialog = new ProgressDialog(this);
+				dialog.setCancelable(false);
+			}
+			dialog.setMessage(message);
+			dialog.show();
+		} catch (Exception e) {
+			// 在其他线程调用dialog会报错
+		}
+	}
+
+	public void hideDialog() {
+		if (dialog != null && dialog.isShowing())
+			try {
+				dialog.dismiss();
+			} catch (Exception e) {
+			}
+	}
 
 	/**
 	 * 监听事件

@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.adapter.MessageAdapter;
-import com.xiaomai.shopping.base.BaseFragment;
+import com.xiaomai.shopping.base.LazyFragment;
 import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver.onReceiveMessageListener;
@@ -28,8 +28,11 @@ import com.xiaomai.shopping.utils.GetDate;
  * @author XiaoMai
  *
  */
-public class XiaoXiFragment extends BaseFragment implements
+public class XiaoXiFragment extends LazyFragment implements
 		onReceiveMessageListener {
+
+	// 标志位，标志已经初始化完成。
+	private boolean isPrepared;
 
 	private View back;
 	private TextView title;
@@ -46,6 +49,8 @@ public class XiaoXiFragment extends BaseFragment implements
 		View view = inflater
 				.inflate(R.layout.fragment_xiaoxi, container, false);
 		initView(view);
+		isPrepared = true;
+		lazyLoad();
 		MyPushMessageReceiver.listener = this;
 		return view;
 	}
@@ -102,6 +107,15 @@ public class XiaoXiFragment extends BaseFragment implements
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	protected void lazyLoad() {
+		// TODO Auto-generated method stub
+		if (!isPrepared || !isVisible) {
+			return;
+		}
+		
 	}
 
 }

@@ -2,12 +2,16 @@ package com.xiaomai.shopping.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobUser;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.User;
@@ -35,6 +39,8 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 
 	// 登录
 	private View login;
+	// 头像
+	private ImageView iv_head;
 	// 用户名字
 	private TextView tv_name;
 	// 设置
@@ -49,6 +55,7 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 	private View ll_wodeqiugou;
 	// 我的积分
 	private View ll_wodejifen;
+	private User user;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,13 +65,16 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 				container, false);
 		showLog("gerenzhongxin", 1, "个人中心");
 		initView(view);
+		onLogin();
 		return view;
 	}
 
 	private void initView(View view) {
 		context = getContext();
 		LoginActivity.listener = this;
+		SettingActivity.listener = this;
 		tv_name = (TextView) view.findViewById(R.id.gerenzhongxin_tv_name);
+		iv_head = (ImageView) view.findViewById(R.id.geren_head);
 		login = view.findViewById(R.id.ll_login_regist);
 		ll_setting = view.findViewById(R.id.gerenzhongxin_ll_setting);
 		ll_fabu = view.findViewById(R.id.gerenzhongxin_ll_fabuzhongxin);
@@ -123,30 +133,22 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 		}
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == RequestCode.REQUEST_CODE_LOGIN
-				&& resultCode == ResultCode.RESULT_CODE_LOGIN_SUCESS) {
-			// 登录成功
-			User user = (User) data.getSerializableExtra("user");
-			showLog("登录成功", 0, user.getObjectId());
-			try {
-				String userName = DES.decryptDES(user.getNicheng(),
-						Utils.ENCRYPT_KEY);
-				tv_name.setText(userName);
-				login.setClickable(false);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if (requestCode == RequestCode.REQUEST_CODE_SETTING
-				&& resultCode == ResultCode.RESULT_CODE_SETTING_LOGOUT) {
-			// 注销登录
-			tv_name.setText("登录/注册");
-			login.setClickable(true);
-		}
-
-	}
+	/*
+	 * @Override public void onActivityResult(int requestCode, int resultCode,
+	 * Intent data) { super.onActivityResult(requestCode, resultCode, data); if
+	 * (requestCode == RequestCode.REQUEST_CODE_LOGIN && resultCode ==
+	 * ResultCode.RESULT_CODE_LOGIN_SUCESS) { // 登录成功 User user = (User)
+	 * data.getSerializableExtra("user"); showLog("登录成功", 0,
+	 * user.getObjectId()); try { String userName =
+	 * DES.decryptDES(user.getNicheng(), Utils.ENCRYPT_KEY);
+	 * tv_name.setText(userName); login.setClickable(false); } catch (Exception
+	 * e) { e.printStackTrace(); } } else if (requestCode ==
+	 * RequestCode.REQUEST_CODE_SETTING && resultCode ==
+	 * ResultCode.RESULT_CODE_SETTING_LOGOUT) { // 注销登录
+	 * tv_name.setText("登录/注册"); login.setClickable(true); }
+	 * 
+	 * }
+	 */
 
 	@Override
 	public void loadData() {
@@ -157,19 +159,31 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 	@Override
 	public void onLogin() {
 		// TODO Auto-generated method stub
-		User user = getCurrentUser();
-		if (user.getIsNiChengChanged()) {
-			tv_name.setText(DES.decryptDES(user.getNicheng(), Utils.ENCRYPT_KEY));
-		} else {
-			tv_name.setText(user.getMobilePhoneNumber());
+		user = BmobUser.getCurrentUser(context, User.class);
+		if (user != null) {
+			if (user.getIsNiChengChanged()) {
+				tv_name.setText(DES.decryptDES(user.getNicheng(),
+						Utils.ENCRYPT_KEY));
+			} else {
+				tv_name.setText(user.getMobilePhoneNumber());
+			}
+			String uri = user.getImageUri();
+			if (!TextUtils.isEmpty(uri)) {
+				iv_head.setImageResource(R.drawable.tupian_jiazaizhong);
+				loader = ImageLoader.getInstance();
+				loader.init(ImageLoaderConfiguration.createDefault(context));
+				loader.displayImage(uri, iv_head);
+			}
+			login.setClickable(false);
 		}
-		login.setClickable(false);
 	}
 
 	@Override
 	public void onLogOut() {
 		// TODO Auto-generated method stub
 		tv_name.setText("登录/注册");
+		iv_head.setImageResource(R.drawable.ic_launcher);
 		login.setClickable(true);
 	}
+
 }

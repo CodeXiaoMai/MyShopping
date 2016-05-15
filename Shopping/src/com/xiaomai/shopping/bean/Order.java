@@ -9,6 +9,8 @@ public class Order extends BmobObject {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final String ORDER_STATUS_WEIZHIFU = "NOTPAY";
+	public static final String ORDER_STATUS_ZHIFUCHENGGONG = "SUCCESS";
 	// 订单号
 	private String orderId;
 	// 用户id
@@ -25,9 +27,12 @@ public class Order extends BmobObject {
 	private Integer count;
 	// 金额
 	private Double money;
+	// 状态
+	private String status;
 
 	public Order(String orderId, String uid, String shangjiaId, String goodsid,
-			String goodsName, String imageUri, Integer count, Double money) {
+			String goodsName, String imageUri, Integer count, Double money,
+			String status) {
 		super();
 		this.orderId = orderId;
 		this.uid = uid;
@@ -37,6 +42,7 @@ public class Order extends BmobObject {
 		this.imageUri = imageUri;
 		this.count = count;
 		this.money = money;
+		this.status = status;
 	}
 
 	public String getImageUri() {
@@ -101,6 +107,14 @@ public class Order extends BmobObject {
 
 	public void setMoney(Double money) {
 		this.money = money;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

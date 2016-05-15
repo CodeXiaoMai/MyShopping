@@ -135,6 +135,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		fragment_adapter = new MyFragmentAdapter(getSupportFragmentManager());
 		viewPager.setAdapter(fragment_adapter);
 		viewPager.addOnPageChangeListener(this);
+		showDialog("数据加载中");
 		loadComment();
 		checkCollection();
 		loadCollectionCount();
@@ -162,12 +163,14 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 			public void onSuccess(int arg0) {
 				tv_shoucang.setText("收藏：" + arg0 + "人");
 				goods.setWant(arg0);
+				hideDialog();
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				showErrorToast(arg0, arg1);
 				showLog("收藏人数", arg0, arg1);
+				hideDialog();
 			}
 		});
 	}

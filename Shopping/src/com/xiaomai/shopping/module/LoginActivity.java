@@ -113,6 +113,7 @@ public class LoginActivity extends BaseActivity {
 			user = new User();
 			user.setUsername(userName);
 			user.setPassword(password);
+			showDialog("正在登录");
 			user.login(context, new SaveListener() {
 
 				@Override
@@ -127,6 +128,7 @@ public class LoginActivity extends BaseActivity {
 						currentUser.setScore(currentUser.getScore()
 								+ Utils.SCORE_LOGIN);
 						currentUser.update(context);
+						hideDialog();
 					}
 					if (listener != null) {
 						listener.onLogin();
@@ -137,6 +139,7 @@ public class LoginActivity extends BaseActivity {
 				@Override
 				public void onFailure(int arg0, String arg1) {
 					showLog("Login", arg0, arg1);
+					hideDialog();
 					switch (arg0) {
 					case 101:
 						showToast("用户名或密码错误！");

@@ -99,17 +99,4 @@ public class SharedPrenerencesUtil {
 		return sp.getBoolean("isShengLiuLiang", false);
 	}
 
-	public static void setIsLogOut(Context context, boolean flag) {
-		SharedPreferences sp = context.getSharedPreferences(
-				SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
-		Editor editor = sp.edit();
-		editor.putBoolean("isLogOut", flag);
-		editor.commit();
-	}
-
-	public static boolean getIsLogOut(Context context) {
-		SharedPreferences sp = context.getSharedPreferences(
-				SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
-		return sp.getBoolean("isLogOut", false);
-	}
 }

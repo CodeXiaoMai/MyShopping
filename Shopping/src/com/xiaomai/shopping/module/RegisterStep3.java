@@ -105,6 +105,7 @@ public class RegisterStep3 extends BaseActivity {
 			showToast("密码不能为空");
 			return;
 		}
+		showDialog("正在注册");
 		String username = getIntent().getStringExtra("username");
 		User user = new User();
 		pass = MD5.ecode(pass);
@@ -173,6 +174,8 @@ public class RegisterStep3 extends BaseActivity {
 
 						@Override
 						public void onSuccess() {
+
+							hideDialog();
 							// TODO Auto-generated method stub
 							Log.i("bmob", "设备信息更新成功");
 							showToast("注册成功,获得50积分^_^");
@@ -185,6 +188,8 @@ public class RegisterStep3 extends BaseActivity {
 						@Override
 						public void onFailure(int code, String msg) {
 							// TODO Auto-generated method stub
+
+							hideDialog();
 							Log.i("bmob", "设备信息更新失败:" + msg);
 						}
 					});

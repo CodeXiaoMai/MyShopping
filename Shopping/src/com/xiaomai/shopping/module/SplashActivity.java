@@ -32,11 +32,6 @@ public class SplashActivity extends Activity {
 		BmobPush.startWork(context);
 		// 检查程序是否是第一次运行
 
-		boolean isLogOut = SharedPrenerencesUtil.getIsLogOut(context);
-		if (!isLogOut) {
-			BmobUser.logOut(context);
-		}
-
 		handler.postDelayed(new Runnable() {
 
 			@Override

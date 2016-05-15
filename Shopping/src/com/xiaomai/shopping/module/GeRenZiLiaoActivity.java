@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 
 import multi_image_selector.MultiImageSelectorActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -33,7 +32,6 @@ import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.RequestCode;
 import com.xiaomai.shopping.utils.Utils;
-import com.xiaomai.shopping.view.MyDialog;
 
 /**
  * 个人资料页面
@@ -54,7 +52,6 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 	private EditText et_grade;
 	private EditText et_num;
 	private EditText et_real_name;
-
 
 	private ImageView iv_nan, iv_nv;
 	private TextView tv_nan, tv_nv;
@@ -237,6 +234,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 
 	@Override
 	public void loadData() {
+		showDialog("数据加载中");
 		user = getCurrentUser();
 		if (user != null) {
 			imageUri = user.getImageUri();
@@ -269,6 +267,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 				et_num.setText(num);
 			}
 		}
+		hideDialog();
 	}
 
 	private void setSex(String sex) {

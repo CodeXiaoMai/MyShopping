@@ -156,6 +156,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 
 	@Override
 	public void loadData() {
+		showDialog("数据加载中");
 		boolean shengLiuLiang = SharedPrenerencesUtil.getShengLiuLiang(context);
 		// 如果是数据状态，并且未开启省流量模式，或者是Wifi状态就加载图片，否则不加载图片
 		if (!NetWorkUtil.isNetwork(context, false)) {
@@ -444,6 +445,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 			@Override
 			public void onSuccess(List<Goods> arg0) {
 				if (list.size() == 0) {
+					dialog.dismiss();
 					if (arg0.size() == 0) {
 						showToast("没有任何数据！");
 						scrollView.onRefreshComplete();
@@ -536,7 +538,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 					images.add(ad.getImage_url());
 				}
 				pagerAdapter = new MyFragmentAdapter(getFragmentManager(),
-						images,context);
+						images, context);
 				// viewPager.setAdapter(adapter_viewPager);
 				viewPager.setAdapter(pagerAdapter);
 				myHandler.sendEmptyMessageDelayed(0, AUTO_PLAY_TIME);

@@ -71,6 +71,7 @@ public class RegisterStep1 extends BaseActivity {
 	 * @param userName
 	 */
 	private void queryName(final String userName) {
+		showDialog("正在验证手机号");
 		BmobQuery<User> query = new BmobQuery<User>();
 		final String username = DES.encryptDES(userName);
 		query = query.addWhereEqualTo("username", username);
@@ -90,6 +91,8 @@ public class RegisterStep1 extends BaseActivity {
 								@Override
 								public void done(Integer arg0,
 										BmobException arg1) {
+
+									hideDialog();
 									if (arg1 == null) {
 										Intent intent = new Intent(context,
 												RegisterStep2.class);
