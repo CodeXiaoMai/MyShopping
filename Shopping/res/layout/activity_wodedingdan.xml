@@ -7,10 +7,31 @@
 
     <include layout="@layout/title" />
 
-    <ListView
+    <com.xiaomai.shopping.view.RefreshListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null" />
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:padding="5dp" />
+
+    <LinearLayout
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="这里是空的"
+            android:textColor="@color/ziti2" />
+    </LinearLayout>
 
 </LinearLayout>

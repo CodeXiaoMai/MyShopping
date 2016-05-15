@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="推荐微信5.0及以上版本的用户使用"
+                android:text="微信5.0及以上版本的用户使用"
                 android:textColor="@color/ziti2"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -166,7 +166,7 @@
         android:background="@color/ziti2" />
 
     <TextView
-        android:textColor="@color/ziti_normal"
+        android:textColor="@color/ziti2"
         android:textSize="14sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

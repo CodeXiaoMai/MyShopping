@@ -150,33 +150,6 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		images = goods.getImages();
 		tv_selector.setText("1/" + images.size());
 		double price = Double.parseDouble(goods.getPrice());
-		/*BP.pay(this, goods.getTitle(), goods.getContent(), price, true,
-				new PListener() {
-
-					@Override
-					public void unknow() {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void succeed() {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void orderId(String arg0) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void fail(int arg0, String arg1) {
-						// TODO Auto-generated method stub
-
-					}
-				});*/
 	}
 
 	// 查询收藏人数
@@ -338,7 +311,8 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 				loadComment();
 			}
 		});
-		setOnClick(back, iv_send, iv_more, bt_shoucang,bt_phone, bt_chat, bt_buy);
+		setOnClick(back, iv_send, iv_more, bt_shoucang, bt_phone, bt_chat,
+				bt_buy);
 	}
 
 	private void loadGoods() {
@@ -387,8 +361,13 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 			}
 			break;
 		case R.id.buy:
-			Intent intent = new Intent(context,PayActivity.class);
+			User user = getCurrentUser();
+			if (user == null) {
+				return;
+			}
+			Intent intent = new Intent(context, PayActivity.class);
 			intent.putExtra("goods", goods);
+			intent.putExtra("user", user);
 			startActivity(intent);
 			break;
 		case R.id.chat:

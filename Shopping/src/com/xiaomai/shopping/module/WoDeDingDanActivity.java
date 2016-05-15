@@ -6,33 +6,39 @@ import java.util.List;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 import com.xiaomai.shopping.R;
+import com.xiaomai.shopping.adapter.OrderAdapter;
 import com.xiaomai.shopping.base.BaseActivity;
+import com.xiaomai.shopping.bean.Order;
+import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.utils.Utils;
+import com.xiaomai.shopping.view.RefreshListView;
+import com.xiaomai.shopping.view.RefreshListView.OnRefreshListener;
 
 /**
- * 我的收藏页面
+ * 我的订单页面
  * 
  * @author XiaoMai
  *
  */
-public class WoDeDingDanActivity extends BaseActivity {
+public class WoDeDingDanActivity extends BaseActivity implements
+		OnRefreshListener {
 	private View back;
 	private TextView title;
 	private View share;
 
 	private Context context;
 
-	// 我的收藏
-	private ListView lv_dingdan;
-	private MyAdapter adapter;
-	private List<String> list_dingdan = new ArrayList<>();
+	// 我的订单
+	private RefreshListView lv_dingdan;
+	private OrderAdapter adapter;
+	private List<Order> list_order = new ArrayList<>();
+	private List<Order> list_temp;
+	private BmobQuery<Order> bmobQuery;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +46,20 @@ public class WoDeDingDanActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wodedingdan);
 		initView();
-		context = this;
+		checkNetWorkState();
 	}
 
 	private void initView() {
+		context = this;
 		back = findViewById(R.id.title_back);
 		title = (TextView) findViewById(R.id.title_title);
 		title.setText("我的订单");
 		share = findViewById(R.id.title_share);
 		share.setVisibility(View.INVISIBLE);
 
-		lv_dingdan = (ListView) findViewById(R.id.listView);
-		adapter = new MyAdapter();
-		lv_dingdan.setAdapter(adapter);
+		lv_dingdan = (RefreshListView) findViewById(R.id.listView);
+		lv_dingdan.setOnRefreshListener(this);
+		bmobQuery = new BmobQuery<Order>();
 		setOnClick(back);
 	}
 
@@ -67,64 +74,63 @@ public class WoDeDingDanActivity extends BaseActivity {
 
 	}
 
-	private class MyAdapter extends BaseAdapter {
+	@Override
+	public void loadData() {
+		// TODO Auto-generated method stub
+		User user = getCurrentUser();
+		if (user != null) {
+			bmobQuery.setLimit(Utils.REQUEST_COUNT);
+			bmobQuery.setSkip(list_order.size());
+			bmobQuery.addWhereEqualTo("uid", user.getObjectId());
+			bmobQuery.findObjects(context, new FindListener<Order>() {
 
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return 10;
-		}
+				@Override
+				public void onSuccess(List<Order> arg0) {
+					// TODO Auto-generated method stub
+					if (list_order.size() == 0) {
+						adapter = new OrderAdapter(context, list_order,
+								imageloader, loader);
+						lv_dingdan.setAdapter(adapter);
+						if (arg0.size() > 0) {
+							list_order = arg0;
+						} else {
+							showToast("你还没有任何详单数据!");
+							return;
+						}
+					} else {
+						if (arg0.size() == 0) {
+							showToast("没有更多数据");
+							return;
+						}
+						list_order.addAll(arg0);
+					}
+					adapter.setList(list_order);
+					adapter.notifyDataSetChanged();
+				}
 
-		@Override
-		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View view = convertView;
-			ViewHolder holder;
-			if (view == null) {
-				view = View.inflate(context, R.layout.item_dingdan, null);
-				holder = new ViewHolder();
-				holder.iv_image = (ImageView) view.findViewById(R.id.iv_image);
-				holder.tv_name = (TextView) view
-						.findViewById(R.id.dingdan_tv_title);
-				holder.tv_price = (TextView) view
-						.findViewById(R.id.dingdan_tv_price);
-				holder.tv_date = (TextView)view.findViewById(R.id.dingdan_tv_date);
-				holder.bt_pingjia = (Button) view
-						.findViewById(R.id.dingdan_bt_pingjia);
-				holder.bt_shanchu_dingdan = (Button) view
-						.findViewById(R.id.dingdan_bt_shanchu_dingdan);
-				view.setTag(holder);
-			} else {
-				holder = (ViewHolder) view.getTag();
-			}
-			return view;
-		}
-
-		private class ViewHolder {
-			TextView tv_date;
-			ImageView iv_image;
-			TextView tv_name;
-			TextView tv_price;
-			Button bt_shanchu_dingdan;
-			Button bt_pingjia;
+				@Override
+				public void onError(int arg0, String arg1) {
+					// TODO Auto-generated method stub
+					showErrorToast(arg0, arg1);
+					showLog("订单", arg0, arg1);
+				}
+			});
 		}
 	}
 
 	@Override
-	public void loadData() {
+	public void pullDownRefresh() {
 		// TODO Auto-generated method stub
-		
+		list_temp = list_order;
+		adapter.setList(list_temp);
+		list_order = new ArrayList<Order>();
+		loadData();
+	}
+
+	@Override
+	public void pullUpLoadMore() {
+		// TODO Auto-generated method stub
+		loadData();
 	}
 
 }
