@@ -203,6 +203,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 	}
 
 	private void updateUserInfo() {
+		showDialog("正在上传数据");
 		name = DES.encryptDES(name);
 		user.setNicheng(name);
 		realName = DES.encryptDES(realName);
@@ -220,12 +221,14 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
+				hideDialog();
 				showToast("修改成功！");
 				finish();
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
+				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("修改个人资料", arg0, arg1);
 			}

@@ -17,13 +17,11 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.bean.User;
-import com.xiaomai.shopping.utils.StateCode;
 import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
 import com.xiaomai.shopping.view.RefreshListView;
@@ -64,6 +62,7 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 
 	public void loadData() {
 		if (user != null) {
+			showDialog("数据加载中");
 			query.setLimit(Utils.REQUEST_COUNT);
 			query.setSkip(list_yifabu.size());
 			query.addWhereEqualTo("userId", user.getObjectId());
@@ -71,6 +70,7 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 
 				@Override
 				public void onSuccess(List<Goods> arg0) {
+					hideDialog();
 					if (list_yifabu.size() == 0) {
 						if (arg0.size() == 0) {
 							showToast("您还没有发布过，赶快去发布吧！");
@@ -93,6 +93,7 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 				public void onError(int arg0, String arg1) {
 					showErrorToast(arg0, arg1);
 					showLog("", arg0, arg1);
+					hideDialog();
 				}
 			});
 		} else {

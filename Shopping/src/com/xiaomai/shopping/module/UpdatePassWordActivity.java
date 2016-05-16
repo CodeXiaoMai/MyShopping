@@ -80,6 +80,7 @@ public class UpdatePassWordActivity extends BaseActivity {
 	}
 
 	private void setPassWord() {
+		showDialog("数据提交中");
 		String pass = et_pass.getText().toString().trim();
 		if (pass.length() < 6) {
 			showToast("密码长度不能小于6位");
@@ -100,6 +101,7 @@ public class UpdatePassWordActivity extends BaseActivity {
 					@Override
 					public void done(BmobException arg0) {
 						// TODO Auto-generated method stub
+						hideDialog();
 						if (arg0 == null) {
 							showToast("密码修改成功！");
 							startActivity(new Intent(context,

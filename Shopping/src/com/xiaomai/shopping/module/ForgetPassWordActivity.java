@@ -94,6 +94,7 @@ public class ForgetPassWordActivity extends BaseActivity {
 			showToast("请输入手机号");
 			return;
 		}
+		showDialog("正在请求数据");
 		BmobQuery<User> bmobQuery = new BmobQuery<User>();
 		String username = DES.encryptDES(phone);
 		bmobQuery.addWhereEqualTo("username", username);
@@ -103,9 +104,11 @@ public class ForgetPassWordActivity extends BaseActivity {
 			public void onSuccess(List<User> arg0) {
 				// TODO Auto-generated method stub
 				if (arg0 == null) {
+					hideDialog();
 					showToast("该用户不存在");
 				} else {
 					if (arg0.size() == 0) {
+						hideDialog();
 						showToast("该用户不存在");
 					} else {
 						BmobSMS.requestSMSCode(context, phone, "Shopping",
@@ -114,6 +117,8 @@ public class ForgetPassWordActivity extends BaseActivity {
 									@Override
 									public void done(Integer arg0,
 											BmobException arg1) {
+
+										hideDialog();
 										// TODO Auto-generated method stub
 										if (arg1 == null) {
 											showToast("验证码已经发送到您的手机!");
@@ -131,7 +136,7 @@ public class ForgetPassWordActivity extends BaseActivity {
 			@Override
 			public void onError(int arg0, String arg1) {
 				// TODO Auto-generated method stub
-
+				hideDialog();
 			}
 		});
 

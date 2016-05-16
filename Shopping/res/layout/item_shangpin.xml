@@ -8,11 +8,12 @@
 
     <ImageView
         android:id="@+id/shangpin_image"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
+        android:padding="5dp"
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:background="@color/white"
-        android:scaleType="center"
+        android:scaleType="centerCrop"
         android:src="@drawable/tupian_jiazaizhong" />
 
     <LinearLayout

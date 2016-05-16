@@ -127,6 +127,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	 * 检查网络状态
 	 */
 	public void checkNetWorkState() {
+
 		boolean shengLiuLiang = SharedPrenerencesUtil.getShengLiuLiang(context);
 		if (NetWorkUtil.isNetwork(context)
 				&& NetWorkUtil.isMobileNetWork(context) && !shengLiuLiang) {
@@ -140,6 +141,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 									true);
 							Toast.makeText(context, "成功开启省流量模式",
 									Toast.LENGTH_SHORT).show();
+							showDialog("数据加载中");
 							loadData();
 						}
 					}, new DialogInterface.OnClickListener() {
@@ -147,16 +149,17 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							loadData();
+							showDialog("数据加载中");
 						}
 					});
 		} else {
 			loadData();
+			showDialog("数据加载中");
 		}
 	}
 
 	@Override
 	public void loadData() {
-		showDialog("数据加载中");
 		boolean shengLiuLiang = SharedPrenerencesUtil.getShengLiuLiang(context);
 		// 如果是数据状态，并且未开启省流量模式，或者是Wifi状态就加载图片，否则不加载图片
 		if (!NetWorkUtil.isNetwork(context, false)) {
@@ -180,7 +183,6 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		scrollView.getLoadingLayoutProxy(false, true).setRefreshingLabel(
 				"加载中...");
 		scrollView.getLoadingLayoutProxy(false, true).setReleaseLabel("释放加载");
-
 		scrollView.setOnRefreshListener(this);
 		loader = ImageLoader.getInstance();
 		loader.init(ImageLoaderConfiguration.createDefault(context));
@@ -444,8 +446,8 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 
 			@Override
 			public void onSuccess(List<Goods> arg0) {
+				hideDialog();
 				if (list.size() == 0) {
-					dialog.dismiss();
 					if (arg0.size() == 0) {
 						showToast("没有任何数据！");
 						scrollView.onRefreshComplete();
@@ -470,6 +472,8 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 
 			@Override
 			public void onError(int arg0, String arg1) {
+				scrollView.onRefreshComplete();
+				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("shouye_goods", arg0, arg1);
 			}
@@ -588,7 +592,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
 		if (currentState == LOAD_GOODS) {
 			list_goods = new ArrayList<Goods>();
-			checkNetWorkState();
+			loadData();
 		} else {
 			list_search_result = new ArrayList<Goods>();
 			loadSearchGoods(et_search);

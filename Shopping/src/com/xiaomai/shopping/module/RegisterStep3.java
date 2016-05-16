@@ -137,6 +137,7 @@ public class RegisterStep3 extends BaseActivity {
 
 					@Override
 					public void onFailure(int arg0, String arg1) {
+						hideDialog();
 						showErrorToast(arg0, arg1);
 						showLog("积分", arg0, arg1);
 					}
@@ -145,6 +146,7 @@ public class RegisterStep3 extends BaseActivity {
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
+				hideDialog();
 				showLog("Register3", arg0, arg1);
 				switch (arg0) {
 				case 301:

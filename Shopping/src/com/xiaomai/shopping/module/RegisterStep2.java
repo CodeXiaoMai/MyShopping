@@ -124,11 +124,13 @@ public class RegisterStep2 extends BaseActivity {
 	 * 重新发送验证码
 	 */
 	private void resetYanZhengMa() {
+		showDialog("正在请求数据");
 		BmobSMS.requestSMSCode(context, phoneNumber, "Shopping",
 				new RequestSMSCodeListener() {
 
 					@Override
 					public void done(Integer arg0, BmobException arg1) {
+						hideDialog();
 						if (arg1 == null) {
 							showToast("发送成功！");
 							duMiao();

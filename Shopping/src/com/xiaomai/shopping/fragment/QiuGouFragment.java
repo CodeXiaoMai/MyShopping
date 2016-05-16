@@ -129,7 +129,7 @@ public class QiuGouFragment extends LazyFragment implements
 
 			@Override
 			public void onSuccess(List<IWant> arg0) {
-				dialog.dismiss();
+				hideDialog();
 				if (list_qiugou.size() == 0) {
 					if (arg0.size() == 0) {
 						scrollView.onRefreshComplete();
@@ -152,6 +152,8 @@ public class QiuGouFragment extends LazyFragment implements
 
 			@Override
 			public void onError(int arg0, String arg1) {
+				scrollView.onRefreshComplete();
+				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("我的求购", arg0, arg1);
 			}

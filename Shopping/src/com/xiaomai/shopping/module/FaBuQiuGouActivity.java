@@ -136,6 +136,7 @@ public class FaBuQiuGouActivity extends BaseActivity {
 	}
 
 	private void fabu() {
+		
 		String userId = user.getObjectId();
 		String userName;
 		if (user.getIsNiChengChanged()) {
@@ -162,10 +163,12 @@ public class FaBuQiuGouActivity extends BaseActivity {
 
 	private void saveData(IWant iWant) {
 		// TODO Auto-generated method stub
+		showDialog("正在发布");
 		iWant.save(context, new SaveListener() {
 
 			@Override
 			public void onSuccess() {
+				hideDialog();
 				addScore(user, Utils.SCORE_ADD_IWANT, "发布求购");
 				MyDialog.showDialog(context, "发布成功", "您还要继续发布新的求购吗？",
 						new DialogInterface.OnClickListener() {
@@ -195,7 +198,7 @@ public class FaBuQiuGouActivity extends BaseActivity {
 			public void onFailure(int arg0, String arg1) {
 				showErrorToast(arg0, arg1);
 				showLog("发布", arg0, arg1);
-
+				hideDialog();
 			}
 		});
 	}

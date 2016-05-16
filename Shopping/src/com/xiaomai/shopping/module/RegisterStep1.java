@@ -115,6 +115,7 @@ public class RegisterStep1 extends BaseActivity {
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
+				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("RegisterStep1", arg0, arg1);
 			}

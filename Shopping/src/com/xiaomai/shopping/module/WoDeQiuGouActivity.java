@@ -198,6 +198,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 
 	@Override
 	public void loadData() {
+		showDialog("数据加载中");
 		User user = getCurrentUser();
 		BmobQuery<IWant> bmobQuery = new BmobQuery<IWant>();
 		bmobQuery.setLimit(Utils.REQUEST_COUNT);
@@ -207,6 +208,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 
 			@Override
 			public void onSuccess(List<IWant> arg0) {
+				hideDialog();
 				if (list_yifabuqiugou.size() == 0) {
 					if (arg0.size() == 0) {
 						showToast("您还没有发布过任何求购！");
@@ -227,6 +229,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 
 			@Override
 			public void onError(int arg0, String arg1) {
+				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("我的求购", arg0, arg1);
 			}

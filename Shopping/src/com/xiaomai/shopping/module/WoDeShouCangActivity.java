@@ -79,6 +79,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 
 	@Override
 	public void loadData() {
+		showDialog("数据加载中");
 		User user = getCurrentUser();
 		if (user != null) {
 			bmobQuery.setLimit(Utils.REQUEST_COUNT);
@@ -88,6 +89,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 
 				@Override
 				public void onSuccess(List<Collection> arg0) {
+					hideDialog();
 					if (list_shoucang.size() == 0) {
 						if (arg0.size() == 0) {
 							showToast("您的藏宝阁是空的！");
@@ -108,6 +110,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 
 				@Override
 				public void onError(int arg0, String arg1) {
+					hideDialog();
 					showErrorToast(arg0, arg1);
 					showLog("收藏", arg0, arg1);
 				}

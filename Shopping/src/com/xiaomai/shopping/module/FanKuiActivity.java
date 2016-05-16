@@ -88,7 +88,7 @@ public class FanKuiActivity extends BaseActivity {
 	 */
 	private void saveData() {
 		// TODO Auto-generated method stub
-		showToast("正在提交，请稍候!");
+		showDialog("正在提交，请稍候!");
 		Suggestion suggestion = new Suggestion(user.getObjectId(), content,
 				phone);
 		suggestion.save(context, new SaveListener() {
@@ -96,12 +96,14 @@ public class FanKuiActivity extends BaseActivity {
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
+				hideDialog();
 				showToast("提交成功！");
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
+				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("提交", arg0, arg1);
 			}

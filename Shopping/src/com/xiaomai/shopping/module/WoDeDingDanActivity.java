@@ -77,6 +77,7 @@ public class WoDeDingDanActivity extends BaseActivity implements
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
+		showDialog("数据加载中");
 		User user = getCurrentUser();
 		if (user != null) {
 			bmobQuery.setLimit(Utils.REQUEST_COUNT);
@@ -86,6 +87,7 @@ public class WoDeDingDanActivity extends BaseActivity implements
 
 				@Override
 				public void onSuccess(List<Order> arg0) {
+					hideDialog();
 					// TODO Auto-generated method stub
 					if (list_order.size() == 0) {
 						adapter = new OrderAdapter(context, list_order,
@@ -111,6 +113,7 @@ public class WoDeDingDanActivity extends BaseActivity implements
 				@Override
 				public void onError(int arg0, String arg1) {
 					// TODO Auto-generated method stub
+					hideDialog();
 					showErrorToast(arg0, arg1);
 					showLog("订单", arg0, arg1);
 				}

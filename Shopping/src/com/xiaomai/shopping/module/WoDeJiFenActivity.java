@@ -122,6 +122,7 @@ public class WoDeJiFenActivity extends BaseActivity {
 
 	@Override
 	public void loadData() {
+		showDialog("数据加载中");
 		User user = getCurrentUser();
 		Integer score = user.getScore();
 		tv_score.setText(score + "");
@@ -133,6 +134,7 @@ public class WoDeJiFenActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(List<Score> arg0) {
+				hideDialog();
 				if (arg0 != null) {
 					list = arg0;
 					adapter.notifyDataSetChanged();
@@ -141,6 +143,7 @@ public class WoDeJiFenActivity extends BaseActivity {
 
 			@Override
 			public void onError(int arg0, String arg1) {
+				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("获取积分", arg0, arg1);
 			}

@@ -258,12 +258,14 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 	}
 
 	private void onImageSuccess(List<String> arg1) {
+		showDialog("正在发布");
 		Goods goods = new Goods(userId, title2, content, price, count, count,
 				address, phone, qq, state, want, 0, arg1);
 		goods.save(context, new SaveListener() {
 
 			@Override
 			public void onSuccess() {
+				hideDialog();
 				showToast("发布成功!");
 				addScore(user, Utils.SCORE_ADD_GOODS, "发布商品");
 				finish();
@@ -271,6 +273,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
+				hideDialog();
 				showLog("fabu", arg0, arg1);
 				showErrorToast(arg0, arg1);
 			}
