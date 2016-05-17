@@ -57,11 +57,11 @@ public class RefreshListView extends ListView implements OnScrollListener {
 		}
 	}
 
-	private Handler handler = new Handler() {
+	/*private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			onRefreshFinish();
 		};
-	};
+	};*/
 
 	private LinearLayout refresh_header_root;
 	private LinearLayout refresh_header_view;
@@ -294,7 +294,7 @@ public class RefreshListView extends ListView implements OnScrollListener {
 					listener.pullDownRefresh();
 				}
 				// 刷新完成后进度条，刷新关隐藏
-				handler.sendEmptyMessageDelayed(0, 1000);
+//				handler.sendEmptyMessageDelayed(0, 1000);
 			}
 			break;
 
@@ -326,7 +326,7 @@ public class RefreshListView extends ListView implements OnScrollListener {
 					listener.pullUpLoadMore();
 				}
 
-				handler.sendEmptyMessageDelayed(0, 1000);
+//				handler.sendEmptyMessageDelayed(0, 1000);
 			}
 		}
 

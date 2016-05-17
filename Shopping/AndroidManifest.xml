@@ -138,6 +138,9 @@
             android:name="com.xiaomai.shopping.module.PayActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.xiaomai.shopping.module.FenLeiActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="c.b.a.A"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
@@ -198,7 +201,6 @@
                 <action android:name="cn.bmob.push.lib.service.PushService" />
             </intent-filter>
         </service>
-
 
         <receiver android:name="cn.bmob.push.PushReceiver" >
             <intent-filter>

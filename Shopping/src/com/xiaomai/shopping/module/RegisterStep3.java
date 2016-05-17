@@ -76,6 +76,7 @@ public class RegisterStep3 extends BaseActivity {
 	}
 
 	private void initView() {
+		context = this;
 		// 密码
 		et_pass = (EditText) findViewById(R.id.et_input_number);
 		// 看见密码

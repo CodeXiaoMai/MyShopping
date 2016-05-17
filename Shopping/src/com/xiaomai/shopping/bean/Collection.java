@@ -12,7 +12,7 @@ public class Collection extends BmobObject {
 	private String userId;
 	private String goodsId;
 	private String goodsName;
-	private String goodsPrice;
+	private Double goodsPrice;
 	private String imageUri;
 
 	public Collection() {
@@ -20,7 +20,7 @@ public class Collection extends BmobObject {
 	}
 
 	public Collection(String userId, String goodsId, String goodsName,
-			String goodsPrice, String imageUri) {
+			Double goodsPrice, String imageUri) {
 		super();
 		this.userId = userId;
 		this.goodsId = goodsId;
@@ -37,11 +37,11 @@ public class Collection extends BmobObject {
 		this.goodsName = goodsName;
 	}
 
-	public String getGoodsPrice() {
+	public Double getGoodsPrice() {
 		return goodsPrice;
 	}
 
-	public void setGoodsPrice(String goodsPrice) {
+	public void setGoodsPrice(Double goodsPrice) {
 		this.goodsPrice = goodsPrice;
 	}
 

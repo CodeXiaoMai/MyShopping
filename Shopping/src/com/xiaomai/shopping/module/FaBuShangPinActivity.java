@@ -13,6 +13,7 @@ import multi_image_selector.utils.Bimp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -25,10 +26,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
@@ -85,13 +90,18 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 	private String state;
 	private int want;
 	private String content;
-	private String price;
+	private Double price;
 	private Integer count;
 	private String address;
 	private String phone;
 	private String qq;
+	private String type;
 	private String title2;
 	private User user;
+
+	private Spinner spinner;
+	private String[] names = { "点击选择分类 ", "交通工具", "电子产品", "体育器材", "学习用品",
+			"衣帽鞋子", "其他" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +124,9 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 		et_count = (EditText) findViewById(R.id.fabu_et_count);
 		et_address = (EditText) findViewById(R.id.fabu_et_address);
 		et_phone = (EditText) findViewById(R.id.fabu_et_phone);
-		et_phone.setText(user.getMobilePhoneNumber());
+		if (user != null) {
+			et_phone.setText(user.getMobilePhoneNumber());
+		}
 		et_qq = (EditText) findViewById(R.id.fabu_et_qq);
 		bt_fabu = (Button) findViewById(R.id.fabu_bt_fabu);
 		gridView = (MyGridView) findViewById(R.id.fabu_gridView);
@@ -132,6 +144,25 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 			}
 		});
 		et_title.requestFocus();
+
+		spinner = (Spinner) findViewById(R.id.spinner);
+		spinner.setAdapter(new ArrayAdapter<>(context, R.layout.spinner_item,
+				R.id.textView, names));
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				type = names[position];
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		setOnClick(back, bt_fabu);
 	}
 
@@ -178,14 +209,19 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 			showToast("给你的宝贝添加几句描述吧！");
 			return;
 		}
-		price = et_price.getText().toString().trim();
-		if (TextUtils.isEmpty(price)) {
+		String strprice = et_price.getText().toString().trim();
+		if (TextUtils.isEmpty(strprice)) {
 			showToast("价格不能为空！");
 			return;
 		}
+		price = Double.parseDouble(strprice);
 		String str_count = et_count.getText().toString().trim();
 		if (TextUtils.isEmpty(str_count)) {
 			showToast("数量不能为空！");
+			return;
+		}
+		if (TextUtils.isEmpty(type) || type.equals(names[0])) {
+			showToast("请选择分类");
 			return;
 		}
 		count = Integer.parseInt(str_count);
@@ -260,7 +296,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 	private void onImageSuccess(List<String> arg1) {
 		showDialog("正在发布");
 		Goods goods = new Goods(userId, title2, content, price, count, count,
-				address, phone, qq, state, want, 0, arg1);
+				address, phone, qq, state, want, 0, type, arg1);
 		goods.save(context, new SaveListener() {
 
 			@Override

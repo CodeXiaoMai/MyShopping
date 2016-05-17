@@ -62,7 +62,7 @@ public class PayActivity extends BaseActivity {
 		tv_price.setText("￥" + goods.getPrice());
 		tv_title.setText(goods.getTitle());
 		name = goods.getTitle();
-		money = Double.parseDouble(goods.getPrice());
+		money = goods.getPrice();
 		user = (User) intent.getSerializableExtra("user");
 
 	}
@@ -108,8 +108,6 @@ public class PayActivity extends BaseActivity {
 			break;
 		}
 	}
-
-	
 
 	/**
 	 * 调用支付宝支付
@@ -247,7 +245,6 @@ public class PayActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	void installBmobPayPlugin(String fileName) {
 		try {

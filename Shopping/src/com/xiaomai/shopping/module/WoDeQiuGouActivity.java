@@ -208,6 +208,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 
 			@Override
 			public void onSuccess(List<IWant> arg0) {
+				lv_yifabuqiugou.onRefreshFinish();
 				hideDialog();
 				if (list_yifabuqiugou.size() == 0) {
 					if (arg0.size() == 0) {
@@ -229,6 +230,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 
 			@Override
 			public void onError(int arg0, String arg1) {
+				lv_yifabuqiugou.onRefreshFinish();
 				hideDialog();
 				showErrorToast(arg0, arg1);
 				showLog("我的求购", arg0, arg1);

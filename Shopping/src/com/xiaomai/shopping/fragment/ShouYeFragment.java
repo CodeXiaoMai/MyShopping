@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -45,6 +47,7 @@ import com.xiaomai.shopping.adapter.ViewPagerAdapter;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.Ad;
 import com.xiaomai.shopping.bean.Goods;
+import com.xiaomai.shopping.module.FenLeiActivity;
 import com.xiaomai.shopping.module.ShangPinXiangQingActivity;
 import com.xiaomai.shopping.utils.NetWorkUtil;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
@@ -207,6 +210,36 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 				R.layout.item_fenlei, new String[] { "image_url", "name" },
 				new int[] { R.id.item_fenlei_image, R.id.item_fenlei_name });
 		gv_fenlei.setAdapter(simple_adapter);
+		gv_fenlei.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(context, FenLeiActivity.class);
+				switch (position) {
+				case 0:
+					intent.putExtra("type", names[0]);
+					break;
+				case 1:
+					intent.putExtra("type", names[1]);
+					break;
+				case 2:
+					intent.putExtra("type", names[2]);
+					break;
+				case 3:
+					intent.putExtra("type", names[3]);
+					break;
+				case 4:
+					intent.putExtra("type", names[4]);
+					break;
+				case 5:
+					intent.putExtra("type", names[5]);
+					break;
+				}
+				startActivity(intent);
+			}
+		});
 		Utils.setHeight(simple_adapter, gv_fenlei, 5);
 
 		list_goods = new ArrayList<Goods>();
@@ -298,7 +331,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 				imageloader.displayImage(goods.getImages().get(0),
 						holder.iv_image);
 			} else {
-				holder.iv_image.setImageResource(R.drawable.chang_an);
+				holder.iv_image.setImageResource(R.drawable.chang_an1);
 				holder.iv_image
 						.setOnLongClickListener(new View.OnLongClickListener() {
 

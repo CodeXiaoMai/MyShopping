@@ -10,6 +10,8 @@ public class User extends BmobUser {
 	private static final long serialVersionUID = 1L;
 	// 昵称
 	private String nicheng;
+	// 真实姓名
+	private String realName;
 	// 头像地址
 	private String imageUri;
 	// 性别
@@ -26,6 +28,14 @@ public class User extends BmobUser {
 	private Boolean isNiChengChanged;
 	// 最后一次登录的时间
 	private String lastTimeLogin;
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
 
 	public String getLastTimeLogin() {
 		return lastTimeLogin;
@@ -97,14 +107,6 @@ public class User extends BmobUser {
 
 	public void setScore(Integer score) {
 		this.score = score;
-	}
-
-	@Override
-	public String toString() {
-		return "User [nicheng=" + nicheng + ", imageUri=" + imageUri + ", sex="
-				+ sex + ", grade=" + grade + ", num=" + num + ", level="
-				+ level + ", score=" + score + ", isNiChengChanged="
-				+ isNiChengChanged + ", lastTimeLogin=" + lastTimeLogin + "]";
 	}
 
 }

@@ -70,6 +70,7 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 
 				@Override
 				public void onSuccess(List<Goods> arg0) {
+					lv_yifabu.onRefreshFinish();
 					hideDialog();
 					if (list_yifabu.size() == 0) {
 						if (arg0.size() == 0) {

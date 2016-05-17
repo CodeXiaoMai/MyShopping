@@ -89,6 +89,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 
 				@Override
 				public void onSuccess(List<Collection> arg0) {
+					lv_shoucang.onRefreshFinish();
 					hideDialog();
 					if (list_shoucang.size() == 0) {
 						if (arg0.size() == 0) {
@@ -110,6 +111,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 
 				@Override
 				public void onError(int arg0, String arg1) {
+					lv_shoucang.onRefreshFinish();
 					hideDialog();
 					showErrorToast(arg0, arg1);
 					showLog("收藏", arg0, arg1);
@@ -193,7 +195,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 						});
 			}
 			holder.tv_name.setText(collection.getGoodsName());
-			holder.tv_price.setText(collection.getGoodsPrice());
+			holder.tv_price.setText(collection.getGoodsPrice() + "");
 			// 进入商品详情
 			view.setOnClickListener(new View.OnClickListener() {
 

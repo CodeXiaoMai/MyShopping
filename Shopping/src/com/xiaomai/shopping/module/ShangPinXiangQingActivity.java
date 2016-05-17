@@ -143,14 +143,13 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 
 	private void fillGoods() {
 		tv_name.setText(goods.getTitle());
-		tv_price.setText(goods.getPrice());
+		tv_price.setText(goods.getPrice()+"");
 		Integer remainCount = goods.getRemainCount();
 		tv_count.setText("数量：" + remainCount);
 		tv_maichu.setText("成交：" + (goods.getCount() - remainCount) + "笔");
 		tv_desc.setText(goods.getContent());
 		images = goods.getImages();
 		tv_selector.setText("1/" + images.size());
-		double price = Double.parseDouble(goods.getPrice());
 	}
 
 	// 查询收藏人数

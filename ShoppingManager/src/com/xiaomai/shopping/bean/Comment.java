@@ -11,15 +11,17 @@ public class Comment extends BmobObject {
 
 	private String goodsId;
 	private String userId;
+	private String userHead;
 	private String userName;
 	private String content;
 
 	public Comment(String goodsId, String content, String userId,
-			String userName) {
+			String userHead, String userName) {
 		super();
 		this.goodsId = goodsId;
 		this.content = content;
 		this.userId = userId;
+		this.userHead = userHead;
 		this.userName = userName;
 	}
 
@@ -45,6 +47,14 @@ public class Comment extends BmobObject {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserHead() {
+		return userHead;
+	}
+
+	public void setUserHead(String userHead) {
+		this.userHead = userHead;
 	}
 
 	public String getUserName() {
