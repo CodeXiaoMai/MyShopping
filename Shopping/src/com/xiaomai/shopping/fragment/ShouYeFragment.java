@@ -82,6 +82,10 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private MyFragmentAdapter pagerAdapter;
 
 	private MyGridView gv_shangpin;
+	private int[] images = { R.drawable.bicycle, R.drawable.shouji,
+			R.drawable.soccerball, R.drawable.book, R.drawable.cloth,
+			R.drawable.more };
+	private String[] names = { "交通工具", "电子产品", "体育器材", "学习用品", "衣帽鞋子", "其他" };
 	private MyAdapter adapter;
 	private List<Goods> list;
 	// 默认加载的商品
@@ -193,10 +197,10 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		dotLayout = (LinearLayout) view.findViewById(R.id.dot_layout);
 		gv_fenlei = (GridView) view.findViewById(R.id.gv_fenlei);
 		data = new ArrayList<Map<String, Object>>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 6; i++) {
 			Map<String, Object> map = new HashMap<>();
-			map.put("image_url", R.drawable.ic_launcher);
-			map.put("name", "图书");
+			map.put("image_url", images[i]);
+			map.put("name", names[i]);
 			data.add(map);
 		}
 		simple_adapter = new SimpleAdapter(getContext(), data,

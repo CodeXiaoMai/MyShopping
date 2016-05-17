@@ -21,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import c.b.BP;
-import cn.bmob.newim.BmobIM;
-import cn.bmob.newim.listener.ConnectListener;
 import cn.bmob.v3.exception.BmobException;
 
 import com.umeng.socialize.PlatformConfig;
@@ -277,22 +275,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-	public void connection(User user) {
-
-		BmobIM.connect(user.getObjectId(), new ConnectListener() {
-			@Override
-			public void done(String uid, BmobException e) {
-				if (e == null) {
-					Toast.makeText(context, "连接成功", Toast.LENGTH_SHORT).show();
-					;
-				} else {
-					Log.i("", e.getErrorCode() + "/" + e.getMessage());
-				}
-			}
-		});
-
 	}
 
 }

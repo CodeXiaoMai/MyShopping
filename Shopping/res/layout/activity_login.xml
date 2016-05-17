@@ -32,12 +32,11 @@
             android:layout_weight="1"
             android:background="#00ffffff"
             android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            android:hint="请输入账号"
+            android:hint="请输入注册时的手机号"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLength="11"
             android:singleLine="true"
-            android:text="15369302755"
             android:textColor="@color/ziti_normal"
             android:textColorHint="#d6d6d6"
             android:textSize="17sp" />
@@ -78,7 +77,6 @@
             android:inputType="textPassword"
             android:maxLength="11"
             android:singleLine="true"
-            android:text="123456"
             android:textColor="@color/ziti_normal"
             android:textColorHint="#d6d6d6"
             android:textSize="17sp" />

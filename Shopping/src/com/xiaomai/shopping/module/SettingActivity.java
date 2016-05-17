@@ -142,9 +142,7 @@ public class SettingActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		mShareAPI = UMShareAPI.get(context);
 
-		final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[] {
-				SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
-				SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE };
+		final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[] { SHARE_MEDIA.SINA };
 
 		new ShareAction(this).setDisplayList(displaylist)
 				.setShareboardclickCallback(this).open();
@@ -160,7 +158,7 @@ public class SettingActivity extends BaseActivity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		mShareAPI.onActivityResult(requestCode, resultCode, data);
+		UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -178,25 +176,14 @@ public class SettingActivity extends BaseActivity implements
 			}
 
 			break;
-		case WEIXIN:
-			if (mShareAPI.isAuthorize(this, SHARE_MEDIA.WEIXIN)) {
-				new ShareAction(this).setPlatform(SHARE_MEDIA.SINA)
-						.setCallback(this).withText("Hello 豆瓣").share();
-			} else {
-				authWeiXin();
-			}
-
-			break;
-		default:
-			break;
 		}
 
 	}
 
-	private void authWeiXin() {
-		// TODO Auto-generated method stub
-		mShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, this);
-	}
+	// private void authWeiXin() {
+	// // TODO Auto-generated method stub
+	// mShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, this);
+	// }
 
 	private void authSina() {
 		// TODO Auto-generated method stub

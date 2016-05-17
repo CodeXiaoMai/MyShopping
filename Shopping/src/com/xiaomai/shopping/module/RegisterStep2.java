@@ -31,7 +31,6 @@ public class RegisterStep2 extends BaseActivity {
 	private TextView tv_PhoneNumber;// 手机号码变色
 	// 下一步
 	private Button btn_second_next;
-	private View back;
 
 	// 手机号
 	private String phoneNumber;
@@ -47,7 +46,7 @@ public class RegisterStep2 extends BaseActivity {
 			int second = msg.arg1;
 			bt_reset_yanzhengma.setText("重新发送(" + second + "s)");
 			if (second == 0) {
-				bt_reset_yanzhengma.setText("重新发送(60s)");
+				bt_reset_yanzhengma.setText("重新发送");
 				bt_reset_yanzhengma.setTextColor(Color.parseColor("#595959"));
 				bt_reset_yanzhengma.setEnabled(true);
 				bt_reset_yanzhengma.setClickable(true);
@@ -63,10 +62,31 @@ public class RegisterStep2 extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_regist2);
 
+		initTitle();
 		initView();
 		initData();
 		duMiao();
 
+	}
+	
+	private void initTitle() {
+		// 标题的控件
+		TextView tv_title;
+		View back;
+		View share;
+
+		// 返回按钮
+		back = findViewById(R.id.title_back);
+
+		// 设置标题
+		tv_title = (TextView) findViewById(R.id.title_title);
+		tv_title.setText("验证验证码");
+
+		// 隐藏分享
+		share = findViewById(R.id.title_share);
+		share.setVisibility(View.INVISIBLE);
+
+		setOnClick(back);
 	}
 
 	private void initData() {

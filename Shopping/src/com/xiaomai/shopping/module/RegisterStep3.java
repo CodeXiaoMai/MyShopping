@@ -51,7 +51,28 @@ public class RegisterStep3 extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_regist3);
+		initTitle();
 		initView();
+	}
+
+	private void initTitle() {
+		// 标题的控件
+		TextView tv_title;
+		View back;
+		View share;
+
+		// 返回按钮
+		back = findViewById(R.id.title_back);
+
+		// 设置标题
+		tv_title = (TextView) findViewById(R.id.title_title);
+		tv_title.setText("设置密码");
+
+		// 隐藏分享
+		share = findViewById(R.id.title_share);
+		share.setVisibility(View.INVISIBLE);
+
+		setOnClick(back);
 	}
 
 	private void initView() {
@@ -168,6 +189,7 @@ public class RegisterStep3 extends BaseActivity {
 			@Override
 			public void onSuccess(List<MyBmobInstallation> object) {
 				// TODO Auto-generated method stub
+				hideDialog();
 				if (object.size() > 0) {
 					MyBmobInstallation mbi = object.get(0);
 					mbi.setUid(BmobUser.getCurrentUser(context, User.class)
@@ -176,8 +198,6 @@ public class RegisterStep3 extends BaseActivity {
 
 						@Override
 						public void onSuccess() {
-
-							hideDialog();
 							// TODO Auto-generated method stub
 							Log.i("bmob", "设备信息更新成功");
 							showToast("注册成功,获得50积分^_^");
@@ -191,7 +211,6 @@ public class RegisterStep3 extends BaseActivity {
 						public void onFailure(int code, String msg) {
 							// TODO Auto-generated method stub
 
-							hideDialog();
 							Log.i("bmob", "设备信息更新失败:" + msg);
 						}
 					});

@@ -79,11 +79,13 @@ public class RegisterStep1 extends BaseActivity {
 
 			@Override
 			public void onSuccess(int count) {
+				hideDialog();
 				Log.i("count:", count + "");
 				// 不存在此用户，可以注册
 				// 为了防止输入密码的过程中别人注册，所以向数据库中添加此用户名，若用户放弃注册怎么办,采用验证码
 				if (count <= 0) {
 					// 发送验证码
+					showDialog("正在发送验证码");
 					final String phoneNumber = userName;
 					BmobSMS.requestSMSCode(context, phoneNumber, "Shopping",
 							new RequestSMSCodeListener() {

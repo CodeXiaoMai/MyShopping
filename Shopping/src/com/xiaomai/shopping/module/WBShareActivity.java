@@ -1,7 +1,6 @@
 package com.xiaomai.shopping.module;
 
-import android.app.Activity;
+import com.umeng.socialize.media.WBShareCallBackActivity;
 
-public class WBShareActivity extends Activity {
-
+public class WBShareActivity extends WBShareCallBackActivity{
 }
