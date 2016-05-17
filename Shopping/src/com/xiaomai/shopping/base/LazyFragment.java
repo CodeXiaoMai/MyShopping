@@ -37,7 +37,7 @@ public abstract class LazyFragment extends Fragment implements OnClickListener {
 		try {
 			if (dialog == null) {
 				dialog = new ProgressDialog(context);
-				dialog.setCancelable(false);
+				dialog.setCancelable(true);
 			}
 			dialog.setMessage(message);
 			dialog.show();

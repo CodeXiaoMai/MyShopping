@@ -43,7 +43,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 		try {
 			if (dialog == null) {
 				dialog = new ProgressDialog(this);
-				dialog.setCancelable(false);
+				dialog.setCancelable(true);
 			}
 			dialog.setMessage(message);
 			dialog.show();

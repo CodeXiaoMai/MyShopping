@@ -23,6 +23,10 @@ public class UserManage extends BaseActivity implements OnRefreshListener {
 	private List<User> list;
 	private List<User> list_temp;
 
+	private TextView tv_user_count;
+	private TextView tv_today_login;
+	private TextView tv_today_regist;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -38,6 +42,11 @@ public class UserManage extends BaseActivity implements OnRefreshListener {
 		title = (TextView) findViewById(R.id.title_title);
 		title.setText("用户管理");
 		setOnClick(back);
+		
+		tv_user_count = (TextView)findViewById(R.id.tv_user_count);
+		tv_today_login = (TextView)findViewById(R.id.tv_today_login);
+		tv_today_regist = (TextView)findViewById(R.id.tv_today_regist);
+		
 		listView = (RefreshListView) findViewById(R.id.listView);
 		listView.setOnRefreshListener(this);
 		list = new ArrayList<User>();

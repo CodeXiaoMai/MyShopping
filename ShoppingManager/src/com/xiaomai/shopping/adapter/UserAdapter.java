@@ -65,9 +65,9 @@ public class UserAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		User user = list.get(position);
-		holder.tv_id.setText(user.getObjectId());
-		holder.tv_userName.setText(user.getUsername());
-		holder.tv_phone.setText(user.getMobilePhoneNumber());
+		holder.tv_id.setText("用户id\n" + user.getObjectId());
+		holder.tv_userName.setText("最后登录\n" + user.getLastTimeLogin());
+		holder.tv_phone.setText("手机号\n" + user.getMobilePhoneNumber());
 		return view;
 	}
 

@@ -32,7 +32,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements
 		try {
 			if (dialog == null) {
 				dialog = new ProgressDialog(this);
-				dialog.setCancelable(false);
+				dialog.setCancelable(true);
 			}
 			dialog.setMessage(message);
 			dialog.show();
