@@ -132,6 +132,7 @@ public class QiuGouFragment extends LazyFragment implements
 				hideDialog();
 				if (list_qiugou.size() == 0) {
 					if (arg0.size() == 0) {
+						showToast("没有数据");
 						scrollView.onRefreshComplete();
 						return;
 					} else {

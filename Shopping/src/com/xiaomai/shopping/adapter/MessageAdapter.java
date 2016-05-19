@@ -69,7 +69,7 @@ public class MessageAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
-		Message message = list.get(position);
+		Message message = list.get(list.size()-position-1);
 		// holder.iv_head
 		holder.tv_message_type.setText(message.getType());
 		holder.tv_message_content.setText(message.getContent());

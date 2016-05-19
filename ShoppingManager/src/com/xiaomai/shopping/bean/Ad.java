@@ -7,6 +7,7 @@ public class Ad extends BmobObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private String image_url;
 	private String action;
 	private String introduce;

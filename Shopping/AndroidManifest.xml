@@ -140,6 +140,12 @@
         <activity
             android:name="com.xiaomai.shopping.module.FenLeiActivity"
             android:screenOrientation="portrait" />
+
+        <provider
+            android:name="com.xiaomai.shopping.biz.MessageBiz"
+            android:authorities="com.xiaomai.message"
+            android:exported="true" />
+
         <activity
             android:name="c.b.a.A"
             android:configChanges="orientation|keyboardHidden|navigation"

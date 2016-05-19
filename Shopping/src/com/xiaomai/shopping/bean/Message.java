@@ -1,16 +1,65 @@
 package com.xiaomai.shopping.bean;
 
-public class Message {
+import cn.bmob.v3.BmobObject;
 
+public class Message extends BmobObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static final Integer STATE_WEIDU = 0;
+	public static final Integer STATE_YIDU = 1;
+
+	private String uid;
+	private String fid;
 	private String type;
 	private String content;
 	private String time;
+	private Integer state;
 
-	public Message(String type, String content, String time) {
+	public Message() {
 		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Message(String tableName) {
+		super(tableName);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Message(String uid, String type, String content, String time) {
+		super();
+		this.uid = uid;
 		this.type = type;
 		this.content = content;
 		this.time = time;
+		this.state = 0;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getFid() {
+		return fid;
+	}
+
+	public void setFid(String fid) {
+		this.fid = fid;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	public String getType() {
@@ -35,6 +84,12 @@ public class Message {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [type=" + type + ", content=" + content + ", time="
+				+ time + "]";
 	}
 
 }

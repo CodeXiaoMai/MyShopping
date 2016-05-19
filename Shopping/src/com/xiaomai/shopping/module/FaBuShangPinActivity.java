@@ -262,6 +262,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 					@Override
 					public void onSuccess(List<BmobFile> arg0, List<String> arg1) {
 						// TODO Auto-generated method stub
+						progressDialog.dismiss();
 						showLog("图片张数：", 1, arg1.size() + "");
 						// 保存
 						if (arg1.size() == list.length) {
@@ -273,6 +274,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 					public void onProgress(int arg0, int arg1, int arg2,
 							int arg3) {
 						// showToast(arg0 + "/" + arg2);
+						progressDialog.dismiss();
 						progressDialog.setTitle("正在上传第" + arg0 + "张图片");
 						progressDialog.setProgress(arg3);
 						Log.d("progress", "arg0:" + arg0 + ",arg1:" + arg1

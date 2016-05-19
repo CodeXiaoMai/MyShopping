@@ -181,6 +181,7 @@
         </FrameLayout>
 
         <FrameLayout
+            android:visibility="gone"
             android:id="@+id/buy"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -191,10 +192,18 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/circle_blue" />
 
+            <TextView 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="我要\n看货"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/white"/>
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:src="@drawable/buy" />
         </FrameLayout>
     </LinearLayout>

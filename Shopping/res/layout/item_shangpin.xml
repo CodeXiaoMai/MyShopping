@@ -54,6 +54,7 @@
                 android:layout_marginRight="5dp"
                 android:gravity="center_vertical"
                 android:text="交易地点"
+                android:singleLine="true"
                 android:textColor="@color/ziti2"
                 android:textSize="12sp" />
         </LinearLayout>

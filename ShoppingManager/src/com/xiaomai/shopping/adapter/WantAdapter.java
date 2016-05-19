@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobPushManager;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.google.gson.Gson;
@@ -106,6 +106,12 @@ public class WantAdapter extends BaseAdapter {
 						// TODO Auto-generated method stub
 						if (listener != null) {
 							listener.onWantUpdate(position);
+							String type = "系统消息";
+							String content = "恭喜,您发布的求购\"" + iwant.getTitle() + "\"通过审核";
+							String time = GetDate.currentTime().replace(" ", "\n");
+							final Message message = new Message(iwant.getUserId(), type,
+									content, time);
+							message.save(context);
 						}
 					}
 
@@ -123,26 +129,21 @@ public class WantAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				BmobPushManager pushManager = new BmobPushManager<>(context);
-
-				BmobQuery<MyBmobInstallation> bmobQuery = MyBmobInstallation
-						.getQuery();
-				bmobQuery.addWhereEqualTo("uid", iwant.getUserId());
-				pushManager.setQuery(bmobQuery);
-				Gson gson = new Gson();
 				String type = "系统消息";
-				String content = "您发布的求购\"" + iwant.getTitle() + "\"未能通过审核";
+				String content = "很遗憾,您发布的求购\"" + iwant.getTitle() + "\"未能通过审核";
 				String time = GetDate.currentTime().replace(" ", "\n");
-				Message message = new Message(type, content, time);
-				pushManager.pushMessage(gson.toJson(message));
+				final Message message = new Message(iwant.getUserId(), type,
+						content, time);
+
 				iwant.setState(IWant.STATE_SHENHE_SHIBAI);
 				iwant.update(context, new UpdateListener() {
 
 					@Override
 					public void onSuccess() {
 						// TODO Auto-generated method stub
-						if (list != null) {
+						if (listener != null) {
 							listener.onWantUpdate(position);
+							message.save(context);
 						}
 					}
 

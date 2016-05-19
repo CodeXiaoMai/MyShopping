@@ -15,12 +15,9 @@ import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.shareboard.SnsPlatform;
-import com.umeng.socialize.utils.ShareBoardlistener;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.listener.OnLoginOutListener;
-import com.xiaomai.shopping.utils.ResultCode;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 import com.zcw.togglebutton.ToggleButton;
 import com.zcw.togglebutton.ToggleButton.OnToggleChanged;
@@ -31,8 +28,8 @@ import com.zcw.togglebutton.ToggleButton.OnToggleChanged;
  * @author XiaoMai
  *
  */
-public class SettingActivity extends BaseActivity implements
-		ShareBoardlistener, UMShareListener, UMAuthListener {
+public class SettingActivity extends BaseActivity implements UMShareListener,
+		UMAuthListener {
 
 	// 显示省流量是否开启
 	private TextView tv_shengliuliang;
@@ -141,12 +138,22 @@ public class SettingActivity extends BaseActivity implements
 	private void share() {
 		// TODO Auto-generated method stub
 		mShareAPI = UMShareAPI.get(context);
+		if (mShareAPI.isAuthorize(this, SHARE_MEDIA.SINA)) {
+			toShare();
+		} else {
+			authSina();
+		}
+	}
 
-		final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[] { SHARE_MEDIA.SINA };
-
-		new ShareAction(this).setDisplayList(displaylist)
-				.setShareboardclickCallback(this).open();
-
+	private void toShare() {
+//		UMImage image = new UMImage(
+//				context,
+//				"http://www.bmob.cn/uploads/attached/app/logo/20160514/fb68c095-24c9-984f-e9a3-8abc861873cc.png");
+		new ShareAction(this)
+				.setPlatform(SHARE_MEDIA.SINA)
+				.setCallback(this)
+				.withText("我在北苑跳蚤市场发现了新大陆，大家快来下载吧,http://xiaomai1993.bmob.cn/")
+				.share();
 	}
 
 	@Override
@@ -160,30 +167,6 @@ public class SettingActivity extends BaseActivity implements
 		super.onActivityResult(requestCode, resultCode, data);
 		UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
 	}
-
-	@Override
-	public void onclick(SnsPlatform arg0, SHARE_MEDIA arg1) {
-		// TODO Auto-generated method stub
-		switch (arg1) {
-		case SINA:
-
-			if (mShareAPI.isAuthorize(this, SHARE_MEDIA.SINA)) {
-
-				new ShareAction(this).setPlatform(SHARE_MEDIA.SINA)
-						.setCallback(this).withText("Hello 豆瓣").share();
-			} else {
-				authSina();
-			}
-
-			break;
-		}
-
-	}
-
-	// private void authWeiXin() {
-	// // TODO Auto-generated method stub
-	// mShareAPI.doOauthVerify(this, SHARE_MEDIA.WEIXIN, this);
-	// }
 
 	private void authSina() {
 		// TODO Auto-generated method stub
@@ -199,17 +182,13 @@ public class SettingActivity extends BaseActivity implements
 	@Override
 	public void onComplete(SHARE_MEDIA arg0, int arg1, Map<String, String> arg2) {
 		// TODO Auto-generated method stub
-		/*
-		 * new ShareAction(SettingActivity.this).setPlatform(arg0)
-		 * .setCallback(SettingActivity.this).withText("Hello 豆瓣").share();
-		 */
 		showToast("授权成功");
+		toShare();
 	}
 
 	@Override
 	public void onCancel(SHARE_MEDIA arg0, int arg1) {
 		// TODO Auto-generated method stub
-
 		showToast("取消授权");
 	}
 

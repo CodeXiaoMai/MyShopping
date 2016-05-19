@@ -80,6 +80,8 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 	private TextView tv_maichu;
 	// 收藏人数
 	private TextView tv_shoucang;
+	//交易地点
+	private TextView tv_address;
 	// 宝贝描述
 	private TextView tv_desc;
 	// 图片地址
@@ -147,6 +149,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		Integer remainCount = goods.getRemainCount();
 		tv_count.setText("数量：" + remainCount);
 		tv_maichu.setText("成交：" + (goods.getCount() - remainCount) + "笔");
+		tv_address.setText(goods.getAddress());
 		tv_desc.setText(goods.getContent());
 		images = goods.getImages();
 		tv_selector.setText("1/" + images.size());
@@ -269,6 +272,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		tv_count = (TextView) findViewById(R.id.goods_tv_remain_count);
 		tv_maichu = (TextView) findViewById(R.id.goods_tv_sale);
 		tv_shoucang = (TextView) findViewById(R.id.goods_tv_shoucang);
+		tv_address = (TextView)findViewById(R.id.goods_tv_address);
 		tv_desc = (TextView) findViewById(R.id.goods_tv_desc);
 
 		iv_more = (ImageView) findViewById(R.id.more);

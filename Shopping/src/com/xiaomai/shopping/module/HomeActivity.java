@@ -1,9 +1,12 @@
 package com.xiaomai.shopping.module;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import android.R.menu;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,15 +24,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import c.b.BP;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 import com.umeng.socialize.PlatformConfig;
 import com.xiaomai.shopping.R;
+import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.fragment.GeRenZhongXinFragment;
 import com.xiaomai.shopping.fragment.QiuGouFragment;
 import com.xiaomai.shopping.fragment.ShouYeFragment;
 import com.xiaomai.shopping.fragment.XiaoXiFragment;
+import com.xiaomai.shopping.receiver.MyPushMessageReceiver.onReceiveMessageListener;
 import com.xiaomai.shopping.utils.Config;
 
 /**
@@ -64,6 +72,10 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 	private int color_black = Color.rgb(89, 89, 89);
 
 	private long mExitTime;
+
+	private User user;
+
+	public static onReceiveMessageListener listener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +129,58 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 		tv_qiugou = (TextView) findViewById(R.id.main_tv_qiugou);
 		ll_qiugou = (LinearLayout) findViewById(R.id.ll_qiugou);
 		ll_qiugou.setOnClickListener(this);
+
+		final BmobQuery<Message> bmobQuery = new BmobQuery<Message>();
+		bmobQuery.addWhereEqualTo("state", Message.STATE_WEIDU);
+		bmobQuery.order("-updateAt");
+		new Thread() {
+
+			public void run() {
+				while (true) {
+
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					user = BmobUser.getCurrentUser(context, User.class);
+					if (user != null) {
+						bmobQuery.addWhereEqualTo("uid", user.getObjectId());
+						bmobQuery.findObjects(context,
+								new FindListener<Message>() {
+
+									@Override
+									public void onSuccess(List<Message> arg0) {
+										// TODO Auto-generated method stub
+										if (arg0.size() > 0) {
+											/*
+											 * Toast.makeText(context,
+											 * "您有新的消息,请到消息列表查看", 0) .show();
+											 */
+											if (listener != null) {
+												listener.onReceiveMessage(arg0);
+											} else {
+												/*
+												 * Toast.makeText(context,
+												 * "null", 0) .show();
+												 */
+											}
+										}
+
+									}
+
+									@Override
+									public void onError(int arg0, String arg1) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+					}
+
+				}
+			}
+		}.start();
 
 	}
 
