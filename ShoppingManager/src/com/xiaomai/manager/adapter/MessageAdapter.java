@@ -1,4 +1,4 @@
-package com.xiaomai.shopping.adapter;
+package com.xiaomai.manager.adapter;
 
 import java.util.List;
 
@@ -6,11 +6,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xiaomai.shopping.R;
-import com.xiaomai.shopping.bean.Message;
+import com.xiaomai.manager.R;
+import com.xiaomai.manager.bean.Message;
 
 public class MessageAdapter extends BaseAdapter {
 
@@ -57,6 +58,7 @@ public class MessageAdapter extends BaseAdapter {
 		if (view == null) {
 			view = View.inflate(context, R.layout.item_message, null);
 			holder = new ViewHolder();
+			holder.iv_head = (ImageView) view.findViewById(R.id.iv_head);
 			holder.tv_message_type = (TextView) view
 					.findViewById(R.id.tv_message_type);
 			holder.tv_message_content = (TextView) view
@@ -68,6 +70,7 @@ public class MessageAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		Message message = list.get(list.size()-position-1);
+		// holder.iv_head
 		holder.tv_message_type.setText(message.getType());
 		holder.tv_message_content.setText(message.getContent());
 		holder.tv_message_time.setText(message.getTime());
@@ -75,6 +78,7 @@ public class MessageAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
+		ImageView iv_head;
 		TextView tv_message_type;
 		TextView tv_message_content;
 		TextView tv_message_time;

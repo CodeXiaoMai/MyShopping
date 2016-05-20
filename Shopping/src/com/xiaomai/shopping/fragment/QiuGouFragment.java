@@ -27,6 +27,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.LazyFragment;
 import com.xiaomai.shopping.bean.IWant;
+import com.xiaomai.shopping.module.QiuGouXiangQingActivity;
 import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
@@ -89,7 +90,7 @@ public class QiuGouFragment extends LazyFragment implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					final int position, long id) {
-				MyDialog.showDialog(context, "提示信息", "您有Ta需要的宝贝？快联系Ta吧！",
+				/*MyDialog.showDialog(context, "提示信息", "您有Ta需要的宝贝？快联系Ta吧！",
 						new DialogInterface.OnClickListener() {
 
 							@Override
@@ -105,7 +106,11 @@ public class QiuGouFragment extends LazyFragment implements
 									startActivity(intent);
 								}
 							}
-						}, null);
+						}, null);*/
+				IWant want = list_qiugou.get(position);
+				Intent intent = new Intent(context,QiuGouXiangQingActivity.class);
+				intent.putExtra("want", want);
+				startActivity(intent);
 			}
 		});
 

@@ -54,6 +54,9 @@
             android:name="com.xiaomai.manager.AdManage"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.xiaomai.manager.MessageManage"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="multi_image_selector.MultiImageSelectorActivity"
             android:screenOrientation="portrait" />
 

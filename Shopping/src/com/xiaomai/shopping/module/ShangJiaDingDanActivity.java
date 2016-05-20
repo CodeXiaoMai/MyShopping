@@ -54,7 +54,14 @@ public class ShangJiaDingDanActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.title_back:
+			finish();
+			break;
 
+		default:
+			break;
+		}
 	}
 
 	@Override

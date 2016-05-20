@@ -8,15 +8,16 @@ import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract.DataUsageFeedback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.biz.DBUtil;
 import com.xiaomai.shopping.module.HomeActivity;
+import com.xiaomai.shopping.module.MessageXiangQingActivity;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver.onReceiveMessageListener;
 import com.xiaomai.shopping.utils.GetDate;
@@ -117,10 +119,10 @@ public class XiaoXiFragment extends BaseFragment implements
 		list = new ArrayList<Message>();
 		adapter = new MessageAdapter(list, context);
 		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(new OnItemClickListener() {
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					final int position, long id) {
 				// TODO Auto-generated method stub
 				MyDialog.showDialog(context, "", "确认删除",
@@ -130,15 +132,32 @@ public class XiaoXiFragment extends BaseFragment implements
 							public void onClick(DialogInterface dialog,
 									int which) {
 								// TODO Auto-generated method stub
-								Message message = list.get(list.size()-position-1);
+								Message message = list.get(list.size()
+										- position - 1);
 								context.getContentResolver().delete(uri,
 										DBUtil.MESSAGE_OBJ_ID + "=?",
 										new String[] { message.getObjectId() });
-								list.remove(list.size()-position-1);
+								list.remove(list.size() - position - 1);
 								adapter.setList(list);
 								adapter.notifyDataSetChanged();
 							}
 						}, null);
+				return true;
+			}
+
+		});
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				// TODO Auto-generated method stub
+				Message message = list.get(list.size() - position - 1);
+				Intent intent = new Intent(context,
+						MessageXiangQingActivity.class);
+				intent.putExtra("message", message);
+				startActivity(intent);
+
 			}
 		});
 

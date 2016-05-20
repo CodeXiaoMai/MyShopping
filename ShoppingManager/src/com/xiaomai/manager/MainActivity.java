@@ -8,6 +8,7 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
 
 import com.xiaomai.manager.base.BaseActivity;
+import com.xiaomai.manager.bean.Message;
 import com.xiaomai.manager.utils.Config;
 
 public class MainActivity extends BaseActivity {
@@ -22,6 +23,8 @@ public class MainActivity extends BaseActivity {
 	private View suggestions;
 	// 广告管理
 	private View ad_manage;
+	// 查看消息
+	private View message_manage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,9 @@ public class MainActivity extends BaseActivity {
 		want_manage = findViewById(R.id.bt_want_manage);
 		suggestions = findViewById(R.id.bt_suggestions_manage);
 		ad_manage = findViewById(R.id.bt_ad_manage);
+		message_manage = findViewById(R.id.bt_message_manage);
 		setOnClick(user_manage, goods_manage, want_manage, suggestions,
-				ad_manage);
+				ad_manage,message_manage);
 	}
 
 	@Override
@@ -64,6 +68,9 @@ public class MainActivity extends BaseActivity {
 			break;
 		case R.id.bt_ad_manage:
 			startActivity(new Intent(context, AdManage.class));
+			break;
+		case R.id.bt_message_manage:
+			startActivity(new Intent(context, MessageManage.class));
 			break;
 		}
 	}

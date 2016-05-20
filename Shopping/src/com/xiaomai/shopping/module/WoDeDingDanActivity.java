@@ -90,7 +90,6 @@ public class WoDeDingDanActivity extends BaseActivity implements
 				public void onSuccess(List<Order> arg0) {
 					lv_dingdan.onRefreshFinish();
 					hideDialog();
-					// TODO Auto-generated method stub
 					if (list_order.size() == 0) {
 						adapter = new OrderAdapter(context, list_order,
 								imageloader, loader);

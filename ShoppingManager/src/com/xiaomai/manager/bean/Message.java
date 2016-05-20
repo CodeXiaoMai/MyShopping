@@ -8,9 +8,9 @@ public class Message extends BmobObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	public static final Integer STATE_WEIDU = 0;
 	public static final Integer STATE_YIDU = 1;
-
 
 	private String uid;
 	private String fid;
@@ -18,6 +18,16 @@ public class Message extends BmobObject {
 	private String content;
 	private String time;
 	private Integer state;
+
+	public Message() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Message(String tableName) {
+		super(tableName);
+		// TODO Auto-generated constructor stub
+	}
 
 	public Message(String uid, String type, String content, String time) {
 		super();
