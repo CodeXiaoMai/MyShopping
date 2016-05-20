@@ -12,14 +12,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.push.autobahn.Utf8Validator;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomai.shopping.R;
+import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.bean.Order;
+import com.xiaomai.shopping.module.ShangPinXiangQingActivity;
 import com.xiaomai.shopping.utils.GetDate;
+import com.xiaomai.shopping.utils.Utils;
 
 public class OrderAdapter extends BaseAdapter {
 
@@ -171,6 +177,24 @@ public class OrderAdapter extends BaseAdapter {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
+						BmobQuery<Goods> bmobQuery = new BmobQuery<Goods>();
+						bmobQuery.getObject(context, order.getGoodsid(),
+								new GetListener<Goods>() {
+
+									@Override
+									public void onSuccess(Goods arg0) {
+										// TODO Auto-generated method stub
+										arg0.setCount(arg0.getCount()
+												+ order.getCount());
+										arg0.update(context);
+									}
+
+									@Override
+									public void onFailure(int arg0, String arg1) {
+										// TODO Auto-generated method stub
+
+									}
+								});
 						order.delete(context, new DeleteListener() {
 
 							@Override
@@ -206,6 +230,12 @@ public class OrderAdapter extends BaseAdapter {
 						holder.bt_zhifu.setVisibility(View.GONE);
 						holder.bt_pingjia.setVisibility(View.VISIBLE);
 						holder.bt_shanchu_dingdan.setVisibility(View.VISIBLE);
+						Message message = new Message(Utils.MANAGERID, "提款消息",
+								"用户:[" + order.getShangjiaId() + "]申请提款 ￥:"
+										+ order.getMoney() + "元", GetDate
+										.currentTime().replace(" ", "\n"));
+						message.setFid(order.getShangjiaId());
+						message.save(context);
 					}
 
 					@Override
@@ -217,11 +247,32 @@ public class OrderAdapter extends BaseAdapter {
 			}
 		});
 		holder.bt_pingjia.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				BmobQuery<Goods> bmobQuery = new BmobQuery<Goods>();
+				bmobQuery.getObject(context, order.getGoodsid(),
+						new GetListener<Goods>() {
+
+							@Override
+							public void onSuccess(Goods arg0) {
+								Intent intent = new Intent(context,
+										ShangPinXiangQingActivity.class);
+								intent.putExtra("goods", arg0);
+								context.startActivity(intent);
+							}
+
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								if (arg0 == 101) {
+									Toast.makeText(context, "宝贝已失效，或已下架", 0)
+											.show();
+								} else {
+									Toast.makeText(context, "网络异常", 0).show();
+								}
+							}
+						});
 			}
 		});
 		return view;

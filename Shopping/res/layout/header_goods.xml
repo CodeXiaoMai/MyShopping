@@ -69,6 +69,7 @@
             android:textColor="@color/ziti_normal" />
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/goods_tv_sale"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

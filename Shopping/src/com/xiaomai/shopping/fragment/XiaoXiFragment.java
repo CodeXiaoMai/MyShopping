@@ -130,11 +130,11 @@ public class XiaoXiFragment extends BaseFragment implements
 							public void onClick(DialogInterface dialog,
 									int which) {
 								// TODO Auto-generated method stub
-								Message message = list.get(position);
+								Message message = list.get(list.size()-position-1);
 								context.getContentResolver().delete(uri,
 										DBUtil.MESSAGE_OBJ_ID + "=?",
 										new String[] { message.getObjectId() });
-								list.remove(position);
+								list.remove(list.size()-position-1);
 								adapter.setList(list);
 								adapter.notifyDataSetChanged();
 							}

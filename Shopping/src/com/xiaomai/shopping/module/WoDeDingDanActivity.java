@@ -80,6 +80,7 @@ public class WoDeDingDanActivity extends BaseActivity implements
 		showDialog("数据加载中");
 		User user = getCurrentUser();
 		if (user != null) {
+			bmobQuery.order("-updatedAt");
 			bmobQuery.setLimit(Utils.REQUEST_COUNT);
 			bmobQuery.setSkip(list_order.size());
 			bmobQuery.addWhereEqualTo("uid", user.getObjectId());

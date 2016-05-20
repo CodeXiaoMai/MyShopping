@@ -76,11 +76,20 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/shangpin_xiangmai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="88人想买"
+                android:textColor="@color/ziti2"
+                android:textSize="10sp" />
+            
+             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="点击进入"
                 android:textColor="@color/ziti2"
                 android:textSize="10sp" />
         </LinearLayout>

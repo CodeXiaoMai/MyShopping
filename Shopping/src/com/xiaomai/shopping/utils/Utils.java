@@ -11,6 +11,7 @@ public class Utils {
 
 	public static UMShareAPI mShareAPI;
 
+	public static final String MANAGERID = "7f08d80a7f";
 	// 注册
 	public static final int SCORE_REGIST = 50;
 	// 登录

@@ -10,7 +10,6 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
 import com.xiaomai.shopping.R;
-import com.xiaomai.shopping.adapter.OrderAdapter;
 import com.xiaomai.shopping.adapter.ShangJiaOrderAdapter;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Order;
@@ -19,7 +18,7 @@ import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.RefreshListView;
 import com.xiaomai.shopping.view.RefreshListView.OnRefreshListener;
 
-public class ShangJiDingDanActivity extends BaseActivity implements
+public class ShangJiaDingDanActivity extends BaseActivity implements
 		OnRefreshListener {
 
 	// 我的订单
@@ -64,6 +63,7 @@ public class ShangJiDingDanActivity extends BaseActivity implements
 		showDialog("数据加载中");
 		User user = getCurrentUser();
 		if (user != null) {
+			bmobQuery.order("-updatedAt");
 			bmobQuery.setLimit(Utils.REQUEST_COUNT);
 			bmobQuery.setSkip(list_order.size());
 			bmobQuery.addWhereEqualTo("shangjiaId", user.getObjectId());

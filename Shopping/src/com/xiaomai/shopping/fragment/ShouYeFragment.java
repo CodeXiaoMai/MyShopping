@@ -35,6 +35,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.GetListener;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -80,7 +81,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private ViewPager viewPager;
 	// private TextView tv_intro;
 	private LinearLayout dotLayout;
-	private ViewPagerAdapter adapter_viewPager;
+//	private ViewPagerAdapter adapter_viewPager;
 	private List<Ad> list_ad;
 	private MyFragmentAdapter pagerAdapter;
 
@@ -95,7 +96,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private List<Goods> list_goods;
 	// 用户搜索的商品
 	private List<Goods> list_search_result;
-	private List<Goods> list_temp;
+//	private List<Goods> list_temp;
 
 	private GridView gv_fenlei;
 	private SimpleAdapter simple_adapter;
@@ -349,11 +350,28 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 					@Override
 					public void onClick(View v) {
 						holder.tv_name.setTextColor(0xffCBCACA);
-						Intent intent = new Intent(getContext(),
-								ShangPinXiangQingActivity.class);
-						intent.putExtra("goods", goods);
-						startActivity(intent);
+						BmobQuery<Goods> bmobQuery = new BmobQuery<Goods>();
+						bmobQuery.getObject(context, goods.getObjectId(),
+								new GetListener<Goods>() {
 
+									@Override
+									public void onSuccess(Goods arg0) {
+										// TODO Auto-generated method stub
+										Intent intent = new Intent(
+												getContext(),
+												ShangPinXiangQingActivity.class);
+										intent.putExtra("goods", arg0);
+										startActivity(intent);
+
+									}
+
+									@Override
+									public void onFailure(int arg0, String arg1) {
+										// TODO Auto-generated method stub
+										showErrorToast(arg0, arg1);
+										showLog("商品", arg0, arg1);
+									}
+								});
 					}
 				});
 			}
@@ -424,6 +442,8 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	}
 
 	private void loadSearchGoods(TextView v) {
+		adapter.setList(list);
+		adapter.notifyDataSetChanged();
 		boolean shengLiuLiang = SharedPrenerencesUtil.getShengLiuLiang(context);
 		if (!shengLiuLiang && NetWorkUtil.isMobileNetWork(context)
 				|| NetWorkUtil.isWifiNetWork(context)) {
@@ -474,9 +494,12 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	}
 
 	private void loadGoods() {
+		adapter.setList(list);
+		adapter.notifyDataSetChanged();
 		BmobQuery<Goods> query = new BmobQuery<Goods>();
 		query.order("-updatedAt");
 		query.addWhereEqualTo("state", StateCode.GOODS_OK);
+		query.addWhereGreaterThan("count", 0);
 		query.setLimit(Utils.REQUEST_COUNT);
 		query.setSkip(list_goods.size());
 		query.findObjects(context, new FindListener<Goods>() {
@@ -629,9 +652,11 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
 		if (currentState == LOAD_GOODS) {
 			list_goods = new ArrayList<Goods>();
+			list = list_goods;
 			loadData();
 		} else {
 			list_search_result = new ArrayList<Goods>();
+			list = list_search_result;
 			loadSearchGoods(et_search);
 		}
 	}

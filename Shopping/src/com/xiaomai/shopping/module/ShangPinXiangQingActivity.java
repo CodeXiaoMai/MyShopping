@@ -373,9 +373,13 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 				return;
 			}
 			Intent intent = new Intent(context, PayActivity.class);
-			intent.putExtra("goods", goods);
-			intent.putExtra("user", user);
-			startActivity(intent);
+			if (goods.getCount() > 0) {
+				intent.putExtra("goods", goods);
+				intent.putExtra("user", user);
+				startActivity(intent);
+			} else {
+				showToast("抱歉，没有货了");
+			}
 			break;
 		case R.id.chat:
 			String phoneNumber = goods.getPhone();

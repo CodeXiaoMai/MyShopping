@@ -19,7 +19,7 @@ import com.xiaomai.shopping.listener.OnLoginOutListener;
 import com.xiaomai.shopping.module.FaBuZhongXinActivity;
 import com.xiaomai.shopping.module.LoginActivity;
 import com.xiaomai.shopping.module.SettingActivity;
-import com.xiaomai.shopping.module.ShangJiDingDanActivity;
+import com.xiaomai.shopping.module.ShangJiaDingDanActivity;
 import com.xiaomai.shopping.module.WoDeDingDanActivity;
 import com.xiaomai.shopping.module.WoDeJiFenActivity;
 import com.xiaomai.shopping.module.WoDeQiuGouActivity;
@@ -124,7 +124,7 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 			isLogin(WoDeJiFenActivity.class);
 			break;
 		case R.id.gerenzhongxin_ll_shangjiadingdan:
-			isLogin(ShangJiDingDanActivity.class);
+			isLogin(ShangJiaDingDanActivity.class);
 			break;
 		}
 	}

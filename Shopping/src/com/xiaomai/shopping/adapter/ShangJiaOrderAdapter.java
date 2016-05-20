@@ -11,10 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomai.shopping.R;
+import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.bean.Order;
 import com.xiaomai.shopping.utils.GetDate;
@@ -122,6 +125,24 @@ public class ShangJiaOrderAdapter extends BaseAdapter {
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
+							BmobQuery<Goods> bmobQuery = new BmobQuery<Goods>();
+							bmobQuery.getObject(context, order.getGoodsid(),
+									new GetListener<Goods>() {
+
+										@Override
+										public void onSuccess(Goods arg0) {
+											// TODO Auto-generated method stub
+											arg0.setCount(arg0.getCount()
+													+ order.getCount());
+											arg0.update(context);
+										}
+
+										@Override
+										public void onFailure(int arg0, String arg1) {
+											// TODO Auto-generated method stub
+
+										}
+									});
 							order.setStatus(Order.ORDER_STATUS_CLOSE);
 							order.update(context, new UpdateListener() {
 

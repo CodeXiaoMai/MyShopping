@@ -142,7 +142,7 @@
             android:name="com.xiaomai.shopping.module.FenLeiActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.xiaomai.shopping.module.ShangJiDingDanActivity"
+            android:name="com.xiaomai.shopping.module.ShangJiaDingDanActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.xiaomai.shopping.module.UpdateGoodsActivity"

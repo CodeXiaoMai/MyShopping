@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +55,8 @@ public class PayActivity extends BaseActivity {
 	private int count = 1;
 	private String orderId;
 
+	private CheckBox checkBox;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -85,6 +88,8 @@ public class PayActivity extends BaseActivity {
 		image = (ImageView) findViewById(R.id.image);
 		tv_price = (TextView) findViewById(R.id.tv_price);
 		tv_title = (TextView) findViewById(R.id.tv_name);
+
+		checkBox = (CheckBox) findViewById(R.id.checkbox);
 
 		jian = findViewById(R.id.jian);
 		add = findViewById(R.id.add);
@@ -148,7 +153,11 @@ public class PayActivity extends BaseActivity {
 			iv_weixin.setImageResource(R.drawable.select);
 			break;
 		case R.id.bt_pay:
-			pay();
+			if (checkBox.isChecked()) {
+				pay();
+			} else {
+				showToast("请先认真阅读，并同意条款");
+			}
 			break;
 		}
 	}
@@ -190,6 +199,7 @@ public class PayActivity extends BaseActivity {
 										public void onSuccess() {
 											// TODO Auto-generated method stub
 											showToast("支付成功!您可以到我的订单页面查看订单详情!");
+											finish();
 										}
 
 										@Override
@@ -275,6 +285,7 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
+									startActivity(new Intent(context,WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {
@@ -296,6 +307,7 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
+									startActivity(new Intent(context,WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {
@@ -318,6 +330,7 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
+									startActivity(new Intent(context,WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {
@@ -338,6 +351,7 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
+									startActivity(new Intent(context,WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {
