@@ -241,32 +241,41 @@ public class OrderAdapter extends BaseAdapter {
 							public void onSuccess(Goods arg0) {
 								// TODO Auto-generated method stub
 								zhifubao = arg0.getQq();
+								order.update(context, new UpdateListener() {
+
+									@Override
+									public void onSuccess() {
+										// TODO Auto-generated method stub
+										holder.bt_shouhuo
+												.setVisibility(View.GONE);
+										holder.bt_zhifu
+												.setVisibility(View.GONE);
+										holder.bt_pingjia
+												.setVisibility(View.VISIBLE);
+										holder.bt_shanchu_dingdan
+												.setVisibility(View.VISIBLE);
+										Message message = new Message(
+												Utils.MANAGERID, "提款消息", "用户:["
+														+ order.getShangjiaId()
+														+ "]申请提款 ￥:"
+														+ order.getMoney()
+														+ "元,收款账号:" + zhifubao,
+												GetDate.currentTime().replace(
+														" ", "\n"));
+										message.setFid(order.getShangjiaId());
+										message.save(context);
+									}
+
+									@Override
+									public void onFailure(int arg0, String arg1) {
+										// TODO Auto-generated method stub
+										Toast.makeText(context, "操作失败", 0)
+												.show();
+									}
+								});
 							}
 						});
-				order.update(context, new UpdateListener() {
 
-					@Override
-					public void onSuccess() {
-						// TODO Auto-generated method stub
-						holder.bt_shouhuo.setVisibility(View.GONE);
-						holder.bt_zhifu.setVisibility(View.GONE);
-						holder.bt_pingjia.setVisibility(View.VISIBLE);
-						holder.bt_shanchu_dingdan.setVisibility(View.VISIBLE);
-						Message message = new Message(Utils.MANAGERID, "提款消息",
-								"用户:[" + order.getShangjiaId() + "]申请提款 ￥:"
-										+ order.getMoney() + "元,收款账号:"
-										+ zhifubao, GetDate.currentTime()
-										.replace(" ", "\n"));
-						message.setFid(order.getShangjiaId());
-						message.save(context);
-					}
-
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						// TODO Auto-generated method stub
-						Toast.makeText(context, "操作失败", 0).show();
-					}
-				});
 			}
 		});
 		holder.bt_pingjia.setOnClickListener(new View.OnClickListener() {
