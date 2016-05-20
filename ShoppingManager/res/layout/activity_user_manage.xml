@@ -72,7 +72,7 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-    <com.xiaomai.shopping.view.RefreshListView
+    <com.xiaomai.manager.view.RefreshListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

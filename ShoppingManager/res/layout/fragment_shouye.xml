@@ -53,7 +53,7 @@
             android:background="@color/white" />
     </LinearLayout>
 
-    <com.xiaomai.shopping.view.MyGridView
+    <com.xiaomai.manager.view.MyGridView
         android:id="@+id/gv_shangpin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
