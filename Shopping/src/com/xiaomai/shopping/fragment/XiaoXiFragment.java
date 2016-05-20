@@ -34,6 +34,7 @@ import com.xiaomai.shopping.module.MessageXiangQingActivity;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver.onReceiveMessageListener;
 import com.xiaomai.shopping.utils.GetDate;
+import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
 
 /**
@@ -56,6 +57,8 @@ public class XiaoXiFragment extends BaseFragment implements
 	private User user;
 	private Uri uri = Uri.parse("content://" + "com.xiaomai.message");
 	private boolean loadHistoryMessage;
+
+	private ContentValues values;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,12 +84,18 @@ public class XiaoXiFragment extends BaseFragment implements
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 			Message message = null;
 			for (int i = 0; i < cursor.getColumnCount(); i++) {
-				String objId = cursor.getString(0);
-				String uid = cursor.getString(1);
-				String type = cursor.getString(2);
-				String content = cursor.getString(3);
-				String time = cursor.getString(4);
-				int state = cursor.getInt(5);
+				String objId = cursor.getString(cursor
+						.getColumnIndex(DBUtil.MESSAGE_OBJ_ID));
+				String uid = cursor.getString(cursor
+						.getColumnIndex(DBUtil.MESSAGE_COLUMN_MESSAGE_UID));
+				String type = cursor.getString(cursor
+						.getColumnIndex(DBUtil.MESSAGE_COLUMN_TYPE));
+				String content = cursor.getString(cursor
+						.getColumnIndex(DBUtil.MESSAGE_COLUMN_MESSAGE_CONTENT));
+				String time = cursor.getString(cursor
+						.getColumnIndex(DBUtil.MESSAGE_COLUMN_TIME));
+				int state = cursor.getInt(cursor
+						.getColumnIndex(DBUtil.MESSAGE_COLUMN_STATE));
 				message = new Message(uid, type, content, time);
 				message.setObjectId(objId);
 				message.setState(state);
@@ -205,6 +214,16 @@ public class XiaoXiFragment extends BaseFragment implements
 			list.add(message);
 			adapter.setList(list);
 			adapter.notifyDataSetChanged();
+
+			values = new ContentValues();
+			values.put(DBUtil.MESSAGE_OBJ_ID, "");
+			values.put(DBUtil.MESSAGE_COLUMN_MESSAGE_UID, user.getObjectId());
+			values.put(DBUtil.MESSAGE_COLUMN_MESSAGE_CONTENT,
+					message.getContent());
+			values.put(DBUtil.MESSAGE_COLUMN_TYPE, message.getType());
+			values.put(DBUtil.MESSAGE_COLUMN_STATE, Message.STATE_YIDU);
+			values.put(DBUtil.MESSAGE_COLUMN_TIME, message.getTime());
+			context.getContentResolver().insert(uri, values);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -217,7 +236,6 @@ public class XiaoXiFragment extends BaseFragment implements
 		if (!loadHistoryMessage) {
 			loadData();
 		}
-		ContentValues values;
 		for (Message message : list) {
 			message.setState(Message.STATE_YIDU);
 			message.update(context);
