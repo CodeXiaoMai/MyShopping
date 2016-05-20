@@ -277,7 +277,9 @@ public class WoDeShouCangActivity extends BaseActivity implements
 	@Override
 	public void pullDownRefresh() {
 		list_temp = list_shoucang;
-		adapter.addList(list_temp);
+		if (list_temp != null) {
+			adapter.addList(list_temp);
+		}
 		list_shoucang = new ArrayList<Collection>();
 		loadData();
 	}

@@ -3,7 +3,6 @@ package com.xiaomai.shopping.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -21,14 +19,14 @@ import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.bean.Order;
 import com.xiaomai.shopping.utils.GetDate;
 
-public class OrderAdapter extends BaseAdapter {
+public class ShangJiaOrderAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Order> list;
 	private ImageLoader imageLoader;
 	private ImageLoader loader;
 
-	public OrderAdapter(Context context, List<Order> list,
+	public ShangJiaOrderAdapter(Context context, List<Order> list,
 			ImageLoader imageLoader, ImageLoader loader) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
@@ -111,23 +109,72 @@ public class OrderAdapter extends BaseAdapter {
 			default:
 				break;
 			}
+
+			holder.tv_status.setText(zt);
 		}
-		holder.tv_status.setText(zt);
 		if (status.equals(Order.ORDER_STATUS_WEIZHIFU)) {
 			holder.bt_pingjia.setVisibility(View.GONE);
 			holder.bt_shouhuo.setVisibility(View.GONE);
-		} else if (status.equals(Order.ORDER_STATUS_ZHIFUCHENGGONG)) {
+			holder.bt_shanchu_dingdan.setText("关闭交易");
+			holder.bt_shanchu_dingdan
+					.setOnClickListener(new View.OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							order.setStatus(Order.ORDER_STATUS_CLOSE);
+							order.update(context, new UpdateListener() {
+
+								@Override
+								public void onSuccess() {
+									// TODO Auto-generated method stub
+									holder.bt_shanchu_dingdan
+											.setVisibility(View.GONE);
+									holder.bt_zhifu.setVisibility(View.GONE);
+									holder.tv_status.setText("交易关闭");
+								}
+
+								@Override
+								public void onFailure(int arg0, String arg1) {
+									// TODO Auto-generated method stub
+									Toast.makeText(context, "操作失败，请稍候再试", 0)
+											.show();
+								}
+							});
+
+						}
+					});
+			holder.bt_zhifu.setText("已线下付款");
+			holder.bt_zhifu.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					order.setStatus(Order.ORDER_STATUS_ZHIFUCHENGGONG);
+					order.update(context, new UpdateListener() {
+
+						@Override
+						public void onSuccess() {
+							// TODO Auto-generated method stub
+							holder.bt_zhifu.setVisibility(View.GONE);
+							holder.bt_shanchu_dingdan.setVisibility(View.GONE);
+							holder.tv_status.setText("买家已支付");
+						}
+
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							// TODO Auto-generated method stub
+							Toast.makeText(context, "操作失败，请稍候再试", 0).show();
+						}
+					});
+
+				}
+			});
+		} else {
 			holder.bt_pingjia.setVisibility(View.GONE);
 			holder.bt_zhifu.setVisibility(View.GONE);
 			holder.bt_shanchu_dingdan.setVisibility(View.GONE);
-		} else if (status.equals(Order.ORDER_STATUS_SHOUHUO)) {
 			holder.bt_shouhuo.setVisibility(View.GONE);
-			holder.bt_zhifu.setVisibility(View.GONE);
-		} else if (status.equals(Order.ORDER_STATUS_PINGJIA)
-				|| status.equals(Order.ORDER_STATUS_CLOSE)) {
-			holder.bt_pingjia.setVisibility(View.GONE);
-			holder.bt_shouhuo.setVisibility(View.GONE);
-			holder.bt_zhifu.setVisibility(View.GONE);
 		}
 		final String imageUri = order.getImageUri();
 		if (imageLoader != null) {
@@ -151,79 +198,6 @@ public class OrderAdapter extends BaseAdapter {
 					});
 		}
 
-		holder.bt_zhifu.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Message message = new Message(order.getShangjiaId(), "订单消息",
-						"有人想买你的【" + order.getGoodsName() + "】,请到商家订单查看",
-						GetDate.currentTime().replace(" ", "\n"));
-				holder.bt_zhifu.setVisibility(View.GONE);
-				message.setFid(order.getUid());
-				message.save(context);
-			}
-		});
-
-		holder.bt_shanchu_dingdan
-				.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						order.delete(context, new DeleteListener() {
-
-							@Override
-							public void onSuccess() {
-								// TODO Auto-generated method stub
-								holder.bt_shanchu_dingdan
-										.setVisibility(View.GONE);
-								holder.bt_zhifu.setVisibility(View.GONE);
-								holder.bt_pingjia.setVisibility(View.GONE);
-								holder.tv_status.setText("订单已删除");
-							}
-
-							@Override
-							public void onFailure(int arg0, String arg1) {
-								// TODO Auto-generated method stub
-								Toast.makeText(context, "操作失败", 0).show();
-							}
-						});
-					}
-				});
-		holder.bt_shouhuo.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				order.setStatus(Order.ORDER_STATUS_SHOUHUO);
-				order.update(context, new UpdateListener() {
-
-					@Override
-					public void onSuccess() {
-						// TODO Auto-generated method stub
-						holder.bt_shouhuo.setVisibility(View.GONE);
-						holder.bt_zhifu.setVisibility(View.GONE);
-						holder.bt_pingjia.setVisibility(View.VISIBLE);
-						holder.bt_shanchu_dingdan.setVisibility(View.VISIBLE);
-					}
-
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						// TODO Auto-generated method stub
-						Toast.makeText(context, "操作失败", 0).show();
-					}
-				});
-			}
-		});
-		holder.bt_pingjia.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		return view;
 	}
 

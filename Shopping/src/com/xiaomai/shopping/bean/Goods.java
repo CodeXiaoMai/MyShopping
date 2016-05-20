@@ -15,7 +15,7 @@ public class Goods extends BmobObject {
 	private String content;
 	private Double price;
 	private Integer count;
-	private Integer remainCount;
+	private Integer remainCount;// 成交数量
 	private String address;
 	private String phone;
 	private String qq;

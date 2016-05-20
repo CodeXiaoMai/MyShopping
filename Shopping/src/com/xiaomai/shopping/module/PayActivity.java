@@ -5,14 +5,16 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.view.View.OnAttachStateChangeListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import c.b.BP;
@@ -25,12 +27,18 @@ import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.bean.Order;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.view.MyDialog;
 
 public class PayActivity extends BaseActivity {
 
 	private ImageView image;
 	private TextView tv_price;
 	private TextView tv_title;
+
+	private View jian;
+	private View add;
+	private EditText et_count;
+
 	private View ll_weixin;
 	private ImageView iv_weixin;
 	private View ll_zhifubao;
@@ -64,7 +72,6 @@ public class PayActivity extends BaseActivity {
 		name = goods.getTitle();
 		money = goods.getPrice();
 		user = (User) intent.getSerializableExtra("user");
-
 	}
 
 	private void initView() {
@@ -78,12 +85,31 @@ public class PayActivity extends BaseActivity {
 		image = (ImageView) findViewById(R.id.image);
 		tv_price = (TextView) findViewById(R.id.tv_price);
 		tv_title = (TextView) findViewById(R.id.tv_name);
+
+		jian = findViewById(R.id.jian);
+		add = findViewById(R.id.add);
+		et_count = (EditText) findViewById(R.id.et_count);
+		et_count.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				if (v.getId() == R.id.et_count) {
+					if (hasFocus) {
+						et_count.setCursorVisible(true);
+					} else {
+						et_count.setCursorVisible(false);
+						et_count.clearFocus();
+					}
+				}
+			}
+		});
 		ll_weixin = findViewById(R.id.ll_weixin);
 		iv_weixin = (ImageView) findViewById(R.id.iv_weixin);
 		ll_zhifubao = findViewById(R.id.ll_zhifubao);
 		iv_zhifubao = (ImageView) findViewById(R.id.iv_zhifubao);
 		bt_pay = (Button) findViewById(R.id.bt_pay);
-		setOnClick(back, ll_weixin, ll_zhifubao, bt_pay);
+		setOnClick(back, jian, add, ll_weixin, ll_zhifubao, bt_pay);
 	}
 
 	@Override
@@ -92,6 +118,24 @@ public class PayActivity extends BaseActivity {
 		switch (v.getId()) {
 		case R.id.title_back:
 			finish();
+			break;
+		case R.id.jian:
+			if (count > 1) {
+				count--;
+				et_count.setText(count + "");
+				money = count * goods.getPrice();
+				tv_price.setText("￥" + money);
+			}
+			break;
+		case R.id.add:
+			if (count < goods.getCount()) {
+				count++;
+				et_count.setText(count + "");
+				money = count * goods.getPrice();
+				tv_price.setText("￥" + money);
+			} else {
+				showToast("商品只有这么多了...");
+			}
 			break;
 		case R.id.ll_zhifubao:
 			isZhiFuBao = true;
@@ -177,6 +221,8 @@ public class PayActivity extends BaseActivity {
 				// order.setText(orderId);
 				PayActivity.this.orderId = orderId;
 				showDialog("获取订单成功!请等待跳转到支付页面~");
+				goods.setCount(goods.getCount() - count);
+				goods.update(context);
 				order = new Order(orderId, user.getObjectId(), goods
 						.getUserId(), goods.getObjectId(), name, goods
 						.getImages().get(0), count, money,
@@ -218,21 +264,91 @@ public class PayActivity extends BaseActivity {
 					break;
 				case 10777:
 					showToast("您的操作过于频繁");
+					finish();
 					break;
 				case -1:
 				case 7777:
-					showToast("微信客户端未安装");
+					MyDialog.showDialog(context, "", "微信客户端未安装,请到我的订单列表中查看",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							}, new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							});
 					break;
 				case 8888:
-					showToast("您微信客户端版本过低，不支持微信支付");
+					MyDialog.showDialog(context, "",
+							"您的微信客户端版本过低，不支持微信支付,请到我的订单列表中查看",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							}, new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							});
 					break;
 				// 支付中断
 				case -2:
 				case 6001:
-					showToast("支付中断,您可以到我的订单页面查看订单详情!");
+					MyDialog.showDialog(context, "", "支付中断,您可以到我的订单页面查看订单详情!",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							}, new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							});
 					break;
 				default:
-					showToast("发生未知错误");
+					MyDialog.showDialog(context, "", "支付中断,您可以到我的订单页面查看订单详情!",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							}, new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									finish();
+								}
+							});
 					break;
 				}
 				hideDialog();

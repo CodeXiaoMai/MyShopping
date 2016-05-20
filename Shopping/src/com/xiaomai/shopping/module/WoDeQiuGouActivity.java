@@ -126,6 +126,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 				holder.tv_time = (TextView) view.findViewById(R.id.tv_time);
 				holder.bt_quxiao = (Button) view
 						.findViewById(R.id.qiugou_bt_quxiao);
+				holder.bt_edit = (Button) view.findViewById(R.id.bt_edit);
 				view.setTag(holder);
 			} else {
 				holder = (ViewHolder) view.getTag();
@@ -184,6 +185,17 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 					});
 				}
 			});
+			holder.bt_edit.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(context,
+							UpdateWantActivity.class);
+					intent.putExtra("want", iWant);
+					startActivity(intent);
+				}
+			});
 			return view;
 		}
 
@@ -193,6 +205,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 			TextView tv_state;
 			TextView tv_time;
 			Button bt_quxiao;
+			Button bt_edit;
 		}
 	}
 
@@ -241,7 +254,9 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 	@Override
 	public void pullDownRefresh() {
 		list_temp = list_yifabuqiugou;
-		adapter.setList(list_temp);
+		if (list_temp != null) {
+			adapter.setList(list_temp);
+		}
 		list_yifabuqiugou = new ArrayList<IWant>();
 		loadData();
 	}

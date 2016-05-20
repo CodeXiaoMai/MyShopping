@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -212,8 +213,9 @@ public class QiuGouFragment extends LazyFragment implements
 				holder = (ViewHolder) view.getTag();
 			}
 			final IWant iWant = list.get(position);
-			if (imageloader != null) {
-				imageloader.displayImage(iWant.getUserImage(), holder.iv_head);
+			String uri = iWant.getUserImage();
+			if (imageloader != null && !TextUtils.isEmpty(uri)) {
+				imageloader.displayImage(uri, holder.iv_head);
 			}
 
 			holder.tv_name.setText(DES.decryptDES(iWant.getUserName(),
@@ -240,7 +242,9 @@ public class QiuGouFragment extends LazyFragment implements
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
 		list_temp = list_qiugou;
-		adapter.setList(list_temp);
+		if(list_temp!=null){
+			adapter.setList(list_temp);
+		}
 		list_qiugou = new ArrayList<IWant>();
 		checkNetWorkState();
 	}

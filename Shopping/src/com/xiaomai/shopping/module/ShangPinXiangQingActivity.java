@@ -80,7 +80,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 	private TextView tv_maichu;
 	// 收藏人数
 	private TextView tv_shoucang;
-	//交易地点
+	// 交易地点
 	private TextView tv_address;
 	// 宝贝描述
 	private TextView tv_desc;
@@ -145,10 +145,10 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 
 	private void fillGoods() {
 		tv_name.setText(goods.getTitle());
-		tv_price.setText(goods.getPrice()+"");
+		tv_price.setText(goods.getPrice() + "");
 		Integer remainCount = goods.getRemainCount();
-		tv_count.setText("数量：" + remainCount);
-		tv_maichu.setText("成交：" + (goods.getCount() - remainCount) + "笔");
+		tv_count.setText("数量：" + goods.getCount());
+		tv_maichu.setText("成交：" + remainCount + "笔");
 		tv_address.setText(goods.getAddress());
 		tv_desc.setText(goods.getContent());
 		images = goods.getImages();
@@ -215,6 +215,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 			public void onError(int arg0, String arg1) {
 				showErrorToast(arg0, arg1);
 				showLog("加载评论", arg0, arg1);
+				scrollView.onRefreshComplete();
 			}
 		});
 	}
@@ -272,7 +273,7 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		tv_count = (TextView) findViewById(R.id.goods_tv_remain_count);
 		tv_maichu = (TextView) findViewById(R.id.goods_tv_sale);
 		tv_shoucang = (TextView) findViewById(R.id.goods_tv_shoucang);
-		tv_address = (TextView)findViewById(R.id.goods_tv_address);
+		tv_address = (TextView) findViewById(R.id.goods_tv_address);
 		tv_desc = (TextView) findViewById(R.id.goods_tv_desc);
 
 		iv_more = (ImageView) findViewById(R.id.more);

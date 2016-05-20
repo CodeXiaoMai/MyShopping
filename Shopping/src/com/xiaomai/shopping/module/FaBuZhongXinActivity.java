@@ -228,6 +228,17 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 				}
 			});
 
+			holder.bt_edit.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(context,
+							UpdateGoodsActivity.class);
+					intent.putExtra("goods", goods);
+					startActivity(intent);
+				}
+			});
 			List<String> images = goods.getImages();
 			if (images.size() > 0) {
 				final String uri = images.get(0);

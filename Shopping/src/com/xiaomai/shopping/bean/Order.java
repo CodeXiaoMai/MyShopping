@@ -11,6 +11,10 @@ public class Order extends BmobObject {
 
 	public static final String ORDER_STATUS_WEIZHIFU = "NOTPAY";
 	public static final String ORDER_STATUS_ZHIFUCHENGGONG = "SUCCESS";
+	public static final String ORDER_STATUS_SHOUHUO = "SHOUHUO";
+	public static final String ORDER_STATUS_PINGJIA = "PINGJIA";
+	public static final String ORDER_STATUS_CLOSE = "CLOSE";
+
 	// 订单号
 	private String orderId;
 	// 用户id
@@ -29,6 +33,16 @@ public class Order extends BmobObject {
 	private Double money;
 	// 状态
 	private String status;
+
+	public Order() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Order(String tableName) {
+		super(tableName);
+		// TODO Auto-generated constructor stub
+	}
 
 	public Order(String orderId, String uid, String shangjiaId, String goodsid,
 			String goodsName, String imageUri, Integer count, Double money,

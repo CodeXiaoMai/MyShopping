@@ -65,7 +65,7 @@
         <activity
             android:name="com.xiaomai.shopping.module.HomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.xiaomai.shopping.module.LoginActivity"
             android:launchMode="singleTask"
@@ -88,7 +88,7 @@
         <activity
             android:name="com.xiaomai.shopping.module.ShangPinXiangQingActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name="com.xiaomai.shopping.module.FaBuZhongXinActivity"
             android:screenOrientation="portrait" />
@@ -136,10 +136,22 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.xiaomai.shopping.module.PayActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.xiaomai.shopping.module.FenLeiActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.ShangJiDingDanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.UpdateGoodsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name="com.xiaomai.shopping.module.UpdateWantActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <provider
             android:name="com.xiaomai.shopping.biz.MessageBiz"

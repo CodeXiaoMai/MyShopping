@@ -19,6 +19,7 @@ import com.xiaomai.shopping.listener.OnLoginOutListener;
 import com.xiaomai.shopping.module.FaBuZhongXinActivity;
 import com.xiaomai.shopping.module.LoginActivity;
 import com.xiaomai.shopping.module.SettingActivity;
+import com.xiaomai.shopping.module.ShangJiDingDanActivity;
 import com.xiaomai.shopping.module.WoDeDingDanActivity;
 import com.xiaomai.shopping.module.WoDeJiFenActivity;
 import com.xiaomai.shopping.module.WoDeQiuGouActivity;
@@ -55,6 +56,8 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 	private View ll_wodeqiugou;
 	// 我的积分
 	private View ll_wodejifen;
+	// 商家订单
+	private View ll_shangjia;
 	private User user;
 
 	@Override
@@ -82,8 +85,9 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 		ll_wodedingdan = view.findViewById(R.id.gerenzhongxin_ll_wodedingdan);
 		ll_wodeqiugou = view.findViewById(R.id.gerenzhongxin_ll_qiugou);
 		ll_wodejifen = view.findViewById(R.id.gerenzhongxin_ll_wodejifen);
+		ll_shangjia = view.findViewById(R.id.gerenzhongxin_ll_shangjiadingdan);
 		setOnClick(login, ll_setting, ll_fabu, ll_wodeshoucang, ll_wodedingdan,
-				ll_wodeqiugou, ll_wodejifen);
+				ll_wodeqiugou, ll_wodejifen, ll_shangjia);
 	}
 
 	@Override
@@ -119,7 +123,8 @@ public class GeRenZhongXinFragment extends BaseFragment implements
 		case R.id.gerenzhongxin_ll_wodejifen:
 			isLogin(WoDeJiFenActivity.class);
 			break;
-		default:
+		case R.id.gerenzhongxin_ll_shangjiadingdan:
+			isLogin(ShangJiDingDanActivity.class);
 			break;
 		}
 	}

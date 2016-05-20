@@ -126,7 +126,9 @@ public class WoDeDingDanActivity extends BaseActivity implements
 	public void pullDownRefresh() {
 		// TODO Auto-generated method stub
 		list_temp = list_order;
-		adapter.setList(list_temp);
+		if (list_temp != null) {
+			adapter.setList(list_temp);
+		}
 		list_order = new ArrayList<Order>();
 		loadData();
 	}
