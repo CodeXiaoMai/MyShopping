@@ -2,6 +2,8 @@ package com.xiaomai.shopping.adapter;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -15,9 +17,11 @@ import android.widget.Toast;
 import cn.bmob.push.autobahn.Utf8Validator;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.GetCallback;
 import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+import com.koushikdutta.async.ZipDataSink;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.bean.Goods;
@@ -33,6 +37,8 @@ public class OrderAdapter extends BaseAdapter {
 	private List<Order> list;
 	private ImageLoader imageLoader;
 	private ImageLoader loader;
+
+	String zhifubao = "";
 
 	public OrderAdapter(Context context, List<Order> list,
 			ImageLoader imageLoader, ImageLoader loader) {
@@ -221,6 +227,22 @@ public class OrderAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				order.setStatus(Order.ORDER_STATUS_SHOUHUO);
+				BmobQuery<Goods> bmobQuery = new BmobQuery<Goods>();
+				bmobQuery.getObject(context, order.getGoodsid(),
+						new GetListener<Goods>() {
+
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public void onSuccess(Goods arg0) {
+								// TODO Auto-generated method stub
+								zhifubao = arg0.getQq();
+							}
+						});
 				order.update(context, new UpdateListener() {
 
 					@Override
@@ -232,8 +254,9 @@ public class OrderAdapter extends BaseAdapter {
 						holder.bt_shanchu_dingdan.setVisibility(View.VISIBLE);
 						Message message = new Message(Utils.MANAGERID, "提款消息",
 								"用户:[" + order.getShangjiaId() + "]申请提款 ￥:"
-										+ order.getMoney() + "元", GetDate
-										.currentTime().replace(" ", "\n"));
+										+ order.getMoney() + "元,收款账号:"
+										+ zhifubao, GetDate.currentTime()
+										.replace(" ", "\n"));
 						message.setFid(order.getShangjiaId());
 						message.save(context);
 					}

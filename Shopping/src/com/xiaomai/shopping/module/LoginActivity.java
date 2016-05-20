@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -167,6 +168,10 @@ public class LoginActivity extends BaseActivity {
 			user.setUsername(userName);
 			user.setPassword(password);
 			showDialog("正在登录");
+			InputMethodManager imm = (InputMethodManager) context
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(et_password.getWindowToken(), 0);
+			imm.hideSoftInputFromWindow(et_username.getWindowToken(), 0);
 			user.login(context, new SaveListener() {
 
 				@Override

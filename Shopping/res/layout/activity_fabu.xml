@@ -154,9 +154,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textSize="15sp"
+                    android:text="分类:"
                     android:textColor="@color/ziti2"
-                    android:text="分类:" />
+                    android:textSize="15sp" />
 
                 <Spinner
                     android:id="@+id/spinner"
@@ -236,7 +236,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
-                android:text="QQ号(选填)"
+                android:text="支付宝帐号(交易成功后,买家在线支付的钱将打到此帐户)"
                 android:textColor="@color/ziti_normal"
                 android:textSize="15sp" />
 
@@ -249,7 +249,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:gravity="center_horizontal"
-                android:inputType="numberSigned"
+                android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="@color/ziti2" />
 

@@ -20,6 +20,7 @@ public class ImageFragment extends BaseFragment {
 	private ImageView imageview;
 	private int position;
 	private List<String> images;
+	private boolean clickAble = true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +62,8 @@ public class ImageFragment extends BaseFragment {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.imageview:
-			imageBrower(context, position, (ArrayList<String>) images);
+			if (clickAble)
+				imageBrower(context, position, (ArrayList<String>) images);
 			break;
 
 		default:
@@ -94,5 +96,9 @@ public class ImageFragment extends BaseFragment {
 	public void loadData() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setClickAble(boolean flag) {
+		clickAble = flag;
 	}
 }

@@ -44,7 +44,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.adapter.MyFragmentAdapter;
-import com.xiaomai.shopping.adapter.ViewPagerAdapter;
 import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.Ad;
 import com.xiaomai.shopping.bean.Goods;
@@ -81,7 +80,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private ViewPager viewPager;
 	// private TextView tv_intro;
 	private LinearLayout dotLayout;
-//	private ViewPagerAdapter adapter_viewPager;
+	// private ViewPagerAdapter adapter_viewPager;
 	private List<Ad> list_ad;
 	private MyFragmentAdapter pagerAdapter;
 
@@ -96,7 +95,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 	private List<Goods> list_goods;
 	// 用户搜索的商品
 	private List<Goods> list_search_result;
-//	private List<Goods> list_temp;
+	// private List<Goods> list_temp;
 
 	private GridView gv_fenlei;
 	private SimpleAdapter simple_adapter;
@@ -602,7 +601,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 					images.add(ad.getImage_url());
 				}
 				pagerAdapter = new MyFragmentAdapter(getFragmentManager(),
-						images, context);
+						images, context, false);
 				// viewPager.setAdapter(adapter_viewPager);
 				viewPager.setAdapter(pagerAdapter);
 				myHandler.sendEmptyMessageDelayed(0, AUTO_PLAY_TIME);

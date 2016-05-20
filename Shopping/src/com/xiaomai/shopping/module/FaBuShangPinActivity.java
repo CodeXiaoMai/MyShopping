@@ -232,6 +232,10 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 			return;
 		}
 		qq = et_qq.getText().toString().trim();
+		if (TextUtils.isEmpty(qq)) {
+			showToast("请务必留下您的支付宝账号，用于向您付款");
+			return;
+		}
 		if (user != null) {
 			userId = user.getObjectId();
 			state = StateCode.GOODS_SHENHE;

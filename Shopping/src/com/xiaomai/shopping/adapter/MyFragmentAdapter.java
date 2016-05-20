@@ -16,12 +16,13 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
 	private List<ImageFragment> list_fragment;
 
 	public MyFragmentAdapter(FragmentManager fm, List<String> images,
-			Context context) {
+			Context context,boolean clickAble) {
 		super(fm);
 		list_fragment = new ArrayList<ImageFragment>();
 		for (int i = 0; i < images.size(); i++) {
 			ImageFragment fragment = new ImageFragment();
 			fragment.init(context, i, images);
+			fragment.setClickAble(clickAble);
 			list_fragment.add(fragment);
 		}
 	}

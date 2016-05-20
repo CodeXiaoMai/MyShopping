@@ -29,7 +29,9 @@ import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.bean.User;
 import com.xiaomai.shopping.biz.DBUtil;
+import com.xiaomai.shopping.listener.OnLoginOutListener;
 import com.xiaomai.shopping.module.HomeActivity;
+import com.xiaomai.shopping.module.LoginActivity;
 import com.xiaomai.shopping.module.MessageXiangQingActivity;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver.onReceiveMessageListener;
@@ -44,7 +46,7 @@ import com.xiaomai.shopping.view.MyDialog;
  *
  */
 public class XiaoXiFragment extends BaseFragment implements
-		onReceiveMessageListener {
+		onReceiveMessageListener, OnLoginOutListener {
 
 	private View back;
 	private TextView title;
@@ -67,10 +69,7 @@ public class XiaoXiFragment extends BaseFragment implements
 		View view = inflater
 				.inflate(R.layout.fragment_xiaoxi, container, false);
 		initView(view);
-		user = BmobUser.getCurrentUser(context, User.class);
-		if (user != null) {
-			fillData();
-		}
+		fillData();
 		MyPushMessageReceiver.listener = this;
 		HomeActivity.listener = this;
 		return view;
@@ -78,38 +77,44 @@ public class XiaoXiFragment extends BaseFragment implements
 
 	private void fillData() {
 		// TODO Auto-generated method stub
-		Cursor cursor = context.getContentResolver().query(uri, null,
-				DBUtil.MESSAGE_COLUMN_MESSAGE_UID + "=?",
-				new String[] { user.getObjectId() }, "_time");
-		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-			Message message = null;
-			for (int i = 0; i < cursor.getColumnCount(); i++) {
-				String objId = cursor.getString(cursor
-						.getColumnIndex(DBUtil.MESSAGE_OBJ_ID));
-				String uid = cursor.getString(cursor
-						.getColumnIndex(DBUtil.MESSAGE_COLUMN_MESSAGE_UID));
-				String type = cursor.getString(cursor
-						.getColumnIndex(DBUtil.MESSAGE_COLUMN_TYPE));
-				String content = cursor.getString(cursor
-						.getColumnIndex(DBUtil.MESSAGE_COLUMN_MESSAGE_CONTENT));
-				String time = cursor.getString(cursor
-						.getColumnIndex(DBUtil.MESSAGE_COLUMN_TIME));
-				int state = cursor.getInt(cursor
-						.getColumnIndex(DBUtil.MESSAGE_COLUMN_STATE));
-				message = new Message(uid, type, content, time);
-				message.setObjectId(objId);
-				message.setState(state);
+		user = BmobUser.getCurrentUser(context, User.class);
+		if (user != null) {
+			Cursor cursor = context.getContentResolver().query(uri, null,
+					DBUtil.MESSAGE_COLUMN_MESSAGE_UID + "=?",
+					new String[] { user.getObjectId() }, "_time");
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+					.moveToNext()) {
+				Message message = null;
+				for (int i = 0; i < cursor.getColumnCount(); i++) {
+					String objId = cursor.getString(cursor
+							.getColumnIndex(DBUtil.MESSAGE_OBJ_ID));
+					String uid = cursor.getString(cursor
+							.getColumnIndex(DBUtil.MESSAGE_COLUMN_MESSAGE_UID));
+					String type = cursor.getString(cursor
+							.getColumnIndex(DBUtil.MESSAGE_COLUMN_TYPE));
+					String content = cursor
+							.getString(cursor
+									.getColumnIndex(DBUtil.MESSAGE_COLUMN_MESSAGE_CONTENT));
+					String time = cursor.getString(cursor
+							.getColumnIndex(DBUtil.MESSAGE_COLUMN_TIME));
+					int state = cursor.getInt(cursor
+							.getColumnIndex(DBUtil.MESSAGE_COLUMN_STATE));
+					message = new Message(uid, type, content, time);
+					message.setObjectId(objId);
+					message.setState(state);
+				}
+				list.add(message);
 			}
-			list.add(message);
+			adapter.setList(list);
+			adapter.notifyDataSetChanged();
+			loadHistoryMessage = true;
 		}
-		adapter.setList(list);
-		adapter.notifyDataSetChanged();
-		loadHistoryMessage = true;
 	}
 
 	private void initView(View view) {
 
 		context = getContext();
+		LoginActivity.listener = this;
 		// 隐藏返回
 		back = view.findViewById(R.id.title_back);
 		back.setVisibility(View.INVISIBLE);
@@ -252,6 +257,22 @@ public class XiaoXiFragment extends BaseFragment implements
 		this.list.addAll(list);
 		adapter.setList(this.list);
 		adapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onLogin() {
+		// TODO Auto-generated method stub
+		fillData();
+	}
+
+	@Override
+	public void onLogOut() {
+		// TODO Auto-generated method stub
+		if (adapter != null) {
+			list = new ArrayList<Message>();
+			adapter.setList(list);
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 }

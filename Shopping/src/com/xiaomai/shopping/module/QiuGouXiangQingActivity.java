@@ -42,7 +42,7 @@ public class QiuGouXiangQingActivity extends BaseActivity {
 	private void fillData() {
 		// TODO Auto-generated method stub
 		iwant = (IWant) getIntent().getSerializableExtra("want");
-		tv_price.setText("￥" + iwant.getMinPrice() + "--" + iwant.getMaxPrice());
+		tv_price.setText(iwant.getMinPrice() + "--" + iwant.getMaxPrice());
 		tv_date.setText(iwant.getUpdatedAt());
 		tv_title.setText(iwant.getTitle());
 		tv_desc.setText(iwant.getDesc());

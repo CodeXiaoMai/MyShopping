@@ -140,7 +140,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.xiaomai.shopping.module.FenLeiActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.xiaomai.shopping.module.ShangJiaDingDanActivity"
             android:screenOrientation="portrait" />
