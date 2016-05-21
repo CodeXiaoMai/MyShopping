@@ -26,8 +26,8 @@
             android:id="@+id/ll_shouye"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
@@ -51,8 +51,8 @@
             android:id="@+id/ll_qiugou"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
@@ -76,8 +76,8 @@
             android:id="@+id/ll_xiaoxi"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
@@ -85,25 +85,40 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_horizontal"
-                android:focusable="false"
                 android:src="@drawable/xiaoxi_normal" />
 
-            <TextView
-                android:id="@+id/main_tv_xiaoxi"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="消息"
-                android:textColor="@color/ziti_normal"
-                android:textSize="10sp" />
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/main_tv_xiaoxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="消息"
+                    android:textColor="@color/ziti_normal"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/message_notify"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:gravity="center"
+                    android:textSize="6sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/dot_focus" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_gerenzhongxin"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView

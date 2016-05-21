@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="用户总数\n89" />
+            android:text="用户总数\n0" />
 
         <TextView
             android:id="@+id/tv_today_login"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="今日登录\n55" />
+            android:text="今日登录\n0" />
 
         <TextView
             android:id="@+id/tv_today_regist"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="今日注册\n23" />
+            android:text="今日注册\n0" />
     </LinearLayout>
 
     <LinearLayout

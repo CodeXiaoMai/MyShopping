@@ -36,7 +36,6 @@ import com.xiaomai.shopping.module.MessageXiangQingActivity;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver.onReceiveMessageListener;
 import com.xiaomai.shopping.utils.GetDate;
-import com.xiaomai.shopping.utils.Utils;
 import com.xiaomai.shopping.view.MyDialog;
 
 /**

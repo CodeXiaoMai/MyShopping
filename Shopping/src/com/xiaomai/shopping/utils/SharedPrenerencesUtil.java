@@ -3,6 +3,7 @@ package com.xiaomai.shopping.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.opengl.ETC1;
 
 public class SharedPrenerencesUtil {
 
@@ -99,4 +100,23 @@ public class SharedPrenerencesUtil {
 		return sp.getBoolean("isShengLiuLiang", false);
 	}
 
+	/**
+	 * 保存未读数量
+	 * 
+	 * @param context
+	 * @param count
+	 */
+	public static void setMessageCount(Context context, int count) {
+		SharedPreferences sp = context.getSharedPreferences(
+				SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
+		Editor editor = sp.edit();
+		editor.putInt("messageCount", count);
+		editor.commit();
+	}
+
+	public static int getMessageCount(Context context) {
+		SharedPreferences sp = context.getSharedPreferences(
+				SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
+		return sp.getInt("messageCount", 0);
+	}
 }

@@ -3,10 +3,8 @@ package com.xiaomai.shopping.module;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R.menu;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +24,6 @@ import android.widget.Toast;
 import c.b.BP;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 import com.umeng.socialize.PlatformConfig;
@@ -39,6 +36,7 @@ import com.xiaomai.shopping.fragment.ShouYeFragment;
 import com.xiaomai.shopping.fragment.XiaoXiFragment;
 import com.xiaomai.shopping.receiver.MyPushMessageReceiver.onReceiveMessageListener;
 import com.xiaomai.shopping.utils.Config;
+import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 
 /**
  * 这是主页
@@ -74,6 +72,9 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 	private long mExitTime;
 
 	private User user;
+
+	private TextView tv_meesgae;
+	private int message_count;
 
 	public static onReceiveMessageListener listener;
 
@@ -153,13 +154,29 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 									@Override
 									public void onSuccess(List<Message> arg0) {
 										// TODO Auto-generated method stub
-										if (arg0.size() > 0) {
+										int size = arg0.size();
+										if (size > 0) {
 											/*
 											 * Toast.makeText(context,
 											 * "您有新的消息,请到消息列表查看", 0) .show();
 											 */
+											tv_meesgae
+													.setVisibility(View.VISIBLE);
+											message_count += size;
+
+											if (message_count < 99) {
+												tv_meesgae
+														.setText(message_count
+																+ "");
+											} else {
+												tv_meesgae.setText("99+");
+											}
+											SharedPrenerencesUtil
+													.setMessageCount(context,
+															message_count);
 											if (listener != null) {
 												listener.onReceiveMessage(arg0);
+
 											} else {
 												/*
 												 * Toast.makeText(context,
@@ -182,6 +199,12 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 			}
 		}.start();
 
+		tv_meesgae = (TextView) findViewById(R.id.message_notify);
+		message_count = SharedPrenerencesUtil.getMessageCount(context);
+		if (message_count > 0) {
+			tv_meesgae.setVisibility(View.VISIBLE);
+			tv_meesgae.setText(message_count > 99 ? "99+" : message_count + "");
+		}
 	}
 
 	private class MyFragmentAdapter extends FragmentPagerAdapter {
@@ -261,6 +284,9 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 		tv_xiaoxi.setTextColor(color_red);
 		tv_shouye.setTextColor(color_black);
 		tv_gerenzhongxin.setTextColor(color_black);
+		tv_meesgae.setVisibility(View.GONE);
+		message_count = 0;
+		SharedPrenerencesUtil.setMessageCount(context, 0);
 	}
 
 	private void gerenzhongxin() {

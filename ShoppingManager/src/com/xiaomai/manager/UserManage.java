@@ -12,6 +12,7 @@ import cn.bmob.v3.listener.FindListener;
 import com.xiaomai.manager.adapter.UserAdapter;
 import com.xiaomai.manager.base.BaseActivity;
 import com.xiaomai.manager.bean.User;
+import com.xiaomai.manager.utils.GetDate;
 import com.xiaomai.manager.utils.Utils;
 import com.xiaomai.manager.view.RefreshListView;
 import com.xiaomai.manager.view.RefreshListView.OnRefreshListener;
@@ -27,6 +28,9 @@ public class UserManage extends BaseActivity implements OnRefreshListener {
 	private TextView tv_today_login;
 	private TextView tv_today_regist;
 
+	private int today_login;
+	private int today_regist;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -34,6 +38,7 @@ public class UserManage extends BaseActivity implements OnRefreshListener {
 		setContentView(R.layout.activity_user_manage);
 		initView();
 		loadData();
+		getUsers();
 	}
 
 	private void initView() {
@@ -42,11 +47,11 @@ public class UserManage extends BaseActivity implements OnRefreshListener {
 		title = (TextView) findViewById(R.id.title_title);
 		title.setText("用户管理");
 		setOnClick(back);
-		
-		tv_user_count = (TextView)findViewById(R.id.tv_user_count);
-		tv_today_login = (TextView)findViewById(R.id.tv_today_login);
-		tv_today_regist = (TextView)findViewById(R.id.tv_today_regist);
-		
+
+		tv_user_count = (TextView) findViewById(R.id.tv_user_count);
+		tv_today_login = (TextView) findViewById(R.id.tv_today_login);
+		tv_today_regist = (TextView) findViewById(R.id.tv_today_regist);
+
 		listView = (RefreshListView) findViewById(R.id.listView);
 		listView.setOnRefreshListener(this);
 		list = new ArrayList<User>();
@@ -65,6 +70,38 @@ public class UserManage extends BaseActivity implements OnRefreshListener {
 		default:
 			break;
 		}
+	}
+
+	private void getUsers() {
+		BmobQuery<User> bmobQuery = new BmobQuery<User>();
+		bmobQuery.findObjects(context, new FindListener<User>() {
+
+			@Override
+			public void onSuccess(List<User> arg0) {
+				// TODO Auto-generated method stub
+				if (arg0 != null) {
+					tv_user_count.setText("用户总数\n" + arg0.size());
+					for (User user : arg0) {
+						if (user.getCreatedAt().startsWith(
+								GetDate.getDateBefore(0))) {
+							today_regist++;
+						}
+						if (user.getLastTimeLogin().startsWith(
+								GetDate.getDateBefore(0))) {
+							today_login++;
+						}
+					}
+					tv_today_login.setText("今日登录\n" + today_login);
+					tv_today_regist.setText("今日注册\n" + today_regist);
+				}
+			}
+
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	@Override
