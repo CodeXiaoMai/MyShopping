@@ -26,8 +26,10 @@ import cn.bmob.v3.listener.UpdateListener;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.Goods;
+import com.xiaomai.shopping.bean.Message;
 import com.xiaomai.shopping.bean.Order;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.utils.GetDate;
 import com.xiaomai.shopping.view.MyDialog;
 
 public class PayActivity extends BaseActivity {
@@ -199,6 +201,17 @@ public class PayActivity extends BaseActivity {
 										public void onSuccess() {
 											// TODO Auto-generated method stub
 											showToast("支付成功!您可以到我的订单页面查看订单详情!");
+											Message message = new Message(
+													goods.getUserId(),
+													"支付消息",
+													"用户:"
+															+ user.getMobilePhoneNumber()
+															+ "想买您的["
+															+ goods.getTitle()
+															+ "],并已经成功支付，请到商家订单查看详情",
+													GetDate.currentTime()
+															.replace(" ", "\n"));
+											message.save(context);
 											finish();
 										}
 
@@ -238,6 +251,11 @@ public class PayActivity extends BaseActivity {
 						.getImages().get(0), count, money,
 						Order.ORDER_STATUS_WEIZHIFU);
 				order.save(context);
+				Message message = new Message(goods.getUserId(), "订单消息", "用户:"
+						+ user.getMobilePhoneNumber() + "想买您的["
+						+ goods.getTitle() + "],并已经成功下单，请到商家订单查看详情", GetDate
+						.currentTime().replace(" ", "\n"));
+				message.save(context);
 			}
 
 			@Override
@@ -249,7 +267,7 @@ public class PayActivity extends BaseActivity {
 				case -3:
 					new AlertDialog.Builder(PayActivity.this)
 							.setMessage(
-									"监测到你尚未安装支付插件,无法进行微信支付,请选择安装插件(已打包在本地,无流量消耗)还是用支付宝支付")
+									"订单获取成功！\n你尚未安装支付插件,无法进行微信支付,请选择安装插件(无流量消耗),还是用支付宝支付,您还可以退出，进行线下付款")
 							.setPositiveButton("安装",
 									new DialogInterface.OnClickListener() {
 
@@ -285,7 +303,8 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
-									startActivity(new Intent(context,WoDeDingDanActivity.class));
+									startActivity(new Intent(context,
+											WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {
@@ -307,7 +326,8 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
-									startActivity(new Intent(context,WoDeDingDanActivity.class));
+									startActivity(new Intent(context,
+											WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {
@@ -330,7 +350,8 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
-									startActivity(new Intent(context,WoDeDingDanActivity.class));
+									startActivity(new Intent(context,
+											WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {
@@ -351,7 +372,8 @@ public class PayActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									// TODO Auto-generated method stub
-									startActivity(new Intent(context,WoDeDingDanActivity.class));
+									startActivity(new Intent(context,
+											WoDeDingDanActivity.class));
 									finish();
 								}
 							}, new DialogInterface.OnClickListener() {

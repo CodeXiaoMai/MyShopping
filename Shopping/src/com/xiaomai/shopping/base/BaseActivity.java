@@ -25,7 +25,6 @@ import com.xiaomai.shopping.view.MyDialog;
 
 public abstract class BaseActivity extends Activity implements OnClickListener {
 
-
 	public UMShareAPI mShareAPI;
 	public View back;
 	public TextView title;
@@ -39,6 +38,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	public Context context = this;
 
 	public ProgressDialog dialog;
+
 	public void showDialog(String message) {
 		try {
 			if (dialog == null) {
@@ -83,7 +83,8 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 		case 10010:
 			arg1 = "您的操作太频繁,请稍后再试!";
 			break;
-		default:
+		case 9016:
+			arg1 = "网络异常";
 			break;
 		}
 		Toast.makeText(this, arg1, Toast.LENGTH_SHORT).show();

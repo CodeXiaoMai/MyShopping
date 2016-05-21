@@ -170,13 +170,21 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		boolean shengLiuLiang = SharedPrenerencesUtil.getShengLiuLiang(context);
 		// 如果是数据状态，并且未开启省流量模式，或者是Wifi状态就加载图片，否则不加载图片
 		if (!NetWorkUtil.isNetwork(context, false)) {
+			scrollView.onRefreshComplete();
+			hideDialog();
 			return;
 		}
-		if (!shengLiuLiang && NetWorkUtil.isMobileNetWork(context)
-				|| NetWorkUtil.isWifiNetWork(context)) {
+		/*
+		 * if (!shengLiuLiang && NetWorkUtil.isMobileNetWork(context) ||
+		 * NetWorkUtil.isWifiNetWork(context)) { imageloader =
+		 * ImageLoader.getInstance();
+		 * imageloader.init(ImageLoaderConfiguration.createDefault(context)); }
+		 * else { imageloader = null; }
+		 */
+		if (!(shengLiuLiang && NetWorkUtil.isMobileNetWork(context))) {
 			imageloader = ImageLoader.getInstance();
 			imageloader.init(ImageLoaderConfiguration.createDefault(context));
-		} else {
+		}else{
 			imageloader = null;
 		}
 		loadGoods();
@@ -338,7 +346,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 							@Override
 							public boolean onLongClick(View v) {
 								holder.iv_image
-										.setImageResource(R.drawable.tupian_jiazaizhong);
+										.setImageResource(R.drawable.tupian_jiazaizhong1);
 								loader.displayImage(goods.getImages().get(0),
 										holder.iv_image);
 								return true;

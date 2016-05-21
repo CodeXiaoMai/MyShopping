@@ -173,6 +173,7 @@ public class FenLeiActivity extends BaseActivity implements TextWatcher,
 		query.order(order);
 		query.addWhereEqualTo("type", type);
 		query.addWhereEqualTo("state", StateCode.GOODS_OK);
+		query.addWhereGreaterThan("count", 0);
 		query.setLimit(Utils.REQUEST_COUNT);
 		query.setSkip(list.size());
 		query.findObjects(context, new FindListener<Goods>() {

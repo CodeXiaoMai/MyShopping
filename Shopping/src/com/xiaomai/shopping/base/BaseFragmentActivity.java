@@ -65,8 +65,18 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements
 	}
 
 	public void showErrorToast(int arg0, String arg1) {
-		Toast.makeText(this, "错误代码：" + arg0 + ",错误信息：" + arg1,
-				Toast.LENGTH_SHORT).show();
+		switch (arg0) {
+		case 101:
+			arg1 = "宝贝已失效，或已下架";
+			break;
+		case 10010:
+			arg1 = "您的操作太频繁,请稍后再试!";
+			break;
+		case 9016:
+			arg1 = "网络异常";
+			break;
+		}
+		Toast.makeText(this, arg1, Toast.LENGTH_SHORT).show();
 	}
 
 	public void showLog(String tag, int arg0, String arg1) {

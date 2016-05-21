@@ -15,8 +15,8 @@ public class Bimp {
 	public static int max = 0;
 
 	public static Bitmap revitionImageSize(String path) throws IOException {
-		int widthSize = 1000;
-		int heightSize = 1000;
+		int widthSize = 800;
+		int heightSize = 800;
 		Bitmap bitmap = null;
 		try {
 			if (new File(path).exists()) {

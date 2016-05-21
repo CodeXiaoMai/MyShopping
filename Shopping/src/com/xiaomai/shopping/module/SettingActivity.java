@@ -36,6 +36,7 @@ public class SettingActivity extends BaseActivity implements UMShareListener,
 	private boolean isShengLiuLiang;
 	// 省流量开关
 	private ToggleButton tb_shengliuliang;
+	private View shengliuliang;
 	// 个人资料
 	private View gerenziliao;
 	// 关于我们
@@ -95,16 +96,29 @@ public class SettingActivity extends BaseActivity implements UMShareListener,
 			}
 		});
 
+		shengliuliang = findViewById(R.id.ll_shengliuliang);
 		gerenziliao = findViewById(R.id.setting_gerenziliao);
 		aboutus = findViewById(R.id.setting_about_us);
 		fankui = findViewById(R.id.setting_fankui);
 		fenxiang = findViewById(R.id.setting_share);
-		setOnClick(back, bt_logOut, gerenziliao, aboutus, fankui, fenxiang);
+		setOnClick(back, shengliuliang, bt_logOut, gerenziliao, aboutus,
+				fankui, fenxiang);
 	}
 
 	@Override
 	public void onClick(View v) {
+
 		switch (v.getId()) {
+		case R.id.ll_shengliuliang:
+			if (isShengLiuLiang) {
+				tb_shengliuliang.setToggleOff();
+			} else {
+				tb_shengliuliang.setToggleOn();
+			}
+			isShengLiuLiang = !isShengLiuLiang;
+			SharedPrenerencesUtil.setShengLiuLiang(context, isShengLiuLiang);
+			tv_shengliuliang.setText(isShengLiuLiang ? "已经开启" : "已经关闭");
+			break;
 		case R.id.title_back:
 			finish();
 			break;
@@ -146,12 +160,10 @@ public class SettingActivity extends BaseActivity implements UMShareListener,
 	}
 
 	private void toShare() {
-//		UMImage image = new UMImage(
-//				context,
-//				"http://www.bmob.cn/uploads/attached/app/logo/20160514/fb68c095-24c9-984f-e9a3-8abc861873cc.png");
-		new ShareAction(this)
-				.setPlatform(SHARE_MEDIA.SINA)
-				.setCallback(this)
+		// UMImage image = new UMImage(
+		// context,
+		// "http://www.bmob.cn/uploads/attached/app/logo/20160514/fb68c095-24c9-984f-e9a3-8abc861873cc.png");
+		new ShareAction(this).setPlatform(SHARE_MEDIA.SINA).setCallback(this)
 				.withText("我在北苑跳蚤市场发现了新大陆，大家快来下载吧,http://xiaomai1993.bmob.cn/")
 				.share();
 	}

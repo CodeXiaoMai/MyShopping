@@ -8,6 +8,7 @@
     <include layout="@layout/title" />
 
     <RelativeLayout
+        android:id="@+id/ll_shengliuliang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

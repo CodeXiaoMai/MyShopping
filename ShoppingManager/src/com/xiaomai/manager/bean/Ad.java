@@ -7,10 +7,20 @@ public class Ad extends BmobObject {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String image_url;
 	private String action;
 	private String introduce;
+
+	public Ad() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Ad(String tableName) {
+		super(tableName);
+		// TODO Auto-generated constructor stub
+	}
 
 	public Ad(String image_url, String action, String introduce) {
 		super();

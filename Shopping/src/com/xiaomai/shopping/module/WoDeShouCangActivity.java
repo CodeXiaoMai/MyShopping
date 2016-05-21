@@ -84,6 +84,7 @@ public class WoDeShouCangActivity extends BaseActivity implements
 		if (user != null) {
 			bmobQuery.setLimit(Utils.REQUEST_COUNT);
 			bmobQuery.setSkip(list_shoucang.size());
+			bmobQuery.order("-updatedAt");
 			bmobQuery.addWhereEqualTo("userId", user.getObjectId());
 			bmobQuery.findObjects(context, new FindListener<Collection>() {
 

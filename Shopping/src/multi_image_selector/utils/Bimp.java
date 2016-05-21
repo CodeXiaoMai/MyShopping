@@ -13,8 +13,8 @@ public class Bimp {
 	public static int max = 0;
 
 	public static Bitmap revitionImageSize(String path) throws IOException {
-		int widthSize = 1000;
-		int heightSize = 1000;
+		int widthSize = 800;
+		int heightSize = 800;
 		Bitmap bitmap = null;
 		try {
 			if (new File(path).exists()) {
@@ -37,7 +37,7 @@ public class Bimp {
 						in = new BufferedInputStream(new FileInputStream(
 								new File(path)));
 						// 这个参数表示新生成的图片为原始图片的几分之一。
-						options.inSampleSize = (int) Math.pow(2.0D, i);
+						options.inSampleSize = (int) Math.pow(3.0D, i);
 						// 这里之前设置为了true，所以要改为false，否则就创建不出图片
 						options.inJustDecodeBounds = false;
 						bitmap = BitmapFactory.decodeStream(in, null, options);
