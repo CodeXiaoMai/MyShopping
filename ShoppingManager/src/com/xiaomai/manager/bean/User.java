@@ -29,6 +29,16 @@ public class User extends BmobUser {
 	// 最后一次登录的时间
 	private String lastTimeLogin;
 
+	private boolean isDongJie;
+
+	public boolean isDongJie() {
+		return isDongJie;
+	}
+
+	public void setDongJie(boolean isDongJie) {
+		this.isDongJie = isDongJie;
+	}
+
 	public String getRealName() {
 		return realName;
 	}

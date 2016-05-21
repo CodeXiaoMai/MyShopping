@@ -654,11 +654,11 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 	private void checkCollection() {
 		User user = BmobUser.getCurrentUser(context, User.class);
 		if (user != null) {
-			showLog("checkCollection", 1, "开始");
+//			showLog("checkCollection", 1, "开始");
 			BmobQuery<Collection> bmobQuery = new BmobQuery<Collection>();
 			String bql = "select * from Collection where userId = ? and goodsId = ?";
-			showLog("user", 0, user.getObjectId());
-			showLog("goods", 1, goods.getObjectId());
+//			showLog("user", 0, user.getObjectId());
+//			showLog("goods", 1, goods.getObjectId());
 			bmobQuery.doSQLQuery(context, bql,
 					new SQLQueryListener<Collection>() {
 
