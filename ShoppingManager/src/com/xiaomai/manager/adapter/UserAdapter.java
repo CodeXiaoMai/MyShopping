@@ -9,13 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 import com.xiaomai.manager.R;
 import com.xiaomai.manager.bean.BlackNumber;
 import com.xiaomai.manager.bean.User;
+import com.xiaomai.manager.utils.DES;
+import com.xiaomai.manager.utils.Utils;
 
 public class UserAdapter extends BaseAdapter {
 
@@ -72,22 +75,24 @@ public class UserAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		final User user = list.get(position);
-		holder.tv_id.setText("用户id\n" + user.getObjectId());
-		holder.tv_userName.setText("最后登录\n" + user.getLastTimeLogin());
-		holder.tv_phone.setText("手机号\n" + user.getMobilePhoneNumber());
-		if (user.isDongJie()) {
-			holder.bt_dongjie.setVisibility(View.GONE);
-			holder.bt_vip.setVisibility(View.VISIBLE);
+
+		if (user.getIsNiChengChanged()) {
+			String nicheng = DES.decryptDES(user.getNicheng(),
+					Utils.ENCRYPT_KEY);
+			holder.tv_userName.setText("用户名\n" + nicheng);
 		} else {
-			holder.bt_dongjie.setVisibility(View.VISIBLE);
-			holder.bt_vip.setVisibility(View.GONE);
+			holder.tv_userName.setText("用户名\n" + user.getMobilePhoneNumber());
 		}
+
+		holder.tv_id.setText("用户id\n" + user.getObjectId());
+		holder.tv_phone.setText("手机号\n" + user.getMobilePhoneNumber());
 		holder.bt_dongjie.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				BlackNumber blackNumber = new BlackNumber(user.getObjectId());
+				BlackNumber blackNumber = new BlackNumber(user
+						.getMobilePhoneNumber());
 				blackNumber.save(context, new SaveListener() {
 
 					@Override
@@ -100,7 +105,6 @@ public class UserAdapter extends BaseAdapter {
 					@Override
 					public void onFailure(int arg0, String arg1) {
 						// TODO Auto-generated method stub
-						Toast.makeText(context, arg1, 0).show();
 						Toast.makeText(context, "操作失败", 0).show();
 					}
 				});
@@ -111,21 +115,38 @@ public class UserAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				BlackNumber blackNumber = new BlackNumber(user.getObjectId());
-				blackNumber.delete(context, new DeleteListener() {
+				BmobQuery<BlackNumber> bmobQuery = new BmobQuery<BlackNumber>();
+				bmobQuery.addWhereEqualTo("userid",
+						user.getMobilePhoneNumber());
+				bmobQuery.findObjects(context, new FindListener<BlackNumber>() {
 
 					@Override
-					public void onSuccess() {
+					public void onSuccess(List<BlackNumber> arg0) {
 						// TODO Auto-generated method stub
-						holder.bt_dongjie.setVisibility(View.VISIBLE);
-						holder.bt_vip.setVisibility(View.GONE);
+						if (arg0 != null & arg0.size() > 0) {
+							arg0.get(0).delete(context, new DeleteListener() {
+
+								@Override
+								public void onSuccess() {
+									// TODO Auto-generated method stub
+									holder.bt_dongjie
+											.setVisibility(View.VISIBLE);
+									holder.bt_vip.setVisibility(View.GONE);
+								}
+
+								@Override
+								public void onFailure(int arg0, String arg1) {
+									// TODO Auto-generated method stub
+									Toast.makeText(context, "操作失败", 0).show();
+								}
+							});
+						}
 					}
 
 					@Override
-					public void onFailure(int arg0, String arg1) {
+					public void onError(int arg0, String arg1) {
 						// TODO Auto-generated method stub
-						Toast.makeText(context, arg1, 0).show();
-						Toast.makeText(context, "操作失败", 0).show();
+						
 					}
 				});
 			}

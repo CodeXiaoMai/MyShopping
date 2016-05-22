@@ -13,7 +13,6 @@ import multi_image_selector.utils.Bimp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -33,7 +32,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
@@ -266,11 +264,12 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 					@Override
 					public void onSuccess(List<BmobFile> arg0, List<String> arg1) {
 						// TODO Auto-generated method stub
-						progressDialog.dismiss();
+//						progressDialog.dismiss();
 						showLog("图片张数：", 1, arg1.size() + "");
 						// 保存
 						if (arg1.size() == list.length) {
 							onImageSuccess(arg1);
+							progressDialog.dismiss();
 						}
 					}
 
@@ -278,8 +277,8 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 					public void onProgress(int arg0, int arg1, int arg2,
 							int arg3) {
 						// showToast(arg0 + "/" + arg2);
-						progressDialog.dismiss();
-						progressDialog.setTitle("正在上传第" + arg0 + "张图片");
+//						progressDialog.dismiss();
+						progressDialog.setTitle("成功上传第" + arg0 + "张图片");
 						progressDialog.setProgress(arg3);
 						Log.d("progress", "arg0:" + arg0 + ",arg1:" + arg1
 								+ ",arg2:" + arg2 + ",arg3:" + arg3);
@@ -288,7 +287,7 @@ public class FaBuShangPinActivity extends BaseActivity implements LunBoListener 
 					@Override
 					public void onError(int arg0, String arg1) {
 						showErrorToast(arg0, arg1);
-
+						progressDialog.dismiss();
 					}
 				});
 			} else {

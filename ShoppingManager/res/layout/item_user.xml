@@ -42,13 +42,12 @@
         android:orientation="vertical" >
 
         <Button
-            android:visibility="gone"
             android:id="@+id/bt_vip"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_margin="5dp"
             android:background="@drawable/button_kongxin_green"
-            android:text="会员"
+            android:text="恢复"
             android:textColor="@color/theme_green"
             android:textSize="12sp" />
 
@@ -58,7 +57,7 @@
             android:layout_height="30dp"
             android:layout_margin="5dp"
             android:background="@drawable/button_kongxin_red"
-            android:text="拉黑"
+            android:text="冻结"
             android:textColor="@color/theme_red"
             android:textSize="12sp" />
     </LinearLayout>

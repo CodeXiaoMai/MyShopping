@@ -89,10 +89,10 @@ public class MessageManage extends BaseActivity implements OnRefreshListener {
 	public void loadData() {
 		// TODO Auto-generated method stub
 		BmobQuery<Message> bmobQuery = new BmobQuery<Message>();
-		bmobQuery.order("-updatedAt");
+		bmobQuery.addWhereEqualTo("uid", Utils.MANAGERID);
 		bmobQuery.setLimit(Utils.REQUEST_COUNT);
 		bmobQuery.setSkip(list.size());
-		bmobQuery.addWhereEqualTo("uid", Utils.MANAGERID);
+		bmobQuery.order("-updatedAt");
 		bmobQuery.findObjects(context, new FindListener<Message>() {
 
 			@Override

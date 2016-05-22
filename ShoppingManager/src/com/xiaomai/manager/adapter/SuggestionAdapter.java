@@ -66,7 +66,7 @@ public class SuggestionAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		Suggestion suggestion = list.get(position);
-//		holder.tv_uid.setText(suggestion.getUid());
+		holder.tv_uid.setText("用户Id:"+suggestion.getUid());
 		holder.tv_phone.setText(suggestion.getPhone());
 		holder.tv_desc.setText(suggestion.getContent());
 		holder.tv_time.setText(suggestion.getUpdatedAt());

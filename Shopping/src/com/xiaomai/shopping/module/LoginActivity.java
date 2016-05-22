@@ -22,6 +22,7 @@ import cn.bmob.v3.listener.UpdateListener;
 
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
+import com.xiaomai.shopping.bean.BlackNumber;
 import com.xiaomai.shopping.bean.MyBmobInstallation;
 import com.xiaomai.shopping.bean.Score;
 import com.xiaomai.shopping.bean.User;
@@ -161,54 +162,81 @@ public class LoginActivity extends BaseActivity {
 					.show();
 			return;
 		} else {
-			// 联网登录
-			userName = DES.encryptDES(userName);
-			password = MD5.ecode(password);
-			user = new User();
-			user.setUsername(userName);
-			user.setPassword(password);
-			showDialog("正在登录");
-			InputMethodManager imm = (InputMethodManager) context
-					.getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(et_password.getWindowToken(), 0);
-			imm.hideSoftInputFromWindow(et_username.getWindowToken(), 0);
-			user.login(context, new SaveListener() {
+			// 判断是不是冻结
+			BmobQuery<BlackNumber> bmobQuery = new BmobQuery<BlackNumber>();
+			bmobQuery.addWhereEqualTo("userid", userName);
+			bmobQuery.findObjects(context, new FindListener<BlackNumber>() {
 
 				@Override
-				public void onSuccess() {
-					hideDialog();
-					User currentUser = getCurrentUser();
-					String lastTimeLogin = currentUser.getLastTimeLogin();
-					if (!lastTimeLogin.startsWith(GetDate.getDateBefore(0))) {
-						Score score = new Score(currentUser.getObjectId(),
-								Utils.SCORE_LOGIN, "登录");
-						score.save(context);
-						currentUser.setLastTimeLogin(GetDate.currentTime());
-						currentUser.setScore(currentUser.getScore()
-								+ Utils.SCORE_LOGIN);
-						currentUser.update(context);
-					}
-					if (listener != null) {
-						listener.onLogin();
-					}
-					startPush();
-					finish();
+				public void onError(int arg0, String arg1) {
+					// TODO Auto-generated method stub
+					showErrorToast(arg0, arg1);
 				}
 
 				@Override
-				public void onFailure(int arg0, String arg1) {
-					showLog("Login", arg0, arg1);
-					hideDialog();
-					switch (arg0) {
-					case 101:
-						showToast("用户名或密码错误！");
-						break;
-					case 9016:
-						showToast(getString(R.string.network_error));
-						break;
+				public void onSuccess(List<BlackNumber> arg0) {
+					// TODO Auto-generated method stub
+					if (arg0 != null && arg0.size() > 0) {
+						showToast("您的账号已经被冻结!");
+					} else {
+						// 联网登录
+						userName = DES.encryptDES(userName);
+						password = MD5.ecode(password);
+						user = new User();
+						user.setUsername(userName);
+						user.setPassword(password);
+						showDialog("正在登录");
+						InputMethodManager imm = (InputMethodManager) context
+								.getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(
+								et_password.getWindowToken(), 0);
+						imm.hideSoftInputFromWindow(
+								et_username.getWindowToken(), 0);
+						user.login(context, new SaveListener() {
+
+							@Override
+							public void onSuccess() {
+								hideDialog();
+								User currentUser = getCurrentUser();
+								String lastTimeLogin = currentUser
+										.getLastTimeLogin();
+								if (!lastTimeLogin.startsWith(GetDate
+										.getDateBefore(0))) {
+									Score score = new Score(currentUser
+											.getObjectId(), Utils.SCORE_LOGIN,
+											"登录");
+									score.save(context);
+									currentUser.setLastTimeLogin(GetDate
+											.currentTime());
+									currentUser.setScore(currentUser.getScore()
+											+ Utils.SCORE_LOGIN);
+									currentUser.update(context);
+								}
+								if (listener != null) {
+									listener.onLogin();
+								}
+								startPush();
+								finish();
+							}
+
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								showLog("Login", arg0, arg1);
+								hideDialog();
+								switch (arg0) {
+								case 101:
+									showToast("用户名或密码错误！");
+									break;
+								case 9016:
+									showToast(getString(R.string.network_error));
+									break;
+								}
+							}
+						});
 					}
 				}
 			});
+
 		}
 	}
 
