@@ -12,7 +12,9 @@ import cn.bmob.v3.listener.FindListener;
 import com.xiaomai.manager.adapter.WantAdapter;
 import com.xiaomai.manager.adapter.WantAdapter.onWantUpdateListener;
 import com.xiaomai.manager.base.BaseActivity;
+import com.xiaomai.manager.bean.Goods;
 import com.xiaomai.manager.bean.IWant;
+import com.xiaomai.manager.utils.StateCode;
 import com.xiaomai.manager.utils.Utils;
 import com.xiaomai.manager.view.RefreshListView;
 import com.xiaomai.manager.view.RefreshListView.OnRefreshListener;
@@ -20,10 +22,15 @@ import com.xiaomai.manager.view.RefreshListView.OnRefreshListener;
 public class WantManage extends BaseActivity implements OnRefreshListener,
 		onWantUpdateListener {
 
+	private TextView tv_all;
+	private TextView tv_weishenhe;
+
 	private RefreshListView listView;
 	private WantAdapter adapter;
 	private List<IWant> list;
 	private List<IWant> list_temp;
+
+	private int state = IWant.STATE_DAISHENHE;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,10 @@ public class WantManage extends BaseActivity implements OnRefreshListener,
 		adapter = new WantAdapter(list, context);
 		adapter.setOnGoodsUpdateListener(this);
 		listView.setAdapter(adapter);
+
+		tv_all = (TextView) findViewById(R.id.all);
+		tv_weishenhe = (TextView) findViewById(R.id.weishenhe);
+		setOnClick(tv_all, tv_weishenhe);
 	}
 
 	@Override
@@ -55,8 +66,19 @@ public class WantManage extends BaseActivity implements OnRefreshListener,
 		case R.id.title_back:
 			finish();
 			break;
-
-		default:
+		case R.id.all:
+			state = 1;
+			list = new ArrayList<IWant>();
+			adapter.setList(list);
+			adapter.notifyDataSetChanged();
+			loadData();
+			break;
+		case R.id.weishenhe:
+			state = IWant.STATE_DAISHENHE;
+			list = new ArrayList<IWant>();
+			adapter.setList(list);
+			adapter.notifyDataSetChanged();
+			loadData();
 			break;
 		}
 	}
@@ -67,7 +89,7 @@ public class WantManage extends BaseActivity implements OnRefreshListener,
 		BmobQuery<IWant> bmobQuery = new BmobQuery<IWant>();
 		bmobQuery.setLimit(Utils.REQUEST_COUNT);
 		bmobQuery.setSkip(list.size());
-		bmobQuery.addWhereEqualTo("state", IWant.STATE_DAISHENHE);
+		bmobQuery.addWhereEqualTo("state", state);
 		bmobQuery.findObjects(context, new FindListener<IWant>() {
 
 			@Override

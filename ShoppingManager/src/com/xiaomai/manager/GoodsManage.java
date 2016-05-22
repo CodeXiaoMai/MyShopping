@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
@@ -20,10 +21,14 @@ import com.xiaomai.manager.view.RefreshListView.OnRefreshListener;
 
 public class GoodsManage extends BaseActivity implements OnRefreshListener,
 		onGoodsUpdateListener {
+
+	private TextView tv_all;
+	private TextView tv_weishenhe;
 	private RefreshListView listView;
 	private GoodsAdapter adapter;
 	private List<Goods> list;
 	private List<Goods> list_temp;
+	private String state = StateCode.GOODS_SHENHE;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +46,17 @@ public class GoodsManage extends BaseActivity implements OnRefreshListener,
 		title.setText("商品管理");
 		setOnClick(back);
 
+		tv_all = (TextView) findViewById(R.id.all);
+		tv_weishenhe = (TextView) findViewById(R.id.weishenhe);
+
 		listView = (RefreshListView) findViewById(R.id.listView);
 		listView.setOnRefreshListener(this);
 		list = new ArrayList<Goods>();
 		adapter = new GoodsAdapter(list, context);
 		adapter.setOnGoodsUpdateListener(this);
 		listView.setAdapter(adapter);
+
+		setOnClick(tv_all, tv_weishenhe);
 	}
 
 	@Override
@@ -56,8 +66,19 @@ public class GoodsManage extends BaseActivity implements OnRefreshListener,
 		case R.id.title_back:
 			finish();
 			break;
-
-		default:
+		case R.id.all:
+			state = StateCode.GOODS_OK;
+			list = new ArrayList<Goods>();
+			adapter.setList(list);
+			adapter.notifyDataSetChanged();
+			loadData();
+			break;
+		case R.id.weishenhe:
+			state = StateCode.GOODS_SHENHE;
+			list = new ArrayList<Goods>();
+			adapter.setList(list);
+			adapter.notifyDataSetChanged();
+			loadData();
 			break;
 		}
 	}
@@ -68,7 +89,7 @@ public class GoodsManage extends BaseActivity implements OnRefreshListener,
 		BmobQuery<Goods> bmobQuery = new BmobQuery<Goods>();
 		bmobQuery.setLimit(Utils.REQUEST_COUNT);
 		bmobQuery.setSkip(list.size());
-		bmobQuery.addWhereEqualTo("state", StateCode.GOODS_SHENHE);
+		bmobQuery.addWhereEqualTo("state", state);
 		bmobQuery.findObjects(context, new FindListener<Goods>() {
 
 			@Override
