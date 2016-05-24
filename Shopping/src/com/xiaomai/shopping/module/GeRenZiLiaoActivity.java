@@ -217,6 +217,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 		user.setNum(num);
 		user.setIsNiChengChanged(true);
 		user.setImageUri(imageUri);
+
 		user.update(context, new UpdateListener() {
 
 			@Override
