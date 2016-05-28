@@ -216,6 +216,7 @@ public class WoDeQiuGouActivity extends BaseActivity implements
 		BmobQuery<IWant> bmobQuery = new BmobQuery<IWant>();
 		bmobQuery.setLimit(Utils.REQUEST_COUNT);
 		bmobQuery.setSkip(list_yifabuqiugou.size());
+		bmobQuery.order("-updatedAt");
 		bmobQuery.addWhereEqualTo("userId", user.getObjectId());
 		bmobQuery.findObjects(context, new FindListener<IWant>() {
 

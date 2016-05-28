@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
@@ -54,6 +56,19 @@ public class MessageManage extends BaseActivity implements OnRefreshListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					final int position, long id) {
 				// TODO Auto-generated method stub
+				Message message = list.get(position - 1);
+				Intent intent = new Intent(context,
+						MessageXiangQingActivity.class);
+				intent.putExtra("message", message);
+				startActivity(intent);
+			}
+		});
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				// TODO Auto-generated method stub
 				MyDialog.showDialog(context, "", "删除消息",
 						new DialogInterface.OnClickListener() {
 
@@ -68,6 +83,7 @@ public class MessageManage extends BaseActivity implements OnRefreshListener {
 								message.delete(context);
 							}
 						}, null);
+				return true;
 
 			}
 		});

@@ -140,7 +140,7 @@ public class HomeActivity extends FragmentActivity implements OnClickListener,
 				while (true) {
 
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(5000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

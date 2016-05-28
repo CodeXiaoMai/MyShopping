@@ -13,6 +13,7 @@ import multi_image_selector.MultiImageSelectorActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -29,6 +30,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaomai.shopping.R;
 import com.xiaomai.shopping.base.BaseActivity;
 import com.xiaomai.shopping.bean.User;
+import com.xiaomai.shopping.request.Request;
 import com.xiaomai.shopping.utils.DES;
 import com.xiaomai.shopping.utils.RequestCode;
 import com.xiaomai.shopping.utils.Utils;
@@ -69,6 +71,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 	private Bitmap bitmap;
 	private String fileName = "";
 	private boolean headChanged;
+	private String uri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +121,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 			setSex(sex);
 			break;
 		case R.id.bt_save:
+			showLog("sex", 0, sex);
 			checkMessage();
 			break;
 		case R.id.iv_head:
@@ -166,7 +170,7 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 			return;
 		}
 		realName = et_real_name.getText().toString().trim();
-
+		showLog("sex", 0, sex);
 		updateUserHead();
 	}
 
@@ -204,6 +208,11 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 
 	private void updateUserInfo() {
 		showDialog("正在上传数据");
+		showLog("", 0, sex);
+		/*uri = Request.uri + "objectId=" + user.getObjectId()
+				+ "&sex=" + sex
+				+ "&nicheng=" + name + "&realName=" + realName + "&grade="
+				+ grade + "&num=" + num;*/
 		name = DES.encryptDES(name);
 		user.setNicheng(name);
 		realName = DES.encryptDES(realName);
@@ -222,9 +231,12 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
+//				MyAsyncTask asyncTask = new MyAsyncTask();
+//				showToast(result);
 				hideDialog();
 				showToast("修改成功！");
 				finish();
+//				asyncTask.execute(uri);
 			}
 
 			@Override
@@ -234,6 +246,26 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 				showLog("修改个人资料", arg0, arg1);
 			}
 		});
+
+	}
+
+	private class MyAsyncTask extends AsyncTask<String, String, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			return Request.getDate(params[0]);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			// if(result)
+			showToast(result);
+			hideDialog();
+//			showToast("修改成功！");
+			finish();
+		}
 	}
 
 	@Override
@@ -269,6 +301,11 @@ public class GeRenZiLiaoActivity extends BaseActivity {
 			if (num != null) {
 				num = DES.decryptDES(num, Utils.ENCRYPT_KEY);
 				et_num.setText(num);
+			}
+			realName = user.getRealName();
+			if(realName!=null){
+				realName = DES.decryptDES(realName, Utils.ENCRYPT_KEY);
+				et_real_name.setText(realName);
 			}
 		}
 		hideDialog();

@@ -44,6 +44,12 @@
                 android:layout_height="25dp"
                 android:background="@drawable/button_quxiao_selector"
                 android:visibility="invisible" />
+            
+            <ImageView
+                android:id="@+id/more" 
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/more"/>
         </LinearLayout>
 
         <View

@@ -40,8 +40,8 @@
         </activity>
         <activity
             android:name="com.xiaomai.manager.UserManage"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.xiaomai.manager.WantManage"
             android:screenOrientation="portrait" />
@@ -53,6 +53,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.xiaomai.manager.AdManage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.manager.MessageXiangQingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.xiaomai.manager.MessageManage"

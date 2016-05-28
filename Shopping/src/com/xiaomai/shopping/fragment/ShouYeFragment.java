@@ -48,6 +48,7 @@ import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.Ad;
 import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.module.FenLeiActivity;
+import com.xiaomai.shopping.module.MoreActivity;
 import com.xiaomai.shopping.module.ShangPinXiangQingActivity;
 import com.xiaomai.shopping.utils.NetWorkUtil;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
@@ -65,6 +66,8 @@ import com.xiaomai.shopping.view.MyGridView;
 public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		OnEditorActionListener, OnPageChangeListener,
 		OnRefreshListener2<ScrollView> {
+
+	private View more;
 
 	private PullToRefreshScrollView scrollView;
 	// 加载全部
@@ -184,7 +187,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		if (!(shengLiuLiang && NetWorkUtil.isMobileNetWork(context))) {
 			imageloader = ImageLoader.getInstance();
 			imageloader.init(ImageLoaderConfiguration.createDefault(context));
-		}else{
+		} else {
 			imageloader = null;
 		}
 		loadGoods();
@@ -192,6 +195,8 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 
 	private void initView(View view) {
 		context = getContext();
+
+		more = view.findViewById(R.id.more);
 		scrollView = (PullToRefreshScrollView) view
 				.findViewById(R.id.pull_refresh_scrollview);
 		scrollView.getLoadingLayoutProxy(false, true).setPullLabel("上拉加载更多");
@@ -268,7 +273,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		et_search.addTextChangedListener(this);
 		et_search.setOnEditorActionListener(this);
 
-		setOnClick(quxiao);
+		setOnClick(quxiao, more);
 	}
 
 	@Override
@@ -280,7 +285,10 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 			list = list_goods;
 			adapter.notifyDataSetChanged();
 			break;
-
+		case R.id.more:
+			Intent intent = new Intent(context, MoreActivity.class);
+			startActivity(intent);
+			break;
 		default:
 			break;
 		}

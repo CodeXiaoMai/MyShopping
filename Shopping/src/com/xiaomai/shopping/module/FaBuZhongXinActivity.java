@@ -65,6 +65,7 @@ public class FaBuZhongXinActivity extends BaseActivity implements
 			showDialog("数据加载中");
 			query.setLimit(Utils.REQUEST_COUNT);
 			query.setSkip(list_yifabu.size());
+			query.order("-updatedAt");
 			query.addWhereEqualTo("userId", user.getObjectId());
 			query.findObjects(context, new FindListener<Goods>() {
 

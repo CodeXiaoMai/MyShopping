@@ -160,6 +160,10 @@
         <activity
             android:name="com.xiaomai.shopping.module.MessageXiangQingActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.xiaomai.shopping.module.MoreActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <provider
             android:name="com.xiaomai.shopping.biz.MessageBiz"
