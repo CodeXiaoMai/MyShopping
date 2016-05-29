@@ -164,6 +164,9 @@
             android:name="com.xiaomai.shopping.module.MoreActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.xiaomai.shopping.module.WebActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="com.xiaomai.shopping.biz.MessageBiz"

@@ -56,11 +56,16 @@ public class MessageManage extends BaseActivity implements OnRefreshListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					final int position, long id) {
 				// TODO Auto-generated method stub
-				Message message = list.get(position - 1);
-				Intent intent = new Intent(context,
-						MessageXiangQingActivity.class);
-				intent.putExtra("message", message);
-				startActivity(intent);
+				try {
+					Message message = list.get(position - 1);
+					Intent intent = new Intent(context,
+							MessageXiangQingActivity.class);
+					intent.putExtra("message", message);
+					startActivity(intent);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
 			}
 		});
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {

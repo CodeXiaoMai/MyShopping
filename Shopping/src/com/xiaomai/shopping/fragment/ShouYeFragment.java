@@ -48,8 +48,8 @@ import com.xiaomai.shopping.base.BaseFragment;
 import com.xiaomai.shopping.bean.Ad;
 import com.xiaomai.shopping.bean.Goods;
 import com.xiaomai.shopping.module.FenLeiActivity;
-import com.xiaomai.shopping.module.MoreActivity;
 import com.xiaomai.shopping.module.ShangPinXiangQingActivity;
+import com.xiaomai.shopping.module.WebActivity;
 import com.xiaomai.shopping.utils.NetWorkUtil;
 import com.xiaomai.shopping.utils.SharedPrenerencesUtil;
 import com.xiaomai.shopping.utils.StateCode;
@@ -286,7 +286,7 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 			adapter.notifyDataSetChanged();
 			break;
 		case R.id.more:
-			Intent intent = new Intent(context, MoreActivity.class);
+			Intent intent = new Intent(context, WebActivity.class);
 			startActivity(intent);
 			break;
 		default:
@@ -424,9 +424,11 @@ public class ShouYeFragment extends BaseFragment implements TextWatcher,
 		// 当输入框中的内容不为空时，显示“取消”，否则隐藏“取消”。
 		if (s.toString().length() > 0) {
 			quxiao.setVisibility(View.VISIBLE);
+			more.setVisibility(View.GONE);
 		} else {
 			currentState = LOAD_GOODS;
 			quxiao.setVisibility(View.INVISIBLE);
+			more.setVisibility(View.VISIBLE);
 			list = list_goods;
 			adapter.notifyDataSetChanged();
 		}

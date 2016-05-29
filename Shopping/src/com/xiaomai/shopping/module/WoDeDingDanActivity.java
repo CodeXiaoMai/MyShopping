@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
@@ -79,6 +80,7 @@ public class WoDeDingDanActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		showDialog("数据加载中");
 		User user = getCurrentUser();
+		
 		if (user != null) {
 			bmobQuery.order("-updatedAt");
 			bmobQuery.setLimit(Utils.REQUEST_COUNT);

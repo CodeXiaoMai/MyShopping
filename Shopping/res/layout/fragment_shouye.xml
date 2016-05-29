@@ -44,12 +44,12 @@
                 android:layout_height="25dp"
                 android:background="@drawable/button_quxiao_selector"
                 android:visibility="invisible" />
-            
+
             <ImageView
-                android:id="@+id/more" 
+                android:id="@+id/more"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/more"/>
+                android:background="@drawable/button_tao_selector" />
         </LinearLayout>
 
         <View
@@ -89,8 +89,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_alignParentBottom="true"
-                    android:gravity="center"
                     android:background="#00ffffff"
+                    android:gravity="center"
                     android:orientation="horizontal" >
                 </LinearLayout>
             </RelativeLayout>
