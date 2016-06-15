@@ -36,9 +36,9 @@ public class ImageFragment extends BaseFragment {
 		imageview = (ImageView) view.findViewById(R.id.imageview);
 		if (images != null) {
 			final String uri = images.get(position);
+			imageview.setOnClickListener(this);
 			if (imageloader != null) {
 				imageloader.displayImage(uri, imageview);
-				imageview.setOnClickListener(this);
 			} else {
 				imageview.setImageResource(R.drawable.chang_an);
 				imageview

@@ -131,6 +131,13 @@ public class ShangPinXiangQingActivity extends BaseFragmentActivity implements
 		fillData();
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		loadGoods();
+		super.onResume();
+	}
+	
 	private void fillData() {
 		goods = (Goods) getIntent().getSerializableExtra("goods");
 		fillGoods();

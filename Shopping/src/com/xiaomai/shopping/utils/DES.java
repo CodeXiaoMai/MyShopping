@@ -13,9 +13,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class DES {
+	
 	private static byte[] iv = { 1, 2, 3, 4, 5, 6, 7, 8 };
-
-	// public static String key = "laia@416";
 
 	// 加密
 	public static String encryptDES(String encryptString) {

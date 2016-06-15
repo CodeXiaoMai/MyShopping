@@ -33,6 +33,8 @@ public class ForgetPassWordActivity extends BaseActivity {
 
 	private String phone;
 	private String yanzhengma;
+	
+	private boolean qingqiuyanzhengma;
 
 	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -122,6 +124,7 @@ public class ForgetPassWordActivity extends BaseActivity {
 										// TODO Auto-generated method stub
 										if (arg1 == null) {
 											showToast("验证码已经发送到您的手机!");
+											qingqiuyanzhengma = true;
 											duMiao();
 										} else {
 											showErrorToast(arg1.getErrorCode(),
@@ -144,6 +147,16 @@ public class ForgetPassWordActivity extends BaseActivity {
 
 	private void checkMessage() {
 		// TODO Auto-generated method stub
+
+		if(!qingqiuyanzhengma){
+			showToast("请先获取验证码");
+			return;
+		}
+		phone = et_phone.getText().toString().trim();
+		if (TextUtils.isEmpty(phone)) {
+			showToast("手机号不能为空");
+			return;
+		}
 		yanzhengma = et_yanzhengma.getText().toString().trim();
 		if (TextUtils.isEmpty(yanzhengma)) {
 			showToast("请输入验证码");
@@ -159,6 +172,7 @@ public class ForgetPassWordActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 
 	}
+
 	/**
 	 * 读秒，60秒内不可以重新发送
 	 */
